@@ -335,8 +335,10 @@
 
 .relatedScroll {
   display: flex;
+  flex-wrap: nowrap;
   gap: 14px;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 4px;
