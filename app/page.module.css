@@ -138,7 +138,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.35;
+  opacity: 0.5;
 }
 
 .heroBannerOverlay {
@@ -146,10 +146,10 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(3, 7, 18, 0.4) 0%,
-    rgba(3, 7, 18, 0.6) 40%,
-    rgba(3, 7, 18, 0.85) 80%,
-    rgba(3, 7, 18, 1) 100%
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.8) 80%,
+    rgba(0, 0, 0, 0.92) 100%
   );
 }
 
@@ -172,6 +172,7 @@
   text-align: center;
   max-width: 900px;
   animation: fadeInUp 0.8s ease both;
+  color: white;
 }
 
 .heroBadge {
@@ -209,7 +210,7 @@
 
 .heroTitleLine1 {
   display: block;
-  color: var(--text-primary);
+  color: white;
 }
 
 .heroTitleLine2,
@@ -233,7 +234,7 @@
 
 .heroSubtitle {
   font-size: clamp(16px, 2.2vw, 20px);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   max-width: 650px;
   margin: 0 auto 40px;
   line-height: 1.7;
@@ -252,8 +253,8 @@
   align-items: center;
   gap: 8px;
   padding: 16px 36px;
-  background: linear-gradient(135deg, #2D6A4F, #ef4444);
-  color: var(--text-primary);
+  background: linear-gradient(135deg, #2D6A4F, #40916C);
+  color: white;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 15px;
@@ -275,13 +276,13 @@
   align-items: center;
   gap: 8px;
   padding: 16px 36px;
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.03em;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-md);
   transition: all var(--transition-med);
   text-decoration: none;
@@ -300,13 +301,14 @@
   align-items: center;
   justify-content: center;
   gap: 0;
-  background: rgba(248, 250, 249, 0.6);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius-xl);
   padding: 20px 12px;
   max-width: 600px;
   margin: 0 auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .heroStat {

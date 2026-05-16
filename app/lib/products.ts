@@ -1,4 +1,4 @@
-/* ── Product & Item Types ── */
+/* -- Product & Item Types -- */
 export interface FlowerProduct {
   sku: string;
   name: string;
@@ -13,7 +13,6 @@ export interface FlowerProduct {
   price14g: PricePoint | null;
   price28g: PricePoint | null;
   image: string;
-  promoImage: string | null;
 }
 
 export interface PricePoint {

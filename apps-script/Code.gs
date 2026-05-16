@@ -193,9 +193,15 @@ function buildProductJSON_(catalog, stockData) {
     if (['EXOTIC', 'PREMIUM', 'AAA+', 'AA', 'BUDGET'].indexOf(tier) < 0) continue;
     
     var name = String(f['Strain'] || '').trim();
+    // Strip sale emoji/text from strain name
+    name = name.replace(/[\u{1F525}\u{2728}]?\s*SALE$/u, '').replace(/\?SALE$/, '').trim();
     if (!name) continue;
     
-    // Parse prices
+    // Detect type + flags from Type column (e.g. "IH SALE", "SH HOT")
+    var typeRaw = String(f['Type'] || 'hybrid').trim().toUpperCase();
+    var typeInfo = detectType_(typeRaw);
+    
+    // Parse prices (supports pipe format: "40|30" = regular $40, sale $30)
     var p3g = parsePriceCell_(f['Price_3G']);
     var p5g = parsePriceCell_(f['Price_5G']);
     var p14g = parsePriceCell_(f['Price_14G']);
@@ -212,32 +218,36 @@ function buildProductJSON_(catalog, stockData) {
     // Must have at least one weight available
     if (!p3g && !p5g && !p14g && !p28g) continue;
     
-    // Read tags from sheet (add IsHot / IsSale columns to FLOWERS_LIVE for control)
+    // Determine sale/hot from Type column flags
+    var isSale = typeInfo.isSale;
+    var isHot = typeInfo.isHot;
+    
+    // Also check explicit IsHot / IsSale columns if present
     var isHotRaw = String(f['IsHot'] || '').trim().toUpperCase();
     var isSaleRaw = String(f['IsSale'] || '').trim().toUpperCase();
-    var promoImage = String(f['PPromo'] || '').trim() || null;
+    if (isHotRaw === 'TRUE' || isHotRaw === 'YES' || isHotRaw === '1') isHot = true;
+    if (isSaleRaw === 'TRUE' || isSaleRaw === 'YES' || isSaleRaw === '1') isSale = true;
     
-    var isHot = (isHotRaw === 'TRUE' || isHotRaw === 'YES' || isHotRaw === '1' || isHotRaw === 'Y');
-    var isSale = (isSaleRaw === 'TRUE' || isSaleRaw === 'YES' || isSaleRaw === '1' || isSaleRaw === 'Y');
-    
-    // Fallback: if no IsSale column, use PPromo as indicator
-    if (!isSaleRaw && promoImage) isSale = true;
+    // If any price has a sale value, mark as sale
+    if ((p3g && p3g.sale !== null) || (p5g && p5g.sale !== null) ||
+        (p14g && p14g.sale !== null) || (p28g && p28g.sale !== null)) {
+      isSale = true;
+    }
     
     flowers.push({
       sku: sku,
       name: name,
       slug: slugify_(name),
       tier: tier,
-      type: detectType_(String(f['Type'] || 'hybrid')),
+      type: typeInfo.type,
       isHot: isHot,
       isSale: isSale,
       thc: parseThc_(f['THC']),
-      price3g: p3g ? { regular: p3g, sale: null } : null,
-      price5g: p5g ? { regular: p5g, sale: null } : null,
-      price14g: p14g ? { regular: p14g, sale: null } : null,
-      price28g: p28g ? { regular: p28g, sale: null } : null,
-      image: String(f['ImageURL'] || '').trim(),
-      promoImage: promoImage
+      price3g: p3g,
+      price5g: p5g,
+      price14g: p14g,
+      price28g: p28g,
+      image: String(f['ImageURL'] || '').trim()
     });
   }
   
@@ -406,12 +416,28 @@ function slugify_(name) {
     .replace(/^-+|-+$/g, '');
 }
 
+/**
+ * Parse price cell. Supports:
+ *   "$40" or "40"  → { regular: 40, sale: null }
+ *   "40|30"        → { regular: 40, sale: 30 }
+ *   blank/N/A      → null
+ */
 function parsePriceCell_(val) {
   if (val === null || val === undefined) return null;
-  var s = String(val).trim().replace('$', '').replace(',', '');
+  var s = String(val).trim().replace(/\$/g, '').replace(/,/g, '');
   if (!s || s === '-' || s === 'N/A' || s === 'None') return null;
+  
+  // Pipe format: "40|30" = regular|sale
+  if (s.indexOf('|') > -1) {
+    var parts = s.split('|');
+    var reg = parseFloat(parts[0].trim());
+    var sal = parseFloat(parts[1].trim());
+    if (isNaN(reg)) return null;
+    return { regular: Math.round(reg), sale: isNaN(sal) ? null : Math.round(sal) };
+  }
+  
   var n = parseFloat(s);
-  return isNaN(n) ? null : Math.round(n);
+  return isNaN(n) ? null : { regular: Math.round(n), sale: null };
 }
 
 function parseThc_(val) {
@@ -425,11 +451,25 @@ function parseThc_(val) {
   return n + '%';
 }
 
+/**
+ * Parse Type column. Supports:
+ *   "IH"       → { type: 'indica', isSale: false, isHot: false }
+ *   "IH SALE"  → { type: 'indica', isSale: true,  isHot: false }
+ *   "SH HOT"   → { type: 'sativa', isSale: false, isHot: true }
+ *   "SAT SALE" → { type: 'sativa', isSale: true,  isHot: false }
+ */
 function detectType_(typeStr) {
   var t = typeStr.trim().toUpperCase();
-  if (t.indexOf('I') === 0 || t.indexOf('INDICA') >= 0) return 'indica';
-  if (t.indexOf('S') === 0 || t.indexOf('SATIVA') >= 0) return 'sativa';
-  return 'hybrid';
+  var isSale = t.indexOf('SALE') >= 0;
+  var isHot = t.indexOf('HOT') >= 0;
+  
+  // Strip flags to get base type
+  var base = t.replace('SALE', '').replace('HOT', '').trim();
+  var type = 'hybrid';
+  if (base.indexOf('I') === 0 || base.indexOf('INDICA') >= 0) type = 'indica';
+  else if (base.indexOf('S') === 0 || base.indexOf('SATIVA') >= 0) type = 'sativa';
+  
+  return { type: type, isSale: isSale, isHot: isHot };
 }
 
 
