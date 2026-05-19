@@ -194,10 +194,8 @@ function PromoCard({ title, accent }: { title: string; accent: string }) {
 const TICKER_SLIDES = [
   "🔥 Spirit Corner Cannabis — 251 Dalhousie St, Ottawa",
   "200+ Strains In Stock",
-  "Open 10AM – 3AM Daily",
+  "Open 24 Hours",
   "Pre-Rolls • Edibles • Vapes • Concentrates",
-  "Buy 2g Get 1g FREE on all tiers!",
-  "Buy 3g Get 3g FREE!",
   "ALL SALES ARE FINAL",
   "🎮 Play Games at spiritcornercannabis.com/games",
 ];
