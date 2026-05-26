@@ -9,6 +9,7 @@ export interface SeoPageData {
   heroTagline: string;
   sections: { heading: string; body: string }[];
   faqs: { q: string; a: string }[];
+  banner?: string;
 }
 
 export const SEO_PAGES: SeoPageData[] = [
@@ -19,6 +20,7 @@ export const SEO_PAGES: SeoPageData[] = [
     h1: "Ottawa Weed Dispensary — Spirit Corner Cannabis",
     icon: "✨",
     heroTagline: "Premium Cannabis on Dalhousie St · Open 24 Hours · Walk-In Welcome",
+    banner: "/banners/spirit-corner-cannabis-ottawa-24-hour-dispensary-banner.png",
     sections: [
       {
         heading: "Ottawa's Premier Cannabis Destination",
@@ -64,6 +66,7 @@ export const SEO_PAGES: SeoPageData[] = [
     h1: "Cheap Weed Ottawa — Budget Cannabis Deals",
     icon: "💰",
     heroTagline: "Budget Flower From $3/g · Ounces From $40 · Always Open",
+    banner: "/banners/cheap-weed-ottawa-dispensary-deals-spirit-corner-cannabis-24-hour.png",
     sections: [
       {
         heading: "Ottawa's Best Prices on Quality Cannabis",
@@ -99,6 +102,7 @@ export const SEO_PAGES: SeoPageData[] = [
     h1: "Native Cigarettes Ottawa — Discount Tobacco",
     icon: "🏷️",
     heroTagline: "Premium & Value Brands · Best Prices in Ottawa · Open 24 Hours",
+    banner: "/banners/native-cigarettes-ottawa-25-dollar-cartons-spirit-corner-cannabis.png",
     sections: [
       {
         heading: "Ottawa's Best Selection of Native Cigarettes",
@@ -134,6 +138,7 @@ export const SEO_PAGES: SeoPageData[] = [
     h1: "Weed Store Near Gatineau — Spirit Corner Cannabis",
     icon: "🌉",
     heroTagline: "Just 5 Minutes From the Portage Bridge · Open 24 Hours",
+    banner: "/banners/dispensaire-cannabis-pres-de-gatineau-hull-ottawa-spirit-corner-cannabis.png",
     sections: [
       {
         heading: "The Closest Quality Dispensary to Gatineau",

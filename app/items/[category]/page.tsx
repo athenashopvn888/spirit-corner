@@ -53,8 +53,30 @@ export default async function ItemsCategoryPage({
     <main className={styles.main}>
       <Navbar />
 
+      {/* Banner Section */}
+      {config.banner && (
+        <section style={{ marginTop: "92px", position: "relative" }}>
+          <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
+            <img
+              src={config.banner}
+              alt={`${config.name} at Spirit Corner Cannabis Ottawa`}
+              style={{ width: "100%", height: "auto", borderRadius: "24px", border: "1px solid var(--border-subtle)", display: "block" }}
+            />
+            <p style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "8px", textAlign: "center", fontStyle: "italic" }}>
+              Explore premium {config.name.toLowerCase()} products at Spirit Corner Cannabis in downtown Ottawa.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Hero */}
-      <section className={styles.hero} style={{ "--cat-color": config.color } as React.CSSProperties}>
+      <section
+        className={styles.hero}
+        style={{
+          marginTop: config.banner ? "20px" : "92px",
+          "--cat-color": config.color,
+        } as React.CSSProperties}
+      >
         <div className={styles.heroContent}>
           <span className={styles.heroIcon}>{config.icon}</span>
           <h1 className={styles.heroTitle}>

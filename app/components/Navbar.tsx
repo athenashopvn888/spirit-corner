@@ -14,7 +14,7 @@ const ALL_LINKS = [
   { href: "/items/prerolls", label: "Pre-Rolls" },
   { href: "/items/vapes", label: "Nic Vape" },
   { href: "/items/vape-disposables", label: "THC Vape" },
-  { href: "/items/concentrates", label: "Extracts" },
+  { href: "/items/concentrates", label: "Concentrates" },
   { href: "/items/magic", label: "Magic Stuff" },
   { href: "/items/cigarettes", label: "Cigarettes" },
   { href: "/items/add-ons", label: "Accessories" },

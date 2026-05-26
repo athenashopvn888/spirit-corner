@@ -33,7 +33,7 @@ ITEMS_OUT = os.path.join(SCRIPT_DIR, "app", "lib", "items.json")
 # ============================================================
 #   CONFIGURATION - Set these values
 # ============================================================
-STORE_CODE = "ALC01"  # Always Lit Cannabis store code
+STORE_CODE = "SCC01"  # Spirit Corner Cannabis store code
 
 # Google Sheet IDs (the long string in the URL)
 # https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit
@@ -441,7 +441,7 @@ def main():
             capture_output=True, text=True
         )
         if result.returncode == 0:
-            print("  [OK] Live at https://always-lit.vercel.app")
+            print("  [OK] Live at https://spiritcornercannabis.com")
         else:
             print(f"  Output:\n{result.stdout[-500:]}")
     else:

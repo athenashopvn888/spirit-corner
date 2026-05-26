@@ -44,8 +44,24 @@ export default async function SeoLandingPage({
     <main className={styles.main}>
       <Navbar />
 
+      {/* Banner Section */}
+      {page.banner && (
+        <section style={{ marginTop: "92px", position: "relative" }}>
+          <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
+            <img
+              src={page.banner}
+              alt={`${page.h1} at Spirit Corner Cannabis Ottawa`}
+              style={{ width: "100%", height: "auto", borderRadius: "24px", border: "1px solid var(--border-subtle)", display: "block" }}
+            />
+            <p style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "8px", textAlign: "center", fontStyle: "italic" }}>
+              Explore premium cannabis and value deals at Spirit Corner Cannabis in downtown Ottawa.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Hero */}
-      <section className={styles.hero}>
+      <section className={styles.hero} style={page.banner ? { marginTop: "20px" } : undefined}>
         <div className={styles.heroInner}>
           <span className={styles.heroIcon}>{page.icon}</span>
           <h1 className={styles.heroH1}>{page.h1}</h1>

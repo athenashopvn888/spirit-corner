@@ -1,7 +1,7 @@
 """
-Always Lit — Product Update Script
+Spirit Corner Cannabis — Product Update Script
 ===================================
-Drop your ONHAND CSV into the always-lit folder as "onhand.csv" and run:
+Drop your ONHAND CSV into the spirit-corner folder as "onhand.csv" and run:
 
     python update_products.py
 
@@ -148,7 +148,7 @@ def main():
 
     if not os.path.exists(csv_path):
         print("=" * 60)
-        print("  Always Lit — Product Updater")
+        print("  Spirit Corner Cannabis — Product Updater")
         print("=" * 60)
         print()
         print(f"  Drop your ONHAND CSV as: {csv_path}")
@@ -196,7 +196,7 @@ def main():
         return
 
     print("=" * 60)
-    print("  Always Lit — Product Updater")
+    print("  Spirit Corner Cannabis — Product Updater")
     print("=" * 60)
     print()
 
@@ -237,7 +237,7 @@ def main():
              "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; vercel --prod --yes"],
             cwd=SCRIPT_DIR
         )
-        print("\n  [OK] Deployed! Check https://always-lit.vercel.app")
+        print("\n  [OK] Deployed! Check https://spiritcornercannabis.com")
     else:
         print("\n  To deploy manually, run:")
         print("    vercel --prod --yes")
