@@ -1,4 +1,4 @@
-/* -- Product & Item Types -- */
+﻿/* -- Product & Item Types -- */
 export interface FlowerProduct {
   sku: string;
   name: string;
@@ -66,7 +66,7 @@ export async function fetchLiveProducts(): Promise<{
   }
 
   try {
-    const res = await fetch(`${APPS_SCRIPT_URL}?store=ALC01`, {
+    const res = await fetch(`${APPS_SCRIPT_URL}?store=SCC01`, {
       next: { revalidate: 300 }, // Cache for 5 min during build
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -100,8 +100,8 @@ export const TIER_CONFIG: Record<
     tagline: "Ultra-rare, top-shelf genetics \u00B7 THC 35-39%",
     banner: "/banners/exotic_premium_cannabis_with_glowing_accents.webp",
     unitPrice: 20,
-    deal3g: { label: "Buy 2g Get 1g FREE", total: "3G", price: 40 },
-    deal6g: { label: "Buy 3g Get 3g FREE", total: "6G", price: 60 },
+    deal3g: { label: "Buy 2g Get 1g FREE = 3g", total: "3G", price: 40 },
+    deal6g: { label: "Buy 3g Get 3g FREE = 6g", total: "6G", price: 60 },
   },
   PREMIUM: {
     name: "Premium",
@@ -111,8 +111,8 @@ export const TIER_CONFIG: Record<
     tagline: "Hand-picked connoisseur grade \u00B7 THC 32-34%",
     banner: "/banners/premium_cannabis_with_glowing_accents.webp",
     unitPrice: 15,
-    deal3g: { label: "Buy 2g Get 1g FREE", total: "3G", price: 30 },
-    deal6g: { label: "Buy 3g Get 3g FREE", total: "6G", price: 45 },
+    deal3g: { label: "Buy 2g Get 1g FREE = 3g", total: "3G", price: 30 },
+    deal6g: { label: "Buy 3g Get 3g FREE = 6g", total: "6G", price: 45 },
   },
   "AAA+": {
     name: "AAA+",
@@ -122,8 +122,8 @@ export const TIER_CONFIG: Record<
     tagline: "Heavy hitters, proven strains \u00B7 THC 30-32%",
     banner: "/banners/electric_neon_cannabis_ad_banner.webp",
     unitPrice: 10,
-    deal3g: { label: "Buy 2g Get 1g FREE", total: "3G", price: 20 },
-    deal6g: { label: "Buy 3g Get 3g FREE", total: "6G", price: 30 },
+    deal3g: { label: "Buy 2g Get 1g FREE = 3g", total: "3G", price: 20 },
+    deal6g: { label: "Buy 3g Get 3g FREE = 6g", total: "6G", price: 30 },
   },
   AA: {
     name: "AA",
@@ -144,7 +144,7 @@ export const TIER_CONFIG: Record<
     tagline: "Shreds & value OZs \u00B7 From $40/oz",
     banner: "/banners/premium_budget_cannabis_deal_showcase.webp",
     unitPrice: 3,
-    deal3g: { label: "Buy 2g Get 1g FREE", total: "3G", price: 10 },
+    deal3g: { label: "$10 / 3g Special", total: "3G", price: 10 },
     deal6g: null,
   },
 };
@@ -154,6 +154,7 @@ export interface CategoryInfo {
   name: string; slug: string; color: string; icon: string;
   seoTitle: string; seoIntro: string; seoDescription: string;
   faqs: { q: string; a: string }[];
+  banner?: string;
 }
 
 export const CATEGORY_CONFIG: Record<string, CategoryInfo> = {
@@ -173,6 +174,7 @@ export const CATEGORY_CONFIG: Record<string, CategoryInfo> = {
     seoTitle: "Vape Pens Ottawa — THC & Nicotine Cartridges",
     seoIntro: "Shop THC and nicotine vape pens at Spirit Corner Cannabis, Ottawa. Cartridges, 510-thread batteries, and premium vape brands — all in stock.",
     seoDescription: "Spirit Corner Cannabis carries a curated selection of vape pens and cartridges in Ottawa. From 510-thread THC cartridges to nicotine vape pods, we stock the most popular brands and flavours. Our knowledgeable budtenders can help you choose the right cartridge and battery setup. Visit us at 251 Dalhousie St for the best vape selection in ByWard Market.",
+    banner: "/banners/5-percent-vapes-ottawa-spirit-corner-cannabis.png",
     faqs: [
       { q: "What vape pens do you sell?", a: "We carry 510-thread THC cartridges, nicotine vape pods, disposable vapes, and compatible batteries from top Canadian brands." },
       { q: "Do you sell vape batteries?", a: "Yes! We stock 510-thread batteries and pod systems that pair with our cartridge selection." },
@@ -183,6 +185,7 @@ export const CATEGORY_CONFIG: Record<string, CategoryInfo> = {
     seoTitle: "Disposable Vapes Ottawa — THC Disposable Pens",
     seoIntro: "THC disposable vapes available at Spirit Corner Cannabis, Ottawa. No charging, no refilling — just open and enjoy.",
     seoDescription: "Disposable THC vapes are the easiest way to enjoy cannabis on the go. Spirit Corner Cannabis stocks a wide selection of pre-charged, pre-filled disposable vape pens with various strain profiles and potencies. Perfect for beginners and experienced users alike. Visit us at 251 Dalhousie St, Ottawa.",
+    banner: "/banners/5-percent-vapes-ottawa-spirit-corner-cannabis.png",
     faqs: [
       { q: "How long does a disposable vape last?", a: "Most disposable THC vapes contain 0.5g-1g of distillate and last between 100-300 puffs depending on usage." },
       { q: "Are disposable vapes rechargeable?", a: "Most are designed for single use, but some models include a USB-C charging port to ensure you can use the full cartridge." },
@@ -195,7 +198,7 @@ export const CATEGORY_CONFIG: Record<string, CategoryInfo> = {
     seoDescription: "Spirit Corner Cannabis offers a premium selection of cannabis concentrates in Ottawa. From traditional hash and kief to modern extracts like shatter, wax, live resin, and THC diamonds, we carry products for every preference and potency level. Our concentrates are sourced from trusted extractors and tested for purity. Visit us at 251 Dalhousie St.",
     faqs: [
       { q: "What types of concentrates do you carry?", a: "We stock shatter, wax, budder, live resin, rosin, hash, kief, and THC diamonds from top Canadian extractors." },
-      { q: "How do I consume concentrates?", a: "Concentrates can be dabbed with a rig, vaped with a concentrate pen, or added to flower in a joint or bowl for extra potency." },
+      { q: "How do I consume concentrates?", a: "Concentrates can be dabbing with a rig, vaped with a concentrate pen, or added to flower in a joint or bowl for extra potency." },
     ],
   },
   PREROLLS: {
@@ -203,6 +206,7 @@ export const CATEGORY_CONFIG: Record<string, CategoryInfo> = {
     seoTitle: "Pre-Rolls Ottawa — Ready-to-Smoke Cannabis Joints",
     seoIntro: "Pre-rolled cannabis joints at Spirit Corner Cannabis, Ottawa. Singles, multi-packs, and infused pre-rolls — ready to light up.",
     seoDescription: "Skip the rolling and grab a pre-roll from Spirit Corner Cannabis in Ottawa. We carry singles, multi-packs, and infused pre-rolls from premium flower. Whether you want a quick smoke or a party pack, our pre-roll selection has something for everyone. Visit us at 251 Dalhousie St — open daily 24 hours.",
+    banner: "/banners/spirit-corner-cannabis-ottawa-24-hour-dispensary-banner.png",
     faqs: [
       { q: "What pre-rolls do you carry?", a: "We stock singles, 3-packs, and multi-packs in various strains and potencies, including infused pre-rolls with concentrates." },
       { q: "Are your pre-rolls made with quality flower?", a: "Yes! Our pre-rolls are filled with ground flower from our regular menu tiers — not shake or trim." },
@@ -222,6 +226,7 @@ export const CATEGORY_CONFIG: Record<string, CategoryInfo> = {
     seoTitle: "Native Cigarettes Ottawa — Discount Tobacco at Spirit Corner",
     seoIntro: "Discount native cigarettes at Spirit Corner Cannabis, Ottawa. Premium and value brands at the best prices on Dalhousie St.",
     seoDescription: "Spirit Corner Cannabis is your go-to source for affordable native cigarettes in Ottawa. We carry a wide selection of premium and value tobacco brands at competitive prices. Located at 251 Dalhousie St in the heart of ByWard Market, we're open daily 24 hours. Stop by for the best cigarette prices in the neighbourhood.",
+    banner: "/banners/native-cigarettes-ottawa-25-dollar-cartons-spirit-corner-cannabis.png",
     faqs: [
       { q: "Do you sell cigarettes at Spirit Corner?", a: "Yes! We carry a wide selection of native cigarette brands at competitive prices." },
       { q: "What cigarette brands do you carry?", a: "We stock a variety of premium and value native cigarette brands. Visit us to see our full in-store selection." },
