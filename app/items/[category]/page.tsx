@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import {
@@ -9,6 +10,7 @@ import {
   type ItemProduct,
 } from "../../lib/products";
 import styles from "./items.module.css";
+import ItemCard from "./ItemCard";
 
 /* ── Generate all category pages ── */
 export function generateStaticParams() {
@@ -29,6 +31,9 @@ export async function generateMetadata({
   return {
     title: catInfo.config.seoTitle || `${catInfo.config.name} — ${items.length} Products`,
     description: catInfo.config.seoIntro || `Shop ${items.length} ${catInfo.config.name.toLowerCase()} at Spirit Corner Cannabis.`,
+    alternates: {
+      canonical: `https://spiritcornercannabis.com/items/${catSlug}`,
+    },
   };
 }
 
@@ -45,7 +50,9 @@ export default async function ItemsCategoryPage({
   let items = getItemsByCategory(catInfo.key);
   if (catInfo.key === "PREROLLS") {
     const accessories = getItemsByCategory("ADD ONS");
-    items = [...items, ...accessories];
+    const existingIds = new Set(items.map(i => i.sku));
+    const uniqueAccessories = accessories.filter(a => !existingIds.has(a.sku));
+    items = [...items, ...uniqueAccessories];
   }
   const { config } = catInfo;
 
@@ -53,38 +60,23 @@ export default async function ItemsCategoryPage({
     <main className={styles.main}>
       <Navbar />
 
-      {/* Banner Section */}
-      {config.banner && (
-        <section style={{ marginTop: "92px", position: "relative" }}>
-          <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
-            <img
-              src={config.banner}
-              alt={`${config.name} at Spirit Corner Cannabis Ottawa`}
-              style={{ width: "100%", height: "auto", borderRadius: "24px", border: "1px solid var(--border-subtle)", display: "block" }}
-            />
-            <p style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "8px", textAlign: "center", fontStyle: "italic" }}>
-              Explore premium {config.name.toLowerCase()} products at Spirit Corner Cannabis in downtown Ottawa.
-            </p>
+      {/* Hero Banner */}
+      <section style={{ width: "100%", overflow: "hidden", marginTop: "92px", marginBottom: "24px" }}>
+        {config.banner ? (
+          <img
+            src={config.banner}
+            alt={config.name}
+            style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }}
+          />
+        ) : (
+          <div className={styles.heroContent} style={{ background: config.color, padding: "60px 24px", textAlign: "center" }}>
+            <span className={styles.heroIcon}>{config.icon}</span>
+            <h1 className={styles.heroTitle}>
+              <span style={{ color: "#fff" }}>{config.name}</span>
+            </h1>
+            <p className={styles.heroSub} style={{ color: "rgba(255,255,255,0.8)" }}>{items.length} products available</p>
           </div>
-        </section>
-      )}
-
-      {/* Hero */}
-      <section
-        className={styles.hero}
-        style={{
-          marginTop: config.banner ? "20px" : "92px",
-          "--cat-color": config.color,
-        } as React.CSSProperties}
-      >
-        <div className={styles.heroContent}>
-          <span className={styles.heroIcon}>{config.icon}</span>
-          <h1 className={styles.heroTitle}>
-            <span style={{ color: config.color }}>{config.name}</span>
-          </h1>
-          <p className={styles.heroSub}>{items.length} products available</p>
-          <p className={styles.heroIntro}>{config.seoIntro}</p>
-        </div>
+        )}
       </section>
 
       {/* Product Grid */}
@@ -148,33 +140,4 @@ export default async function ItemsCategoryPage({
   );
 }
 
-function ItemCard({ item, catColor }: { item: ItemProduct; catColor: string }) {
-  return (
-    <div className={styles.card} style={{ "--cat-color": catColor } as React.CSSProperties}>
-      <div className={styles.cardMedia}>
-        {item.image ? (
-          <img src={item.image} alt={item.name} loading="lazy" className={styles.cardImg} />
-        ) : (
-          <div className={styles.cardPlaceholder}>
-            {item.name[0]}
-          </div>
-        )}
-        <div className={styles.cardBadges}>
-          {item.thc && <span className={styles.badgeThc}>{item.thc}</span>}
-          {item.mg && <span className={styles.badgeMg}>{item.mg}</span>}
-        </div>
-      </div>
-      <div className={styles.cardBody}>
-        <span className={styles.cardCategory}>{item.category}</span>
-        <h3 className={styles.cardName}>{item.name}</h3>
-        {item.price && (
-          <div className={styles.cardPrice}>
-            <span className={styles.priceVal}>{item.price.startsWith('$') ? item.price : `$${item.price}`}</span>
-            <span className={styles.priceUnit}>each</span>
-          </div>
-        )}
-        <span className={styles.skuTag}>SKU {item.sku}</span>
-      </div>
-    </div>
-  );
-}
+

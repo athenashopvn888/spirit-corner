@@ -19,8 +19,10 @@
 .slide {
   position: absolute;
   inset: 0;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
+  background-color: #030712;
   opacity: 0;
   visibility: hidden;
   transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s;

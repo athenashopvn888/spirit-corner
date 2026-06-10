@@ -26,7 +26,7 @@ const TIER_CROWN: Record<string,string> = {
   EXOTIC:"👑", PREMIUM:"👑", "AAA+":"👑", AA:"🏅", BUDGET:"💰", OZ:"🎯"
 };
 const TIER_UNIT: Record<string,string> = {
-  EXOTIC:"$20/G", PREMIUM:"$15/G", "AAA+":"$10/G", AA:"$5/G", BUDGET:"$3.33/G"
+  EXOTIC:"-/g", PREMIUM:"-/g", "AAA+":"-/g", AA:"/g", BUDGET:"/g"
 };
 const TIER_DEAL: Record<string,string> = {
   EXOTIC:"Buy 3g Get 3 FREE", PREMIUM:"Buy 3g Get 3 FREE",
@@ -266,12 +266,28 @@ function FlowerCard({
               {hi?.thc && <div className={styles.imgThcBadge}>{fmtTHC(hi.thc)}</div>}
               {prevImg && (
                 <img src={prevImg} alt="" className={`${styles.budImg} ${styles.budImgFadeOut}`}
-                  referrerPolicy="no-referrer" />
+                  referrerPolicy="no-referrer" 
+            onError={(e) => {
+              const t = e.currentTarget;
+              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
+                const filename = t.src.split('/').pop();
+                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+              }
+            }}
+          />
               )}
               {fadeImg && (
                 <img key={fadeImg} src={fadeImg} alt={hi?.name||""}
                   className={`${styles.budImg} ${styles.budImgFadeIn}`}
-                  referrerPolicy="no-referrer" />
+                  referrerPolicy="no-referrer" 
+            onError={(e) => {
+              const t = e.currentTarget;
+              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
+                const filename = t.src.split('/').pop();
+                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+              }
+            }}
+          />
               )}
               {hi?.type && (
                 <div className={styles.imgTypeBadge}>
@@ -488,8 +504,24 @@ function OZCard({ flowers, hiIdx }: { flowers: Flower[]; hiIdx: number }) {
           <div className={styles.ozImgWrap}>
             <div className={styles.mediaViewport}>
               {hi?.isHot && <div className={styles.topPickBadge}>TOP PICK</div>}
-              {prevImg && <img src={prevImg} alt="" className={`${styles.budImg} ${styles.budImgFadeOut}`} referrerPolicy="no-referrer" />}
-              {fadeImg && <img key={fadeImg} src={fadeImg} alt={hi?.name||""} className={`${styles.budImg} ${styles.budImgFadeIn}`} referrerPolicy="no-referrer" />}
+              {prevImg && <img src={prevImg} alt="" className={`${styles.budImg} ${styles.budImgFadeOut}`} referrerPolicy="no-referrer" 
+            onError={(e) => {
+              const t = e.currentTarget;
+              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
+                const filename = t.src.split('/').pop();
+                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+              }
+            }}
+          />}
+              {fadeImg && <img key={fadeImg} src={fadeImg} alt={hi?.name||""} className={`${styles.budImg} ${styles.budImgFadeIn}`} referrerPolicy="no-referrer" 
+            onError={(e) => {
+              const t = e.currentTarget;
+              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
+                const filename = t.src.split('/').pop();
+                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+              }
+            }}
+          />}
               {hi?.type && (
                 <div className={styles.imgTypeBadge}>
                   <span className={`${styles.imgType} ${hi.type==="sativa"?styles.imgTypeSat:styles.imgTypeInd}`}>{hi.type.toUpperCase()}</span>
@@ -580,8 +612,24 @@ function AddOnsCard({ items, hiIdx }: { items: Item[]; hiIdx: number }) {
         <div className={styles.addonsHero}>
           <div className={styles.addonsHeroImg}>
             <div className={styles.mediaViewport}>
-              {prevImg && <img src={prevImg} alt="" className={`${styles.budImg} ${styles.budImgFadeOut}`} referrerPolicy="no-referrer" />}
-              {fadeImg && <img key={fadeImg} src={fadeImg} alt={hi?.name||""} className={`${styles.budImg} ${styles.budImgFadeIn}`} referrerPolicy="no-referrer" />}
+              {prevImg && <img src={prevImg} alt="" className={`${styles.budImg} ${styles.budImgFadeOut}`} referrerPolicy="no-referrer" 
+            onError={(e) => {
+              const t = e.currentTarget;
+              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
+                const filename = t.src.split('/').pop();
+                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+              }
+            }}
+          />}
+              {fadeImg && <img key={fadeImg} src={fadeImg} alt={hi?.name||""} className={`${styles.budImg} ${styles.budImgFadeIn}`} referrerPolicy="no-referrer" 
+            onError={(e) => {
+              const t = e.currentTarget;
+              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
+                const filename = t.src.split('/').pop();
+                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+              }
+            }}
+          />}
             </div>
           </div>
           <div className={styles.addonsDetailCard}>
@@ -598,7 +646,15 @@ function AddOnsCard({ items, hiIdx }: { items: Item[]; hiIdx: number }) {
           {items.map((it,i) => (
             <div key={it.sku+i} className={`${styles.addonRow} ${i===hiIdx?styles.addonRowHi:""}`}
               style={i===hiIdx ? {borderColor:"rgba(34,197,94,.55)", boxShadow:"0 0 0 2px rgba(34,197,94,.35), 0 6px 16px rgba(2,6,23,.15)"} : undefined}>
-              {it.image && <img src={it.image} alt={it.name} className={styles.addonImg} referrerPolicy="no-referrer" />}
+              {it.image && <img src={it.image} alt={it.name} className={styles.addonImg} referrerPolicy="no-referrer" 
+            onError={(e) => {
+              const t = e.currentTarget;
+              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
+                const filename = t.src.split('/').pop();
+                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+              }
+            }}
+          />}
               <div className={styles.addonInfo}>
                 <div className={styles.addonName}>{it.name}</div>
                 <div className={styles.addonPrice}>{(it.price||'').replace(/\[object.*\]/,'')}</div>
@@ -615,11 +671,11 @@ function AddOnsCard({ items, hiIdx }: { items: Item[]; hiIdx: number }) {
    VERTICAL TICKER
    ============================================================ */
 const TICKER_SLIDES = [
-  "🔥 Mohawk Medicine — 2655 Eglinton Ave E, Scarborough",
+  "🔥 Spirit Corner Cannabis — 251 Dalhousie St, Ottawa",
   "200+ Strains In Stock",
   "Open 24 Hours",
   "ALL SALES ARE FINAL",
-  "🎮 Play Games at mohawkmedicine.com/games",
+  "🎮 Play Games at spiritcornercannabis.com/games",
 ];
 
 function VerticalTicker() {
@@ -787,7 +843,7 @@ export default function TVMenuPage() {
 
         {/* TV BANNER */}
         <div style={{ margin: "-40px -40px 30px -40px", width: "calc(100% + 80px)" }}>
-          <img src="/banners/25_Mohawk_FlowerTV.webp" alt="Mohawk Medicine TV Menu" style={{ width: "100%", display: "block" }} />
+          <img src="/banners/FlowerTvBanner.webp" alt="Spirit Corner Cannabis TV Menu" style={{ width: "100%", display: "block" }} />
         </div>
 
         {/* GRID */}

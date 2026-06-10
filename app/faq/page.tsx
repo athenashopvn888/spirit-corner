@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "FAQ — Spirit Corner Cannabis | Ottawa Dispensary Questions",
   description:
     "Frequently asked questions about Spirit Corner Cannabis in Ottawa. Hours, location, products, pricing, promotions, and everything you need to know before visiting.",
+  alternates: {
+    canonical: "https://spiritcornercannabis.com/faq",
+  },
 };
 
 const FAQ_CATEGORIES = [
