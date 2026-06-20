@@ -24,8 +24,8 @@ export const gbpLocation = {
     "Accessories"
   ],
   menuUrl: "/",
-  directionsUrl: "https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6",
-  mapEmbedUrl: "https://maps.google.com/maps?q=Spirit%20Corner%20Cannabis%20251%20Dalhousie%20St%2C%20Ottawa%2C%20ON%20K1N%201E7&t=&z=15&ie=UTF8&iwloc=&output=embed",
+  directionsUrl: "",
+  mapEmbedUrl: "",
   latitude: "45.4292",
   longitude: "-75.6928",
   hours: ["Open 24 Hours"],

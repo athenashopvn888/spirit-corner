@@ -98,7 +98,7 @@ export const TIER_SEO: Record<string, TierSeoData> = {
 
   BUDGET: {
     seoTitle: "Budget Cannabis Ottawa — Cheap Weed From $3/g",
-    seoIntro: "Cheap weed in Ottawa starting at $3/g. Spirit Corner Cannabis Budget tier features shreds and value ounces for cost-conscious smokers. Open daily on Dalhousie St.",
+    seoIntro: "Cheap weed in Ottawa starting at $3/g. Spirit Corner Cannabis Budget tier features shreds and value ounces for cost-conscious smokers. Check current store hours before visiting Spirit Corner Cannabis.",
     sections: [
       {
         heading: "Affordable Cannabis Without Compromise",

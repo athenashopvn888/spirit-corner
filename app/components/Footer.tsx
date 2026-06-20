@@ -23,14 +23,6 @@ export default function Footer() {
               >
                 Call Now
               </a>
-              <a
-                href="https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.btnSecondary}
-              >
-                Get Directions
-              </a>
             </div>
           </div>
 
@@ -76,13 +68,6 @@ export default function Footer() {
               <Link href="/info/weed-store-near-gatineau">Weed Store Near Gatineau</Link>
               <Link href="/weed-dispensary-ottawa/">Spirit Corner Cannabis Weed Dispensary in Ottawa</Link>
               <Link href="/contact">Contact Us</Link>
-              <a
-                href="https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Google Maps
-              </a>
             </nav>
           </div>
         </div>

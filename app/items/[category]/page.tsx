@@ -123,14 +123,6 @@ export default async function ItemsCategoryPage({
             <p className={styles.visitText}>
               251 Dalhousie St, Ottawa, ON K1N 1E7 · Open 24 Hours
             </p>
-            <a
-              href="https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.visitBtn}
-            >
-              📍 Get Directions
-            </a>
           </div>
         </div>
       </section>

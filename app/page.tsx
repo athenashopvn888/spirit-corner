@@ -185,11 +185,6 @@ export default function HomePage() {
         closes: "23:59",
       },
     ],
-    sameAs: [
-      "https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6",
-      "https://www.google.com/maps/place/?q=place_id:ChIJm9VGUowFzkwRl2QzOCSoNlg",
-    ],
-    hasMap: "https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6",
     areaServed: [
       { "@type": "City", name: "Ottawa" },
       { "@type": "City", name: "Gatineau" },
@@ -689,14 +684,6 @@ export default function HomePage() {
                   <br />
                   Ottawa, ON K1N 1E7
                   <br />
-                  <a
-                    href="https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.storeLink}
-                  >
-                    Get Directions →
-                  </a>
                 </p>
               </div>
               <div className={styles.storeCard}>
@@ -723,16 +710,6 @@ export default function HomePage() {
 
             {/* Embedded map */}
             <div className={styles.mapWrap}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2800.0!2d-75.6928!3d45.4292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce04c8524ed59b%3A0x5836a82438336497!2s251+Dalhousie+St%2C+Ottawa%2C+ON+K1N+1E7!5e0!3m2!1sen!2sca!4v1"
-                width="100%"
-                height="300"
-                style={{ border: 0, borderRadius: "var(--radius-lg)" }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Spirit Corner Cannabis — 251 Dalhousie St, Ottawa"
-              ></iframe>
             </div>
           </div>
         </section>

@@ -100,20 +100,9 @@ const jsonLd = {
       closes: "23:59",
     },
   ],
-  sameAs: [
-    "https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6",
-    "https://www.google.com/maps/place/?q=place_id:ChIJm9VGUowFzkwRl2QzOCSoNlg",
-  ],
-  hasMap: "https://maps.app.goo.gl/yVDY1PZ8qSwAjQ6s6",
   areaServed: {
     "@type": "City",
     name: "Ottawa",
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    reviewCount: "15",
-    bestRating: "5",
   },
 };
 
