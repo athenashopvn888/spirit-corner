@@ -8,9 +8,9 @@ import Link from "next/link";
 
 /* ── HOMEPAGE METADATA ── */
 export const metadata: Metadata = {
-  title: "24 Hour Dispensary Ottawa | Downtown Ottawa Cannabis Store | Spirit Corner Cannabis",
+  title: "24 Hour Downtown Ottawa Dispensary | Spirit Corner Cannabis",
   description:
-    "Spirit Corner Cannabis is a downtown Ottawa cannabis store near the ByWard Market serving Ottawa, Gatineau, Hull, Barrhaven, Kanata, Orleans, Nepean, and surrounding communities.",
+    "Spirit Corner Cannabis is a downtown Ottawa cannabis store near ByWard Market with flower, pre-rolls, vapes, edibles, concentrates, accessories, and adult 19+ store info.",
   alternates: {
     canonical: "https://spiritcornercannabis.com",
   },
