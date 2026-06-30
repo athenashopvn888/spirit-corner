@@ -34,7 +34,7 @@ export async function GET() {
   }
 
   try {
-    const posts = await listManagerBlogPosts();
+    const posts = await listManagerBlogPosts(session);
     return NextResponse.json({ posts, storage_configured: true });
   } catch (error) {
     return errorResponse(error);
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const result = await saveManagerBlogPost(body);
+    const result = await saveManagerBlogPost(body, session);
     return NextResponse.json({ ok: true, result });
   } catch (error) {
     return errorResponse(error);
@@ -60,7 +60,7 @@ export async function DELETE(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const result = await deleteManagerBlogPost(body);
+    const result = await deleteManagerBlogPost(body, session);
     return NextResponse.json({ ok: true, result });
   } catch (error) {
     return errorResponse(error);

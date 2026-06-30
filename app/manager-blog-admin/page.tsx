@@ -18,6 +18,9 @@ export default async function ManagerBlogAdminPage() {
       storeName={managerBlogConfig.storeName}
       storeCode={managerBlogConfig.storeCode}
       storageConfigured={isManagerBlogStorageConfigured()}
+      username={session.username}
+      role={session.role}
+      canManageUsers={session.can_manage_users}
     />
   );
 }

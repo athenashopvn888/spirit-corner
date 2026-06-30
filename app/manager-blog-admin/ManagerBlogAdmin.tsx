@@ -13,6 +13,8 @@ type ManagerPost = {
   author: string;
   date?: string;
   published: boolean | string;
+  can_edit?: boolean;
+  can_delete?: boolean;
 };
 
 type FormState = {
@@ -22,6 +24,15 @@ type FormState = {
   excerpt: string;
   content: string;
   published: boolean;
+};
+
+type ManagerBlogAdminProps = {
+  storeName: string;
+  storeCode: string;
+  storageConfigured: boolean;
+  username: string;
+  role: "publisher" | "master_admin";
+  canManageUsers: boolean;
 };
 
 const emptyForm: FormState = { id: "", title: "", slug: "", excerpt: "", content: "", published: false };
@@ -35,7 +46,11 @@ function isPublished(value: boolean | string) {
   return String(value || "").toUpperCase() === "TRUE";
 }
 
-export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigured }: { storeName: string; storeCode: string; storageConfigured: boolean }) {
+function roleLabel(role: ManagerBlogAdminProps["role"]) {
+  return role === "master_admin" ? "Master admin" : "Blog publisher";
+}
+
+export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigured, username, role, canManageUsers }: ManagerBlogAdminProps) {
   const router = useRouter();
   const [posts, setPosts] = useState<ManagerPost[]>([]);
   const [form, setForm] = useState<FormState>(emptyForm);
@@ -114,7 +129,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   }
 
   async function deletePost(post: ManagerPost) {
-    if (!post.id || !confirm("Delete this manager blog post?")) return;
+    if (!post.id || !post.can_delete || !confirm("Delete this manager blog post?")) return;
     const response = await fetch("/api/manager-blog/posts", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: post.id }) });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
@@ -136,12 +151,14 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
         <div>
           <p className={styles.eyebrow}>Manager blog admin</p>
           <h1>{storeName}</h1>
-          <p className={styles.scope}>Store locked to {storeCode}. Source: manager-submitted. Author: Ottawa Manager.</p>
+          <p className={styles.scope}>Store locked to {storeCode}. Signed in as {username} ({roleLabel(role)}). Author: Ottawa Manager.</p>
         </div>
         <button className={styles.secondaryButton} onClick={logout}>Logout</button>
       </header>
 
       {!storageConfigured && <section className={styles.notice}><strong>Storage setup required.</strong><p>Login/admin routes are installed, but live self-publishing stays blocked until the storage provider env vars are configured.</p></section>}
+      {canManageUsers && <section className={styles.notice}><strong>Master admin mode.</strong><p>User management remains environment-based until an approved storage provider supports user persistence.</p></section>}
+      {!canManageUsers && <section className={styles.notice}><strong>Publisher mode.</strong><p>This account can create, edit, publish, and unpublish its own manager-submitted posts for this store.</p></section>}
       {error && <p className={styles.error}>{error}</p>}
       {message && <p className={styles.message}>{message}</p>}
 
@@ -166,7 +183,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
             <div className={styles.postList}>{posts.map((post) => (
               <article key={post.id || post.slug} className={styles.postRow}>
                 <div><h3>{post.title || "Untitled"}</h3><p>{post.slug}</p><span className={isPublished(post.published) ? styles.published : styles.draft}>{isPublished(post.published) ? "Published" : "Draft"}</span></div>
-                <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={() => editPost(post)}>Edit</button><button type="button" className={styles.secondaryButton} onClick={() => togglePost(post)}>{isPublished(post.published) ? "Unpublish" : "Publish"}</button><button type="button" className={styles.dangerButton} onClick={() => deletePost(post)}>Delete</button></div>
+                <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={() => editPost(post)}>Edit</button><button type="button" className={styles.secondaryButton} onClick={() => togglePost(post)}>{isPublished(post.published) ? "Unpublish" : "Publish"}</button>{post.can_delete && <button type="button" className={styles.dangerButton} onClick={() => deletePost(post)}>Delete</button>}</div>
               </article>
             ))}</div>
           )}

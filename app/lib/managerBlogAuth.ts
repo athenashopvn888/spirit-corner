@@ -4,20 +4,82 @@ import { managerBlogConfig } from "./managerBlogConfig";
 
 export const MANAGER_BLOG_SESSION_COOKIE = "manager_blog_session";
 const SESSION_TTL_SECONDS = 60 * 60 * 8;
+const validRoles = ["publisher", "master_admin"] as const;
+
+export type ManagerBlogRole = (typeof validRoles)[number];
+
+export interface ManagerBlogUser {
+  username: string;
+  passwordHash: string;
+  role: ManagerBlogRole;
+  stores: string[];
+}
 
 export interface ManagerBlogSession {
-  role: "manager-blog";
+  role: ManagerBlogRole;
+  username: string;
   store_code: string;
+  store_codes: string[];
   manager_owner: string;
+  can_manage_users: boolean;
   exp: number;
 }
 
+function normalizeStoreCode(value: unknown) {
+  const store = String(value || "").trim().toUpperCase();
+  return store === "SCC" ? "SCC01" : store;
+}
+
+function normalizeRole(value: unknown): ManagerBlogRole {
+  return value === "master_admin" ? "master_admin" : "publisher";
+}
+
+function parseUsersJson(): ManagerBlogUser[] {
+  const raw = process.env.MANAGER_BLOG_USERS_JSON;
+  if (!raw) return [];
+
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed
+      .map((entry) => {
+        const record = entry as Record<string, unknown>;
+        const stores = Array.isArray(record.stores)
+          ? record.stores.map(normalizeStoreCode).filter(Boolean)
+          : [];
+
+        return {
+          username: String(record.username || "").trim(),
+          passwordHash: String(record.passwordHash || "").trim(),
+          role: normalizeRole(record.role),
+          stores,
+        };
+      })
+      .filter((user) => user.username && user.passwordHash && user.stores.includes(managerBlogConfig.storeCode));
+  } catch {
+    return [];
+  }
+}
+
+export function getConfiguredManagerBlogUsers(): ManagerBlogUser[] {
+  const multiUserConfig = parseUsersJson();
+  if (multiUserConfig.length > 0) return multiUserConfig;
+
+  const username = process.env.MANAGER_BLOG_USERNAME || "";
+  const passwordHash = process.env.MANAGER_BLOG_PASSWORD_HASH || "";
+  if (!username || !passwordHash) return [];
+
+  return [{
+    username,
+    passwordHash,
+    role: "publisher",
+    stores: [managerBlogConfig.storeCode],
+  }];
+}
+
 export function isManagerBlogAuthConfigured() {
-  return Boolean(
-    process.env.MANAGER_BLOG_USERNAME &&
-      process.env.MANAGER_BLOG_PASSWORD_HASH &&
-      process.env.MANAGER_BLOG_SESSION_SECRET
-  );
+  return Boolean(process.env.MANAGER_BLOG_SESSION_SECRET && getConfiguredManagerBlogUsers().length > 0);
 }
 
 function timingSafeStringEqual(a: string, b: string) {
@@ -40,27 +102,32 @@ function verifyScryptHash(password: string, storedHash: string) {
 }
 
 export function verifyManagerBlogPassword(username: string, password: string) {
-  const expectedUsername = process.env.MANAGER_BLOG_USERNAME || "";
-  const passwordHash = process.env.MANAGER_BLOG_PASSWORD_HASH || "";
+  const attemptedUsername = username.trim();
+  const users = getConfiguredManagerBlogUsers();
 
-  if (!expectedUsername || !passwordHash) return false;
-  if (!timingSafeStringEqual(username, expectedUsername)) return false;
+  for (const user of users) {
+    if (!timingSafeStringEqual(attemptedUsername, user.username)) continue;
+    if (verifyScryptHash(password, user.passwordHash)) return user;
+  }
 
-  return verifyScryptHash(password, passwordHash);
+  return null;
 }
 
 function signPayload(payload: string, secret: string) {
   return crypto.createHmac("sha256", secret).update(payload).digest("base64url");
 }
 
-export function createManagerBlogSessionToken() {
+export function createManagerBlogSessionToken(user: ManagerBlogUser) {
   const secret = process.env.MANAGER_BLOG_SESSION_SECRET || "";
-  if (!secret) return null;
+  if (!secret || !user.stores.includes(managerBlogConfig.storeCode)) return null;
 
   const session: ManagerBlogSession = {
-    role: "manager-blog",
+    role: user.role,
+    username: user.username,
     store_code: managerBlogConfig.storeCode,
-    manager_owner: managerBlogConfig.managerOwner,
+    store_codes: user.stores,
+    manager_owner: user.username,
+    can_manage_users: user.role === "master_admin",
     exp: Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS,
   };
 
@@ -79,8 +146,9 @@ export function verifyManagerBlogSessionToken(token?: string) {
 
   try {
     const session = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as ManagerBlogSession;
-    if (session.role !== "manager-blog") return null;
+    if (!validRoles.includes(session.role)) return null;
     if (session.store_code !== managerBlogConfig.storeCode) return null;
+    if (!Array.isArray(session.store_codes) || !session.store_codes.includes(managerBlogConfig.storeCode)) return null;
     if (session.exp < Math.floor(Date.now() / 1000)) return null;
     return session;
   } catch {
