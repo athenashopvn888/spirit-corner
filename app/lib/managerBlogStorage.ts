@@ -1,4 +1,4 @@
-﻿import type { ManagerBlogSession } from "./managerBlogAuth";
+import type { ManagerBlogSession } from "./managerBlogAuth";
 import { managerBlogConfig } from "./managerBlogConfig";
 
 export interface ManagerBlogPost {
@@ -113,10 +113,8 @@ function getStorageConfig(): StorageConfig {
   return { provider: "app-script", url, token: process.env.MANAGER_BLOG_STORAGE_TOKEN };
 }
 
-function storageHeaders(config: StorageConfig) {
-  const headers: Record<string, string> = { "content-type": "application/json;charset=utf-8" };
-  if (config.token) headers.authorization = `Bearer ${config.token}`;
-  return headers;
+function storageHeaders() {
+  return { "content-type": "application/json;charset=utf-8" };
 }
 
 function boolFromStorage(value: unknown) {
@@ -345,10 +343,10 @@ async function fetchRawPosts(admin = false) {
   url.searchParams.set("action", "blog");
   url.searchParams.set("store", managerBlogConfig.storeCode);
   if (admin) url.searchParams.set("admin", "1");
+  if (admin && config.token) url.searchParams.set("token", config.token);
 
   const response = await fetch(url.toString(), {
     cache: "no-store",
-    headers: config.token ? { authorization: `Bearer ${config.token}` } : undefined,
   });
 
   if (!response.ok) {
@@ -364,11 +362,12 @@ async function fetchRawPosts(admin = false) {
 
 async function postStoragePayload(payload: Record<string, unknown>) {
   const config = getStorageConfig();
+  const storagePayload = config.token ? { ...payload, token: config.token } : payload;
   const response = await fetch(config.url, {
     method: "POST",
     cache: "no-store",
-    headers: storageHeaders(config),
-    body: JSON.stringify(payload),
+    headers: storageHeaders(),
+    body: JSON.stringify(storagePayload),
   });
 
   if (!response.ok) {
