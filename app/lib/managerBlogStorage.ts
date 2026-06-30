@@ -1,24 +1,47 @@
-import type { ManagerBlogSession } from "./managerBlogAuth";
+﻿import type { ManagerBlogSession } from "./managerBlogAuth";
 import { managerBlogConfig } from "./managerBlogConfig";
 
 export interface ManagerBlogPost {
   id?: string;
   title: string;
   slug: string;
+  seo_title?: string;
+  meta_description?: string;
+  h1?: string;
   excerpt?: string;
   metaDescription?: string;
   content: string;
+  faq?: string;
+  featured_image_url?: string;
+  target_keyword?: string;
+  supporting_keywords?: string;
+  expected_result?: string;
+  manager_notes?: string;
+  baseline_query?: string;
+  baseline_note?: string;
+  baseline_screenshot_url?: string;
+  result_7_day_note?: string;
+  result_14_day_note?: string;
+  result_28_day_note?: string;
+  gsc_clicks?: string;
+  gsc_impressions?: string;
+  gsc_ctr?: string;
+  gsc_position?: string;
   author: string;
   date?: string;
   published: boolean | string;
+  archived?: boolean | string;
   store?: string;
   store_code?: string;
   source?: string;
   manager_owner?: string;
+  experiment_tag?: string;
   created_at?: string;
   updated_at?: string;
+  published_at?: string;
   can_edit?: boolean;
   can_delete?: boolean;
+  preview_url?: string;
 }
 
 export class ManagerBlogStorageError extends Error {
@@ -36,12 +59,44 @@ interface StorageConfig {
   token?: string;
 }
 
+type StorageAction = "create" | "update" | "publish" | "unpublish" | "archive" | "delete" | "duplicate";
+
+const textFieldLimits: Record<string, number> = {
+  title: managerBlogConfig.maxTitleLength,
+  slug: 140,
+  seo_title: managerBlogConfig.maxTitleLength,
+  meta_description: managerBlogConfig.maxExcerptLength,
+  h1: managerBlogConfig.maxTitleLength,
+  excerpt: managerBlogConfig.maxExcerptLength,
+  faq: 12000,
+  featured_image_url: 500,
+  target_keyword: 160,
+  supporting_keywords: 500,
+  expected_result: 1000,
+  manager_notes: 2000,
+  baseline_query: 240,
+  baseline_note: 2000,
+  baseline_screenshot_url: 500,
+  result_7_day_note: 2000,
+  result_14_day_note: 2000,
+  result_28_day_note: 2000,
+  gsc_clicks: 40,
+  gsc_impressions: 40,
+  gsc_ctr: 40,
+  gsc_position: 40,
+};
+
 export function isManagerBlogStorageConfigured() {
   return Boolean(process.env.MANAGER_BLOG_STORAGE_PROVIDER && process.env.MANAGER_BLOG_STORAGE_URL);
 }
 
+export function getManagerBlogStorageProviderName() {
+  const provider = (process.env.MANAGER_BLOG_STORAGE_PROVIDER || "").toLowerCase().trim();
+  return provider || "not configured";
+}
+
 function getStorageConfig(): StorageConfig {
-  const provider = (process.env.MANAGER_BLOG_STORAGE_PROVIDER || "").toLowerCase();
+  const provider = (process.env.MANAGER_BLOG_STORAGE_PROVIDER || "").toLowerCase().trim();
   const url = process.env.MANAGER_BLOG_STORAGE_URL || "";
 
   if (!provider || !url) {
@@ -66,18 +121,23 @@ function storageHeaders(config: StorageConfig) {
 
 function boolFromStorage(value: unknown) {
   if (typeof value === "boolean") return value;
-  return String(value || "").toUpperCase() === "TRUE";
+  const normalized = String(value || "").trim().toLowerCase();
+  return ["true", "1", "yes", "published"].includes(normalized);
 }
 
-function isSameStore(post: ManagerBlogPost) {
-  if (!post.store && !post.store_code) return true;
+function valueFromPost(post: Partial<ManagerBlogPost> & Record<string, unknown>, key: keyof ManagerBlogPost) {
+  return post[key] ?? post[String(key).replace(/_([a-z])/g, (_, char: string) => char.toUpperCase())];
+}
+
+function isSameStore(post: Partial<ManagerBlogPost>) {
   return post.store === managerBlogConfig.storeCode || post.store_code === managerBlogConfig.storeCode;
 }
 
-function isManagerPost(post: ManagerBlogPost) {
+function isManagerPost(post: Partial<ManagerBlogPost>) {
   return Boolean(
     isSameStore(post) &&
       (post.source === managerBlogConfig.source ||
+        post.experiment_tag === "manager-seo-experiment" ||
         post.manager_owner ||
         post.author === managerBlogConfig.defaultAuthor)
   );
@@ -89,29 +149,68 @@ function canEditPost(post: ManagerBlogPost, session: ManagerBlogSession) {
   return post.manager_owner === session.manager_owner || post.manager_owner === session.username;
 }
 
-function normalizeStoredPost(post: Partial<ManagerBlogPost>, session: ManagerBlogSession): ManagerBlogPost {
+function cleanText(input: unknown, maxLength: number) {
+  return String(input || "")
+    .replace(/\0/g, "")
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/<\/?script[^>]*>/gi, "")
+    .replace(/\son[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(/javascript:/gi, "")
+    .trim()
+    .slice(0, maxLength);
+}
+
+function trimField(input: unknown, maxLength: number) {
+  return String(input || "").trim().slice(0, maxLength);
+}
+
+function normalizeStoredPost(post: Partial<ManagerBlogPost> & Record<string, unknown>, session?: ManagerBlogSession): ManagerBlogPost {
+  const metaDescription = trimField(valueFromPost(post, "meta_description") || post.metaDescription || post.excerpt, managerBlogConfig.maxExcerptLength);
   const normalized: ManagerBlogPost = {
-    id: post.id,
-    title: String(post.title || ""),
-    slug: String(post.slug || ""),
-    excerpt: post.excerpt ? String(post.excerpt) : undefined,
-    metaDescription: post.metaDescription ? String(post.metaDescription) : undefined,
+    id: post.id ? String(post.id) : undefined,
+    title: trimField(post.title, managerBlogConfig.maxTitleLength),
+    slug: trimField(post.slug, 140),
+    seo_title: trimField(valueFromPost(post, "seo_title") || post.title, managerBlogConfig.maxTitleLength),
+    meta_description: metaDescription,
+    metaDescription,
+    h1: trimField(post.h1 || post.title, managerBlogConfig.maxTitleLength),
+    excerpt: trimField(post.excerpt || metaDescription, managerBlogConfig.maxExcerptLength),
     content: String(post.content || ""),
+    faq: post.faq ? String(post.faq) : undefined,
+    featured_image_url: trimField(valueFromPost(post, "featured_image_url"), textFieldLimits.featured_image_url),
+    target_keyword: trimField(valueFromPost(post, "target_keyword"), textFieldLimits.target_keyword),
+    supporting_keywords: trimField(valueFromPost(post, "supporting_keywords"), textFieldLimits.supporting_keywords),
+    expected_result: trimField(valueFromPost(post, "expected_result"), textFieldLimits.expected_result),
+    manager_notes: trimField(valueFromPost(post, "manager_notes"), textFieldLimits.manager_notes),
+    baseline_query: trimField(valueFromPost(post, "baseline_query"), textFieldLimits.baseline_query),
+    baseline_note: trimField(valueFromPost(post, "baseline_note"), textFieldLimits.baseline_note),
+    baseline_screenshot_url: trimField(valueFromPost(post, "baseline_screenshot_url"), textFieldLimits.baseline_screenshot_url),
+    result_7_day_note: trimField(valueFromPost(post, "result_7_day_note"), textFieldLimits.result_7_day_note),
+    result_14_day_note: trimField(valueFromPost(post, "result_14_day_note"), textFieldLimits.result_14_day_note),
+    result_28_day_note: trimField(valueFromPost(post, "result_28_day_note"), textFieldLimits.result_28_day_note),
+    gsc_clicks: trimField(valueFromPost(post, "gsc_clicks"), textFieldLimits.gsc_clicks),
+    gsc_impressions: trimField(valueFromPost(post, "gsc_impressions"), textFieldLimits.gsc_impressions),
+    gsc_ctr: trimField(valueFromPost(post, "gsc_ctr"), textFieldLimits.gsc_ctr),
+    gsc_position: trimField(valueFromPost(post, "gsc_position"), textFieldLimits.gsc_position),
     author: String(post.author || managerBlogConfig.defaultAuthor),
     date: post.date ? String(post.date) : undefined,
     published: boolFromStorage(post.published),
+    archived: boolFromStorage(post.archived),
     store: post.store ? String(post.store) : undefined,
     store_code: post.store_code ? String(post.store_code) : undefined,
     source: post.source ? String(post.source) : undefined,
     manager_owner: post.manager_owner ? String(post.manager_owner) : undefined,
+    experiment_tag: post.experiment_tag ? String(post.experiment_tag) : undefined,
     created_at: post.created_at ? String(post.created_at) : undefined,
     updated_at: post.updated_at ? String(post.updated_at) : undefined,
+    published_at: post.published_at ? String(post.published_at) : undefined,
   };
 
   return {
     ...normalized,
-    can_edit: canEditPost(normalized, session),
-    can_delete: session.role === "master_admin" && canEditPost(normalized, session),
+    can_edit: session ? canEditPost(normalized, session) : false,
+    can_delete: session ? session.role === "master_admin" && canEditPost(normalized, session) : false,
+    preview_url: normalized.slug ? `/blog/${normalized.slug}` : undefined,
   };
 }
 
@@ -135,58 +234,117 @@ export function createSafeSlug(input: string) {
   return slug.slice(0, 120);
 }
 
-function sanitizeContent(input: string) {
-  return input
-    .replace(/\0/g, "")
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
-    .replace(/<\/?script[^>]*>/gi, "")
-    .replace(/\son[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
-    .replace(/javascript:/gi, "")
-    .slice(0, managerBlogConfig.maxContentLength);
-}
-
-function trimField(input: unknown, maxLength: number) {
-  return String(input || "").trim().slice(0, maxLength);
+function cleanManagedField(input: Record<string, unknown>, field: string) {
+  return cleanText(input[field], textFieldLimits[field] || 2000);
 }
 
 function normalizeInput(input: Record<string, unknown>, session: ManagerBlogSession, existing?: ManagerBlogPost) {
-  const title = trimField(input.title, managerBlogConfig.maxTitleLength);
+  const title = cleanText(input.title, managerBlogConfig.maxTitleLength);
   if (!title) throw new ManagerBlogStorageError("Title is required.", 400);
 
   const slugInput = trimField(input.slug, 140) || title;
   const slug = createSafeSlug(slugInput);
-  const content = sanitizeContent(String(input.content || "").trim());
+  const content = cleanText(input.content, managerBlogConfig.maxContentLength);
   if (!content) throw new ManagerBlogStorageError("Content is required.", 400);
 
   const now = new Date().toISOString();
-  const excerpt = trimField(input.excerpt || input.metaDescription, managerBlogConfig.maxExcerptLength);
+  const metaDescription = cleanText(input.meta_description || input.metaDescription || input.excerpt, managerBlogConfig.maxExcerptLength);
+  const published = Boolean(input.published);
+  const wasPublished = boolFromStorage(existing?.published);
 
   return {
     action: existing?.id ? "update" : "create",
     id: existing?.id,
     title,
     slug,
-    excerpt,
-    metaDescription: excerpt,
+    seo_title: cleanText(input.seo_title || title, managerBlogConfig.maxTitleLength),
+    meta_description: metaDescription,
+    metaDescription,
+    h1: cleanText(input.h1 || title, managerBlogConfig.maxTitleLength),
+    excerpt: metaDescription,
     content,
+    faq: cleanManagedField(input, "faq"),
+    featured_image_url: cleanManagedField(input, "featured_image_url"),
+    target_keyword: cleanManagedField(input, "target_keyword"),
+    supporting_keywords: cleanManagedField(input, "supporting_keywords"),
+    expected_result: cleanManagedField(input, "expected_result"),
+    manager_notes: cleanManagedField(input, "manager_notes"),
+    baseline_query: cleanManagedField(input, "baseline_query"),
+    baseline_note: cleanManagedField(input, "baseline_note"),
+    baseline_screenshot_url: cleanManagedField(input, "baseline_screenshot_url"),
+    result_7_day_note: cleanManagedField(input, "result_7_day_note"),
+    result_14_day_note: cleanManagedField(input, "result_14_day_note"),
+    result_28_day_note: cleanManagedField(input, "result_28_day_note"),
+    gsc_clicks: cleanManagedField(input, "gsc_clicks"),
+    gsc_impressions: cleanManagedField(input, "gsc_impressions"),
+    gsc_ctr: cleanManagedField(input, "gsc_ctr"),
+    gsc_position: cleanManagedField(input, "gsc_position"),
     author: managerBlogConfig.defaultAuthor,
-    published: Boolean(input.published),
+    published,
+    archived: Boolean(input.archived),
     store: managerBlogConfig.storeCode,
     store_code: managerBlogConfig.storeCode,
     source: managerBlogConfig.source,
-    manager_owner: existing?.manager_owner || session.manager_owner,
+    experiment_tag: "manager-seo-experiment",
+    manager_owner: existing?.manager_owner || session.manager_owner || session.username,
     date: String(input.date || existing?.date || now),
     created_at: existing?.created_at || now,
     updated_at: now,
+    published_at: published ? existing?.published_at || now : wasPublished ? existing?.published_at : undefined,
   };
 }
 
-export async function listManagerBlogPosts(session: ManagerBlogSession): Promise<ManagerBlogPost[]> {
+function payloadFromPost(post: ManagerBlogPost, action: StorageAction, extra: Record<string, unknown> = {}) {
+  const now = new Date().toISOString();
+  return {
+    action,
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    seo_title: post.seo_title || post.title,
+    meta_description: post.meta_description || post.excerpt || "",
+    metaDescription: post.meta_description || post.excerpt || "",
+    h1: post.h1 || post.title,
+    excerpt: post.excerpt || post.meta_description || "",
+    content: post.content,
+    faq: post.faq || "",
+    featured_image_url: post.featured_image_url || "",
+    target_keyword: post.target_keyword || "",
+    supporting_keywords: post.supporting_keywords || "",
+    expected_result: post.expected_result || "",
+    manager_notes: post.manager_notes || "",
+    baseline_query: post.baseline_query || "",
+    baseline_note: post.baseline_note || "",
+    baseline_screenshot_url: post.baseline_screenshot_url || "",
+    result_7_day_note: post.result_7_day_note || "",
+    result_14_day_note: post.result_14_day_note || "",
+    result_28_day_note: post.result_28_day_note || "",
+    gsc_clicks: post.gsc_clicks || "",
+    gsc_impressions: post.gsc_impressions || "",
+    gsc_ctr: post.gsc_ctr || "",
+    gsc_position: post.gsc_position || "",
+    author: post.author || managerBlogConfig.defaultAuthor,
+    published: boolFromStorage(post.published),
+    archived: boolFromStorage(post.archived),
+    store: managerBlogConfig.storeCode,
+    store_code: managerBlogConfig.storeCode,
+    source: managerBlogConfig.source,
+    experiment_tag: post.experiment_tag || "manager-seo-experiment",
+    manager_owner: post.manager_owner || managerBlogConfig.managerOwner,
+    date: post.date || now,
+    created_at: post.created_at || now,
+    updated_at: now,
+    published_at: post.published_at,
+    ...extra,
+  };
+}
+
+async function fetchRawPosts(admin = false) {
   const config = getStorageConfig();
   const url = new URL(config.url);
   url.searchParams.set("action", "blog");
   url.searchParams.set("store", managerBlogConfig.storeCode);
-  url.searchParams.set("admin", "1");
+  if (admin) url.searchParams.set("admin", "1");
 
   const response = await fetch(url.toString(), {
     cache: "no-store",
@@ -198,29 +356,17 @@ export async function listManagerBlogPosts(session: ManagerBlogSession): Promise
   }
 
   const data = await response.json();
-  const posts: ManagerBlogPost[] = Array.isArray(data.posts)
-    ? data.posts.map((post: Partial<ManagerBlogPost>) => normalizeStoredPost(post, session))
-    : [];
-  return posts.filter((post: ManagerBlogPost) => canEditPost(post, session));
+  if (Array.isArray(data)) return data as Array<Partial<ManagerBlogPost> & Record<string, unknown>>;
+  if (Array.isArray(data.posts)) return data.posts as Array<Partial<ManagerBlogPost> & Record<string, unknown>>;
+  if (Array.isArray(data.data)) return data.data as Array<Partial<ManagerBlogPost> & Record<string, unknown>>;
+  return [];
 }
 
-async function findEditablePost(id: string, session: ManagerBlogSession): Promise<ManagerBlogPost | undefined> {
-  const posts = await listManagerBlogPosts(session);
-  return posts.find((post) => post.id === id);
-}
-
-export async function saveManagerBlogPost(input: Record<string, unknown>, session: ManagerBlogSession) {
+async function postStoragePayload(payload: Record<string, unknown>) {
   const config = getStorageConfig();
-  const id = trimField(input.id, 120);
-  const existing = id ? await findEditablePost(id, session) : undefined;
-
-  if (id && !existing) {
-    throw new ManagerBlogStorageError("This post is not available for manager editing.", 403);
-  }
-
-  const payload = normalizeInput(input, session, existing);
   const response = await fetch(config.url, {
     method: "POST",
+    cache: "no-store",
     headers: storageHeaders(config),
     body: JSON.stringify(payload),
   });
@@ -232,12 +378,75 @@ export async function saveManagerBlogPost(input: Record<string, unknown>, sessio
   return response.json().catch(() => ({ ok: true }));
 }
 
+export async function listManagerBlogPosts(session: ManagerBlogSession): Promise<ManagerBlogPost[]> {
+  const posts = (await fetchRawPosts(true)).map((post) => normalizeStoredPost(post, session));
+  return posts.filter((post) => canEditPost(post, session));
+}
+
+async function findEditablePost(id: string, session: ManagerBlogSession): Promise<ManagerBlogPost | undefined> {
+  const posts = await listManagerBlogPosts(session);
+  return posts.find((post) => post.id === id || post.slug === id);
+}
+
+export async function saveManagerBlogPost(input: Record<string, unknown>, session: ManagerBlogSession) {
+  const id = trimField(input.id, 120);
+  const existing = id ? await findEditablePost(id, session) : undefined;
+
+  if (id && !existing) {
+    throw new ManagerBlogStorageError("This post is not available for manager editing.", 403);
+  }
+
+  const payload = normalizeInput(input, session, existing);
+  return postStoragePayload(payload);
+}
+
+export async function changeManagerBlogPostStatus(input: Record<string, unknown>, session: ManagerBlogSession, action: "publish" | "unpublish" | "archive") {
+  const id = trimField(input.id, 120);
+  if (!id) throw new ManagerBlogStorageError("Post id is required.", 400);
+
+  const existing = await findEditablePost(id, session);
+  if (!existing) throw new ManagerBlogStorageError("This post is not available for manager editing.", 403);
+
+  const now = new Date().toISOString();
+  const payload = payloadFromPost(existing, action, {
+    published: action === "publish",
+    archived: action === "archive" ? true : boolFromStorage(existing.archived) && action !== "publish",
+    published_at: action === "publish" ? existing.published_at || now : existing.published_at,
+    updated_at: now,
+  });
+
+  return postStoragePayload(payload);
+}
+
+export async function duplicateManagerBlogPost(input: Record<string, unknown>, session: ManagerBlogSession) {
+  const id = trimField(input.id, 120);
+  if (!id) throw new ManagerBlogStorageError("Post id is required.", 400);
+
+  const existing = await findEditablePost(id, session);
+  if (!existing) throw new ManagerBlogStorageError("This post is not available for manager editing.", 403);
+
+  const now = new Date().toISOString();
+  const duplicateSlug = createSafeSlug(`${existing.slug || existing.title}-copy-${Date.now().toString(36)}`);
+  const payload = payloadFromPost(existing, "create", {
+    id: undefined,
+    title: `Copy of ${existing.title}`.slice(0, managerBlogConfig.maxTitleLength),
+    slug: duplicateSlug,
+    published: false,
+    archived: false,
+    manager_owner: existing.manager_owner || session.manager_owner || session.username,
+    created_at: now,
+    updated_at: now,
+    published_at: undefined,
+  });
+
+  return postStoragePayload(payload);
+}
+
 export async function deleteManagerBlogPost(input: Record<string, unknown>, session: ManagerBlogSession) {
   if (session.role !== "master_admin") {
     throw new ManagerBlogStorageError("Only master admin can delete manager blog posts.", 403);
   }
 
-  const config = getStorageConfig();
   const id = trimField(input.id, 120);
   if (!id) throw new ManagerBlogStorageError("Post id is required.", 400);
 
@@ -246,23 +455,22 @@ export async function deleteManagerBlogPost(input: Record<string, unknown>, sess
     throw new ManagerBlogStorageError("This post is not available for manager deletion.", 403);
   }
 
-  const response = await fetch(config.url, {
-    method: "POST",
-    headers: storageHeaders(config),
-    body: JSON.stringify({
-      action: "delete",
-      id,
-      store: managerBlogConfig.storeCode,
-      store_code: managerBlogConfig.storeCode,
-      source: managerBlogConfig.source,
-      manager_owner: existing.manager_owner || session.manager_owner,
-      updated_at: new Date().toISOString(),
-    }),
-  });
+  return postStoragePayload(payloadFromPost(existing, "delete", { updated_at: new Date().toISOString() }));
+}
 
-  if (!response.ok) {
-    throw new ManagerBlogStorageError("Manager blog storage returned an error while deleting.", 502);
+export async function listPublishedManagerBlogPosts(): Promise<ManagerBlogPost[]> {
+  if (!isManagerBlogStorageConfigured()) return [];
+
+  try {
+    const posts = (await fetchRawPosts(false)).map((post) => normalizeStoredPost(post));
+    return posts.filter((post) => isManagerPost(post) && boolFromStorage(post.published) && !boolFromStorage(post.archived));
+  } catch {
+    return [];
   }
+}
 
-  return response.json().catch(() => ({ ok: true }));
+export async function getPublishedManagerBlogPostBySlug(slug: string): Promise<ManagerBlogPost | null> {
+  const safeSlug = createSafeSlug(slug);
+  const posts = await listPublishedManagerBlogPosts();
+  return posts.find((post) => post.slug === safeSlug) || null;
 }

@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { getManagerBlogSession } from "../lib/managerBlogAuth";
 import { managerBlogConfig } from "../lib/managerBlogConfig";
-import { isManagerBlogStorageConfigured } from "../lib/managerBlogStorage";
+import { getManagerBlogStorageProviderName, isManagerBlogStorageConfigured } from "../lib/managerBlogStorage";
 import ManagerBlogAdmin from "./ManagerBlogAdmin";
 
 export const metadata = {
@@ -18,6 +18,7 @@ export default async function ManagerBlogAdminPage() {
       storeName={managerBlogConfig.storeName}
       storeCode={managerBlogConfig.storeCode}
       storageConfigured={isManagerBlogStorageConfigured()}
+      storageProvider={getManagerBlogStorageProviderName()}
       username={session.username}
       role={session.role}
       canManageUsers={session.can_manage_users}
