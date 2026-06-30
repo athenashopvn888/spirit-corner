@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -149,6 +149,8 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   const [message, setMessage] = useState("");
   const [error, setError] = useState(storageConfigured ? "" : "Manager blog storage is not configured yet. Set the storage env vars before live publishing.");
   const editing = Boolean(form.id);
+  const isMasterAdmin = role === "master_admin";
+  const tabs: Tab[] = isMasterAdmin ? ["drafts", "published", "archived", "all", "experiment"] : ["drafts", "published", "archived", "all"];
   const publicUrl = useMemo(() => (form.slug ? `/blog/${form.slug}` : "/blog/[slug]"), [form.slug]);
 
   async function loadPosts() {
@@ -278,11 +280,11 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   const visiblePosts = posts.filter((post) => {
     const status = postStatus(post);
     if (activeTab === "all") return true;
-    if (activeTab === "experiment") return Boolean(post.target_keyword || post.expected_result || post.baseline_query || post.manager_notes);
+    if (activeTab === "experiment") return isMasterAdmin && Boolean(post.target_keyword || post.expected_result || post.baseline_query || post.manager_notes);
     return status === activeTab;
   });
 
-  const counts = {
+  const counts: Record<Tab, number> = {
     drafts: posts.filter((post) => postStatus(post) === "draft").length,
     published: posts.filter((post) => postStatus(post) === "published").length,
     archived: posts.filter((post) => postStatus(post) === "archived").length,
@@ -294,7 +296,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
     <main className={styles.page}>
       <header className={styles.header}>
         <div>
-          <p className={styles.eyebrow}>Manager SEO experiment dashboard</p>
+          <p className={styles.eyebrow}>{isMasterAdmin ? "Manager SEO experiment dashboard" : "Manager blog dashboard"}</p>
           <h1>{storeName}</h1>
           <p className={styles.scope}>Store locked to {storeCode}. Signed in as {username} ({roleLabel(role)}). Author: Ottawa Manager.</p>
         </div>
@@ -329,29 +331,31 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
           <label className={styles.label}>FAQ section<textarea className={styles.textareaSmall} value={form.faq} onChange={(event) => updateForm({ faq: event.target.value })} /></label>
           <label className={styles.label}>Featured image URL<input className={styles.input} value={form.featured_image_url} onChange={(event) => updateForm({ featured_image_url: event.target.value })} /></label>
 
-          <h3 className={styles.subhead}>Experiment tracking</h3>
-          <div className={styles.twoColumn}>
-            <label className={styles.label}>Target keyword<input className={styles.input} value={form.target_keyword} onChange={(event) => updateForm({ target_keyword: event.target.value })} /></label>
-            <label className={styles.label}>Supporting keywords<input className={styles.input} value={form.supporting_keywords} onChange={(event) => updateForm({ supporting_keywords: event.target.value })} /></label>
-          </div>
-          <label className={styles.label}>Expected result<textarea className={styles.textareaSmall} value={form.expected_result} onChange={(event) => updateForm({ expected_result: event.target.value })} /></label>
-          <label className={styles.label}>Manager notes<textarea className={styles.textareaSmall} value={form.manager_notes} onChange={(event) => updateForm({ manager_notes: event.target.value })} /></label>
-          <div className={styles.twoColumn}>
-            <label className={styles.label}>Baseline query<input className={styles.input} value={form.baseline_query} onChange={(event) => updateForm({ baseline_query: event.target.value })} /></label>
-            <label className={styles.label}>Baseline screenshot URL<input className={styles.input} value={form.baseline_screenshot_url} onChange={(event) => updateForm({ baseline_screenshot_url: event.target.value })} /></label>
-          </div>
-          <label className={styles.label}>Baseline note<textarea className={styles.textareaSmall} value={form.baseline_note} onChange={(event) => updateForm({ baseline_note: event.target.value })} /></label>
-          <div className={styles.threeColumn}>
-            <label className={styles.label}>7 day result<textarea className={styles.textareaMini} value={form.result_7_day_note} onChange={(event) => updateForm({ result_7_day_note: event.target.value })} /></label>
-            <label className={styles.label}>14 day result<textarea className={styles.textareaMini} value={form.result_14_day_note} onChange={(event) => updateForm({ result_14_day_note: event.target.value })} /></label>
-            <label className={styles.label}>28 day result<textarea className={styles.textareaMini} value={form.result_28_day_note} onChange={(event) => updateForm({ result_28_day_note: event.target.value })} /></label>
-          </div>
-          <div className={styles.fourColumn}>
-            <label className={styles.label}>GSC clicks<input className={styles.input} value={form.gsc_clicks} onChange={(event) => updateForm({ gsc_clicks: event.target.value })} /></label>
-            <label className={styles.label}>GSC impressions<input className={styles.input} value={form.gsc_impressions} onChange={(event) => updateForm({ gsc_impressions: event.target.value })} /></label>
-            <label className={styles.label}>GSC CTR<input className={styles.input} value={form.gsc_ctr} onChange={(event) => updateForm({ gsc_ctr: event.target.value })} /></label>
-            <label className={styles.label}>GSC position<input className={styles.input} value={form.gsc_position} onChange={(event) => updateForm({ gsc_position: event.target.value })} /></label>
-          </div>
+          {isMasterAdmin && <>
+            <h3 className={styles.subhead}>Experiment tracking</h3>
+            <div className={styles.twoColumn}>
+              <label className={styles.label}>Target keyword<input className={styles.input} value={form.target_keyword} onChange={(event) => updateForm({ target_keyword: event.target.value })} /></label>
+              <label className={styles.label}>Supporting keywords<input className={styles.input} value={form.supporting_keywords} onChange={(event) => updateForm({ supporting_keywords: event.target.value })} /></label>
+            </div>
+            <label className={styles.label}>Expected result<textarea className={styles.textareaSmall} value={form.expected_result} onChange={(event) => updateForm({ expected_result: event.target.value })} /></label>
+            <label className={styles.label}>Manager notes<textarea className={styles.textareaSmall} value={form.manager_notes} onChange={(event) => updateForm({ manager_notes: event.target.value })} /></label>
+            <div className={styles.twoColumn}>
+              <label className={styles.label}>Baseline query<input className={styles.input} value={form.baseline_query} onChange={(event) => updateForm({ baseline_query: event.target.value })} /></label>
+              <label className={styles.label}>Baseline screenshot URL<input className={styles.input} value={form.baseline_screenshot_url} onChange={(event) => updateForm({ baseline_screenshot_url: event.target.value })} /></label>
+            </div>
+            <label className={styles.label}>Baseline note<textarea className={styles.textareaSmall} value={form.baseline_note} onChange={(event) => updateForm({ baseline_note: event.target.value })} /></label>
+            <div className={styles.threeColumn}>
+              <label className={styles.label}>7 day result<textarea className={styles.textareaMini} value={form.result_7_day_note} onChange={(event) => updateForm({ result_7_day_note: event.target.value })} /></label>
+              <label className={styles.label}>14 day result<textarea className={styles.textareaMini} value={form.result_14_day_note} onChange={(event) => updateForm({ result_14_day_note: event.target.value })} /></label>
+              <label className={styles.label}>28 day result<textarea className={styles.textareaMini} value={form.result_28_day_note} onChange={(event) => updateForm({ result_28_day_note: event.target.value })} /></label>
+            </div>
+            <div className={styles.fourColumn}>
+              <label className={styles.label}>GSC clicks<input className={styles.input} value={form.gsc_clicks} onChange={(event) => updateForm({ gsc_clicks: event.target.value })} /></label>
+              <label className={styles.label}>GSC impressions<input className={styles.input} value={form.gsc_impressions} onChange={(event) => updateForm({ gsc_impressions: event.target.value })} /></label>
+              <label className={styles.label}>GSC CTR<input className={styles.input} value={form.gsc_ctr} onChange={(event) => updateForm({ gsc_ctr: event.target.value })} /></label>
+              <label className={styles.label}>GSC position<input className={styles.input} value={form.gsc_position} onChange={(event) => updateForm({ gsc_position: event.target.value })} /></label>
+            </div>
+          </>}
 
           <div className={styles.metaGrid}><div><span className={styles.metaLabel}>Author</span><strong>Ottawa Manager</strong></div><div><span className={styles.metaLabel}>Preview URL</span><strong>{publicUrl}</strong></div></div>
           <label className={styles.checkbox}><input type="checkbox" checked={form.published} onChange={(event) => updateForm({ published: event.target.checked })} />Publish immediately</label>
@@ -360,7 +364,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
 
         <section className={styles.postsPanel}>
           <div className={styles.editorHeader}><h2>Manager posts</h2><button type="button" className={styles.secondaryButton} onClick={loadPosts} disabled={!storageConfigured || loading}>Refresh</button></div>
-          <div className={styles.tabs}>{(["drafts", "published", "archived", "all", "experiment"] as Tab[]).map((tab) => <button key={tab} type="button" className={activeTab === tab ? styles.activeTab : styles.tab} onClick={() => setActiveTab(tab)}>{tab} ({counts[tab]})</button>)}</div>
+          <div className={styles.tabs}>{tabs.map((tab) => <button key={tab} type="button" className={activeTab === tab ? styles.activeTab : styles.tab} onClick={() => setActiveTab(tab)}>{tab} ({counts[tab]})</button>)}</div>
           {loading ? <p>Loading posts...</p> : visiblePosts.length === 0 ? <p className={styles.empty}>No manager-submitted posts found for this view.</p> : (
             <div className={styles.postList}>{visiblePosts.map((post) => (
               <article key={post.id || post.slug} className={styles.postRow}>
@@ -373,7 +377,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
                     <div><dt>Owner</dt><dd>{post.manager_owner || "Not set"}</dd></div>
                     <div><dt>Updated</dt><dd>{postDate(post.updated_at)}</dd></div>
                     <div><dt>Published</dt><dd>{postDate(post.published_at)}</dd></div>
-                    <div><dt>Target keyword</dt><dd>{post.target_keyword || "Not set"}</dd></div>
+                    {isMasterAdmin && <div><dt>Target keyword</dt><dd>{post.target_keyword || "Not set"}</dd></div>}
                     <div><dt>Preview</dt><dd><a href={post.preview_url || `/blog/${post.slug}`} target="_blank" rel="noreferrer">Open</a></dd></div>
                   </dl>
                 </div>

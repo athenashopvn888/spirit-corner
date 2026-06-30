@@ -235,6 +235,26 @@ export function createSafeSlug(input: string) {
 function cleanManagedField(input: Record<string, unknown>, field: string) {
   return cleanText(input[field], textFieldLimits[field] || 2000);
 }
+type ExperimentField =
+  | "target_keyword"
+  | "supporting_keywords"
+  | "expected_result"
+  | "manager_notes"
+  | "baseline_query"
+  | "baseline_note"
+  | "baseline_screenshot_url"
+  | "result_7_day_note"
+  | "result_14_day_note"
+  | "result_28_day_note"
+  | "gsc_clicks"
+  | "gsc_impressions"
+  | "gsc_ctr"
+  | "gsc_position";
+
+function cleanExperimentField(input: Record<string, unknown>, field: ExperimentField, session: ManagerBlogSession, existing?: ManagerBlogPost) {
+  if (session.role === "master_admin") return cleanManagedField(input, field);
+  return existing ? trimField(existing[field], textFieldLimits[field] || 2000) : "";
+}
 
 function normalizeInput(input: Record<string, unknown>, session: ManagerBlogSession, existing?: ManagerBlogPost) {
   const title = cleanText(input.title, managerBlogConfig.maxTitleLength);
@@ -263,27 +283,27 @@ function normalizeInput(input: Record<string, unknown>, session: ManagerBlogSess
     content,
     faq: cleanManagedField(input, "faq"),
     featured_image_url: cleanManagedField(input, "featured_image_url"),
-    target_keyword: cleanManagedField(input, "target_keyword"),
-    supporting_keywords: cleanManagedField(input, "supporting_keywords"),
-    expected_result: cleanManagedField(input, "expected_result"),
-    manager_notes: cleanManagedField(input, "manager_notes"),
-    baseline_query: cleanManagedField(input, "baseline_query"),
-    baseline_note: cleanManagedField(input, "baseline_note"),
-    baseline_screenshot_url: cleanManagedField(input, "baseline_screenshot_url"),
-    result_7_day_note: cleanManagedField(input, "result_7_day_note"),
-    result_14_day_note: cleanManagedField(input, "result_14_day_note"),
-    result_28_day_note: cleanManagedField(input, "result_28_day_note"),
-    gsc_clicks: cleanManagedField(input, "gsc_clicks"),
-    gsc_impressions: cleanManagedField(input, "gsc_impressions"),
-    gsc_ctr: cleanManagedField(input, "gsc_ctr"),
-    gsc_position: cleanManagedField(input, "gsc_position"),
+    target_keyword: cleanExperimentField(input, "target_keyword", session, existing),
+    supporting_keywords: cleanExperimentField(input, "supporting_keywords", session, existing),
+    expected_result: cleanExperimentField(input, "expected_result", session, existing),
+    manager_notes: cleanExperimentField(input, "manager_notes", session, existing),
+    baseline_query: cleanExperimentField(input, "baseline_query", session, existing),
+    baseline_note: cleanExperimentField(input, "baseline_note", session, existing),
+    baseline_screenshot_url: cleanExperimentField(input, "baseline_screenshot_url", session, existing),
+    result_7_day_note: cleanExperimentField(input, "result_7_day_note", session, existing),
+    result_14_day_note: cleanExperimentField(input, "result_14_day_note", session, existing),
+    result_28_day_note: cleanExperimentField(input, "result_28_day_note", session, existing),
+    gsc_clicks: cleanExperimentField(input, "gsc_clicks", session, existing),
+    gsc_impressions: cleanExperimentField(input, "gsc_impressions", session, existing),
+    gsc_ctr: cleanExperimentField(input, "gsc_ctr", session, existing),
+    gsc_position: cleanExperimentField(input, "gsc_position", session, existing),
     author: managerBlogConfig.defaultAuthor,
     published,
     archived: Boolean(input.archived),
     store: managerBlogConfig.storeCode,
     store_code: managerBlogConfig.storeCode,
     source: managerBlogConfig.source,
-    experiment_tag: "manager-seo-experiment",
+    experiment_tag: session.role === "master_admin" ? "manager-seo-experiment" : "",
     manager_owner: existing?.manager_owner || session.manager_owner || session.username,
     date: String(input.date || existing?.date || now),
     created_at: existing?.created_at || now,
@@ -327,7 +347,7 @@ function payloadFromPost(post: ManagerBlogPost, action: StorageAction, extra: Re
     store: managerBlogConfig.storeCode,
     store_code: managerBlogConfig.storeCode,
     source: managerBlogConfig.source,
-    experiment_tag: post.experiment_tag || "manager-seo-experiment",
+    experiment_tag: post.experiment_tag || "",
     manager_owner: post.manager_owner || managerBlogConfig.managerOwner,
     date: post.date || now,
     created_at: post.created_at || now,
