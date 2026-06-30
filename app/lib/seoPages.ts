@@ -97,20 +97,20 @@ export const SEO_PAGES: SeoPageData[] = [
 
   {
     slug: "native-cigarettes-ottawa",
-    title: "Native Cigarettes Ottawa — Discount Tobacco | Spirit Corner Cannabis",
-    metaDescription: "Buy native cigarettes in Ottawa at Spirit Corner Cannabis. Wide selection of premium and value tobacco brands at the best prices. 251 Dalhousie St, ByWard Market. Open 24/7.",
-    h1: "Native Cigarettes Ottawa — Discount Tobacco",
+    title: "Native Cigarettes Ottawa — $25 Per Carton | Spirit Corner Cannabis",
+    metaDescription: "Native cigarettes in Ottawa at Spirit Corner Cannabis near ByWard Market, with Native cigarette cartons at $25 Per Carton for adult customers. Open 24/7.",
+    h1: "Native Cigarettes Ottawa — $25 Per Carton",
     icon: "🏷️",
-    heroTagline: "Premium & Value Brands · Best Prices in Ottawa · Open 24 Hours",
+    heroTagline: "Premium & Value Brands · $25 Per Carton · Open 24 Hours",
     banner: "/banners/native-cigarettes-ottawa-25-dollar-cartons-spirit-corner-cannabis.png",
     sections: [
       {
-        heading: "Ottawa's Best Selection of Native Cigarettes",
-        body: "Spirit Corner Cannabis carries one of the widest selections of native cigarettes in Ottawa. Located at 251 Dalhousie St in the ByWard Market, we stock a comprehensive range of both premium and value native cigarette brands at competitive prices. Whether you prefer full-flavour, light, menthol, or specialty blends, our tobacco selection has something for every smoker. We're proud to be one of the few stores in downtown Ottawa that combines a full cannabis dispensary with a comprehensive tobacco counter — one stop for everything you need.",
+        heading: "Ottawa Native Cigarettes — $25 Per Carton",
+        body: "Spirit Corner Cannabis carries Native cigarette cartons at $25 Per Carton for adult customers in downtown Ottawa. Located at 251 Dalhousie St in the ByWard Market, the store lists premium and value Native cigarette brands alongside its cannabis menu for a clear, local shopping stop.",
       },
       {
-        heading: "Why Ottawa Smokers Choose Spirit Corner",
-        body: "There are three reasons Ottawa smokers keep coming back to Spirit Corner for their cigarettes. First, our prices are among the lowest in the ByWard Market area — we buy in volume and pass the savings to our customers. Second, our selection is comprehensive — we carry brands and varieties that many other shops simply don't stock. Third, we're open 24 hours a day, 7 days a week. Need cigarettes at midnight? 3 AM? We're here. No other tobacco shop in downtown Ottawa offers this level of convenience.",
+        heading: "Why Adult Customers Visit Spirit Corner",
+        body: "The page is built for adult customers comparing Native cigarette carton options in downtown Ottawa. Spirit Corner keeps the offer clear: Native cigarette cartons are $25 Per Carton, with the store open 24 hours a day near ByWard Market.",
       },
       {
         heading: "Convenient ByWard Market Location",
@@ -122,9 +122,9 @@ export const SEO_PAGES: SeoPageData[] = [
       },
     ],
     faqs: [
-      { q: "Does Spirit Corner sell native cigarettes?", a: "Yes! We carry one of the widest selections of native cigarettes in downtown Ottawa, including premium brands, value brands, full-flavour, light, and menthol varieties." },
+      { q: "Does Spirit Corner sell native cigarettes?", a: "Yes. Spirit Corner Cannabis carries Native cigarette cartons at $25 Per Carton for adult customers in downtown Ottawa, with premium and value brand options available in store." },
       { q: "What cigarette brands do you carry?", a: "We stock a comprehensive range of native cigarette brands in multiple varieties. Our selection rotates regularly. Visit us at 251 Dalhousie St to see our full current inventory and pricing." },
-      { q: "Where can I buy cheap cigarettes in Ottawa?", a: "Spirit Corner Cannabis at 251 Dalhousie St offers some of the best cigarette prices in Ottawa's ByWard Market area. We're open 24 hours so you can shop on your own schedule." },
+      { q: "Where can I buy Native cigarette cartons in Ottawa?", a: "Spirit Corner Cannabis at 251 Dalhousie St offers Native cigarette cartons at $25 Per Carton near Ottawa's ByWard Market. We're open 24 hours so adult customers can shop on their own schedule." },
       { q: "Are you open late for cigarette purchases?", a: "We're open 24 hours a day, 7 days a week. Whether you need cigarettes at noon or 3 AM, our doors are always open." },
       { q: "Can I buy cigarettes and cannabis at Spirit Corner?", a: "Absolutely. Spirit Corner is both a fully-licensed cannabis dispensary and a tobacco retailer. Many customers appreciate the convenience of one stop for both products." },
       { q: "Where is Spirit Corner located?", a: "251 Dalhousie St, Ottawa, ON K1N 1E7 — in the ByWard Market. Near Rideau Centre, close to major bus routes, with free evening street parking available." },
