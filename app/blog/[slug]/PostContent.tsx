@@ -44,9 +44,19 @@ function renderContent(raw: string) {
       );
     }
 
-    // Paragraph — handle **bold**
-    const html = trimmed.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-    return <p key={i} className={styles.contentP} dangerouslySetInnerHTML={{ __html: html }} />;
+    // Paragraph - handle **bold** without injecting HTML.
+    const parts = trimmed.split(/(\*\*[^*]+\*\*)/g);
+    return (
+      <p key={i} className={styles.contentP}>
+        {parts.map((part, j) =>
+          part.startsWith("**") && part.endsWith("**") ? (
+            <strong key={j}>{part.slice(2, -2)}</strong>
+          ) : (
+            <span key={j}>{part}</span>
+          )
+        )}
+      </p>
+    );
   });
 }
 
