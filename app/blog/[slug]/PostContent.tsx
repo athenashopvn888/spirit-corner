@@ -17,6 +17,8 @@ interface BlogPost {
   h1?: string;
   content: string;
   faq?: string;
+  internal_links_used?: string;
+  internal_link_notes?: string;
   author: string;
   date?: string;
 }
@@ -28,6 +30,93 @@ type PostContentProps = {
   storeName: string;
   ctaLine: string;
 };
+type RelatedLink = {
+  href: string;
+  label: string;
+  note?: string;
+};
+
+const defaultRelatedLinksByStore: Record<string, RelatedLink[]> = {
+  CHC01: [
+    { href: "/", label: "Castle Heights Cannabis", note: "Store homepage" },
+    { href: "/weed-dispensary-ottawa", label: "Ottawa cannabis dispensary", note: "Local visit guide" },
+    { href: "/blog", label: "Castle Heights cannabis blog", note: "More local guides" },
+    { href: "/items/prerolls", label: "Pre-roll menu category", note: "General category page" },
+    { href: "/items/edibles", label: "Edibles menu category", note: "General category page" },
+  ],
+  SCC01: [
+    { href: "/", label: "Spirit Corner Cannabis", note: "Store homepage" },
+    { href: "/info/native-cigarettes-ottawa", label: "Native cigarettes in Ottawa", note: "Popular shopper guide" },
+    { href: "/24-hour-ottawa-dispensary", label: "24-hour Ottawa dispensary", note: "Local visit page" },
+    { href: "/blog", label: "Spirit Corner cannabis blog", note: "More local guides" },
+    { href: "/items/prerolls", label: "Pre-roll menu category", note: "General category page" },
+  ],
+};
+
+function cleanInternalHref(value: string) {
+  const href = value.trim();
+  if (!href.startsWith("/") || href.startsWith("//") || href.includes("..") || href.includes("\\") || /[\s<>]/.test(href)) return "";
+  return href;
+}
+
+function parseRelatedLinkLine(line: string): RelatedLink | null {
+  const trimmed = line.trim();
+  if (!trimmed) return null;
+
+  const markdown = trimmed.match(/^\[([^\]]+)\]\((\/[^)]+)\)$/);
+  if (markdown) {
+    const href = cleanInternalHref(markdown[2]);
+    return href ? { label: markdown[1].trim(), href } : null;
+  }
+
+  const pipeParts = trimmed.split("|").map((item) => item.trim());
+  if (pipeParts.length >= 2) {
+    const href = cleanInternalHref(pipeParts[1]);
+    return href ? { label: pipeParts[0], href, note: pipeParts[2] } : null;
+  }
+
+  const arrowParts = trimmed.split("->").map((item) => item.trim());
+  if (arrowParts.length >= 2) {
+    const href = cleanInternalHref(arrowParts[1]);
+    return href ? { label: arrowParts[0], href } : null;
+  }
+
+  return null;
+}
+
+function relatedLinksForPost(post: BlogPost, storeCode: string) {
+  const selected = (post.internal_links_used || "").split("\n").map(parseRelatedLinkLine).filter((link): link is RelatedLink => Boolean(link));
+  const source = selected.length > 0 ? selected : (defaultRelatedLinksByStore[storeCode] || []);
+  const seen = new Set<string>();
+  return source.filter((link) => {
+    const key = `${link.href}|${link.label.toLowerCase()}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  }).slice(0, 5);
+}
+
+function RelatedLinksSection({ links, storeName }: { links: RelatedLink[]; storeName: string }) {
+  if (links.length === 0) return null;
+
+  return (
+    <section className={styles.relatedLinks} aria-label="Helpful related links">
+      <div className={styles.relatedHeader}>
+        <span className={styles.relatedKicker}>Helpful next steps</span>
+        <h2>Plan your next visit to {storeName}</h2>
+        <p>Use these store-specific links to keep exploring without hunting through the menu.</p>
+      </div>
+      <div className={styles.relatedGrid}>
+        {links.map((link) => (
+          <Link key={`${link.href}-${link.label}`} href={link.href} className={styles.relatedCard}>
+            <strong>{link.label}</strong>
+            {link.note && <span>{link.note}</span>}
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 function renderInline(text: string) {
   const nodes: ReactNode[] = [];
@@ -166,6 +255,7 @@ export default function PostContent({ managerPost = null, slug, storeCode, store
           {renderContent(post.content)}
         </div>
         {renderFaq(post.faq)}
+        <RelatedLinksSection links={relatedLinksForPost(post, storeCode)} storeName={storeName} />
 
         <div className={styles.cta}>
           <p>

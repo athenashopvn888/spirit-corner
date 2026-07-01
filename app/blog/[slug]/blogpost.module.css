@@ -1,4 +1,4 @@
-/* ── Individual Blog Post Styles ── */
+/* Individual Blog Post Styles */
 
 .main {
   min-height: 100vh;
@@ -155,3 +155,77 @@
 }
 
 .contentLink { color: #16a34a; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.relatedLinks {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin: 0 0 32px;
+  background: var(--bg-secondary);
+}
+
+.relatedHeader {
+  margin-bottom: 16px;
+}
+
+.relatedKicker {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--green-mid);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.relatedHeader h2 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.relatedHeader p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.relatedCard {
+  display: grid;
+  gap: 4px;
+  min-height: 88px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  color: var(--text-primary);
+  text-decoration: none;
+  background: var(--bg-primary);
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.relatedCard:hover {
+  border-color: var(--green-mid);
+  transform: translateY(-2px);
+}
+
+.relatedCard strong {
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.relatedCard span {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+@media (max-width: 720px) {
+  .relatedGrid { grid-template-columns: 1fr; }
+}

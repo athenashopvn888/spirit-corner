@@ -96,35 +96,39 @@ type InternalLinkSuggestion = {
   label: string;
   anchor: string;
   note: string;
+  group: string;
+  priority: number;
 };
 
 const STORE_TIME_ZONE = "America/Toronto";
 
 const internalLinksByStore: Record<string, InternalLinkSuggestion[]> = {
   CHC01: [
-    { href: "/", label: "Homepage", anchor: "Castle Heights Cannabis", note: "Store homepage" },
-    { href: "/blog", label: "Blog", anchor: "Castle Heights cannabis blog", note: "Blog hub" },
-    { href: "/weed-dispensary-ottawa", label: "Local page", anchor: "Ottawa cannabis dispensary", note: "Local store guide" },
-    { href: "/items/prerolls", label: "Pre-rolls", anchor: "pre-roll menu category", note: "Category page" },
-    { href: "/items/edibles", label: "Edibles", anchor: "edibles menu category", note: "Category page" },
-    { href: "/items/vapes", label: "Vapes", anchor: "vape menu category", note: "Category page" },
-    { href: "/items/concentrates", label: "Concentrates", anchor: "concentrates menu category", note: "Category page" },
-    { href: "/exotic", label: "Flower", anchor: "flower menu tiers", note: "Flower tier page" },
-    { href: "/items/add-ons", label: "Accessories", anchor: "accessories and add-ons", note: "Category page" },
+    { href: "/", label: "Store homepage", anchor: "Castle Heights Cannabis", note: "Best default link when a post mentions the store, location, or visit planning.", group: "Visit planning", priority: 1 },
+    { href: "/weed-dispensary-ottawa", label: "Ottawa local guide", anchor: "Ottawa cannabis dispensary", note: "Use for Ottawa, Center St, neighbourhood, and local shopping context.", group: "Visit planning", priority: 2 },
+    { href: "/blog", label: "Blog hub", anchor: "Castle Heights cannabis blog", note: "Use when pointing readers to more store guides and updates.", group: "Visit planning", priority: 3 },
+    { href: "/items/prerolls", label: "Pre-roll category", anchor: "pre-roll menu category", note: "Use only for general category education, not live availability.", group: "Menu categories", priority: 4 },
+    { href: "/items/edibles", label: "Edibles category", anchor: "edibles menu category", note: "Use only for general category education, not live availability.", group: "Menu categories", priority: 5 },
+    { href: "/items/vapes", label: "Vape category", anchor: "vape menu category", note: "Use only for general category education, not live availability.", group: "Menu categories", priority: 6 },
+    { href: "/items/concentrates", label: "Concentrates category", anchor: "concentrates menu category", note: "Use only for general category education, not live availability.", group: "Menu categories", priority: 7 },
+    { href: "/exotic", label: "Flower tiers", anchor: "flower menu tiers", note: "Use for general flower/tier navigation without price or availability claims.", group: "Menu categories", priority: 8 },
+    { href: "/items/add-ons", label: "Accessories", anchor: "accessories and add-ons", note: "Use for accessories context without Product/Offer claims.", group: "Menu categories", priority: 9 },
   ],
   SCC01: [
-    { href: "/", label: "Homepage", anchor: "Spirit Corner Cannabis", note: "Store homepage" },
-    { href: "/info/native-cigarettes-ottawa", label: "Native cigarettes", anchor: "native cigarettes in Ottawa", note: "Ranked info page" },
-    { href: "/blog", label: "Blog", anchor: "Spirit Corner cannabis blog", note: "Blog hub" },
-    { href: "/24-hour-ottawa-dispensary", label: "24-hour page", anchor: "24-hour Ottawa dispensary", note: "Local intent page" },
-    { href: "/items/prerolls", label: "Pre-rolls", anchor: "pre-roll menu category", note: "Category page" },
-    { href: "/items/edibles", label: "Edibles", anchor: "edibles menu category", note: "Category page" },
-    { href: "/items/vapes", label: "Vapes", anchor: "vape menu category", note: "Category page" },
-    { href: "/items/concentrates", label: "Concentrates", anchor: "concentrates menu category", note: "Category page" },
-    { href: "/exotic", label: "Flower", anchor: "flower menu tiers", note: "Flower tier page" },
-    { href: "/items/add-ons", label: "Accessories", anchor: "accessories and add-ons", note: "Category page" },
+    { href: "/", label: "Store homepage", anchor: "Spirit Corner Cannabis", note: "Best default link when a post mentions the store, downtown Ottawa, or visit planning.", group: "Visit planning", priority: 1 },
+    { href: "/info/native-cigarettes-ottawa", label: "Native cigarettes guide", anchor: "native cigarettes in Ottawa", note: "Use for the high-value native cigarettes page and related shopper questions.", group: "Priority pages", priority: 2 },
+    { href: "/24-hour-ottawa-dispensary", label: "24-hour Ottawa page", anchor: "24-hour Ottawa dispensary", note: "Use only when 24-hour wording naturally fits the post topic.", group: "Priority pages", priority: 3 },
+    { href: "/blog", label: "Blog hub", anchor: "Spirit Corner cannabis blog", note: "Use when pointing readers to more store guides and updates.", group: "Visit planning", priority: 4 },
+    { href: "/items/prerolls", label: "Pre-roll category", anchor: "pre-roll menu category", note: "Use only for general category education, not live availability.", group: "Menu categories", priority: 5 },
+    { href: "/items/edibles", label: "Edibles category", anchor: "edibles menu category", note: "Use only for general category education, not live availability.", group: "Menu categories", priority: 6 },
+    { href: "/items/vapes", label: "Vape category", anchor: "vape menu category", note: "Use only for general category education, not live availability.", group: "Menu categories", priority: 7 },
+    { href: "/items/concentrates", label: "Concentrates category", anchor: "concentrates menu category", note: "Use only for general category education, not live availability.", group: "Menu categories", priority: 8 },
+    { href: "/exotic", label: "Flower tiers", anchor: "flower menu tiers", note: "Use for general flower/tier navigation without price or availability claims.", group: "Menu categories", priority: 9 },
+    { href: "/items/add-ons", label: "Accessories", anchor: "accessories and add-ons", note: "Use for accessories context without Product/Offer claims.", group: "Menu categories", priority: 10 },
   ],
 };
+
+const EMPTY_INTERNAL_LINKS: InternalLinkSuggestion[] = [];
 
 const emptyForm: FormState = {
   id: "",
@@ -255,6 +259,18 @@ function isoToStoreLocalInput(value?: string) {
 function markdownLink(link: InternalLinkSuggestion) {
   return `[${link.anchor}](${link.href})`;
 }
+function relatedLinkLine(link: InternalLinkSuggestion) {
+  return `${link.anchor} -> ${link.href}`;
+}
+
+function selectedRelatedLinkLines(value: string) {
+  return value.split("\n").map((item) => item.trim()).filter(Boolean);
+}
+
+function selectedRelatedLinkLabel(line: string) {
+  const [label, href] = line.split("->").map((item) => item.trim());
+  return href ? `${label} (${href})` : line;
+}
 
 export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigured, storageProvider, username, role, canManageUsers }: ManagerBlogAdminProps) {
   const router = useRouter();
@@ -270,7 +286,14 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   const isMasterAdmin = role === "master_admin";
   const tabs: Tab[] = isMasterAdmin ? ["drafts", "scheduled", "published", "archived", "all", "experiment"] : ["drafts", "scheduled", "published", "archived", "all"];
   const publicUrl = useMemo(() => (form.slug ? `/blog/${form.slug}` : "/blog/[slug]"), [form.slug]);
-  const internalLinks = internalLinksByStore[storeCode] || [];
+  const internalLinks = internalLinksByStore[storeCode] ?? EMPTY_INTERNAL_LINKS;
+  const linkGroups = useMemo(() => {
+    return [...internalLinks].sort((a, b) => a.priority - b.priority).reduce<Record<string, InternalLinkSuggestion[]>>((groups, link) => {
+      groups[link.group] = [...(groups[link.group] || []), link];
+      return groups;
+    }, {});
+  }, [internalLinks]);
+  const selectedRelatedLinks = useMemo(() => selectedRelatedLinkLines(form.internal_links_used), [form.internal_links_used]);
 
   async function loadPosts() {
     setLoading(true);
@@ -309,14 +332,38 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   }
 
   function addUsedLink(link: InternalLinkSuggestion) {
-    const entry = `${link.anchor} -> ${link.href}`;
+    const entry = relatedLinkLine(link);
     setForm((current) => {
-      const currentLinks = current.internal_links_used.split("\n").map((item) => item.trim()).filter(Boolean);
+      const currentLinks = selectedRelatedLinkLines(current.internal_links_used);
       const nextLinks = currentLinks.includes(entry) ? currentLinks : [...currentLinks, entry];
       return { ...current, internal_links_used: nextLinks.join("\n") };
     });
   }
 
+  function addRelatedLink(link: InternalLinkSuggestion) {
+    addUsedLink(link);
+    setMessage(`Added related link: ${link.anchor}. It will show in the public Helpful next steps block.`);
+  }
+
+  function applyRecommendedLinks() {
+    const recommended = [...internalLinks].sort((a, b) => a.priority - b.priority).slice(0, 5).map(relatedLinkLine);
+    setForm((current) => {
+      const currentLinks = selectedRelatedLinkLines(current.internal_links_used);
+      const nextLinks = [...currentLinks];
+      recommended.forEach((entry) => {
+        if (!nextLinks.includes(entry)) nextLinks.push(entry);
+      });
+      return { ...current, internal_links_used: nextLinks.join("\n") };
+    });
+    setMessage("Added the recommended related-link set. These render as public link cards below the article.");
+  }
+
+  function removeRelatedLink(line: string) {
+    setForm((current) => ({
+      ...current,
+      internal_links_used: selectedRelatedLinkLines(current.internal_links_used).filter((item) => item !== line).join("\n"),
+    }));
+  }
   function insertInternalLink(link: InternalLinkSuggestion) {
     const insertion = markdownLink(link);
     setForm((current) => ({
@@ -504,27 +551,53 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
           <section className={styles.linkAssistant}>
             <div className={styles.editorHeader}>
               <div>
-                <h3 className={styles.subhead}>Suggested internal links</h3>
-                <p className={styles.helperText}>Store-specific links only. Use natural anchors and avoid stuffing.</p>
+                <h3 className={styles.subhead}>Related links assistant</h3>
+                <p className={styles.helperText}>Pick 3-5 store-specific links. They show as a public Helpful next steps block, not a messy link dump.</p>
               </div>
+              <button type="button" className={styles.secondaryButton} onClick={applyRecommendedLinks} disabled={!internalLinks.length}>Use recommended set</button>
             </div>
-            <div className={styles.linkGrid}>
-              {internalLinks.map((link) => (
-                <article key={link.href} className={styles.linkCard}>
-                  <strong>{link.label}</strong>
-                  <span>{link.href}</span>
-                  <p>{link.note}</p>
-                  <p><b>Anchor:</b> {link.anchor}</p>
-                  <div className={styles.linkActions}>
-                    <button type="button" className={styles.secondaryButton} onClick={() => insertInternalLink(link)}>Insert</button>
-                    <button type="button" className={styles.secondaryButton} onClick={() => copyInternalLink(link)}>{copiedLink === link.href ? "Copied" : "Copy"}</button>
-                  </div>
-                </article>
-              ))}
+            <div className={styles.selectedLinksPanel}>
+              <div>
+                <strong>Selected public links: {selectedRelatedLinks.length}</strong>
+                <p className={styles.helperText}>These links render as button cards below the article. If none are selected, the public post uses safe store defaults.</p>
+              </div>
+              {selectedRelatedLinks.length > 0 ? (
+                <div className={styles.selectedLinkList}>
+                  {selectedRelatedLinks.map((line) => (
+                    <div key={line} className={styles.selectedLinkRow}>
+                      <span>{selectedRelatedLinkLabel(line)}</span>
+                      <button type="button" className={styles.secondaryButton} onClick={() => removeRelatedLink(line)}>Remove</button>
+                    </div>
+                  ))}
+                </div>
+              ) : <p className={styles.empty}>No related links selected yet.</p>}
             </div>
+            {Object.entries(linkGroups).map(([group, links]) => (
+              <section key={group} className={styles.linkGroup}>
+                <h4 className={styles.linkGroupTitle}>{group}</h4>
+                <div className={styles.linkGrid}>
+                  {links.map((link) => (
+                    <article key={link.href} className={styles.linkCard}>
+                      <div className={styles.linkCardHeader}>
+                        <strong>{link.label}</strong>
+                        {link.priority <= 3 && <span className={styles.recommendationBadge}>Recommended</span>}
+                      </div>
+                      <span>{link.href}</span>
+                      <p>{link.note}</p>
+                      <p><b>Anchor:</b> {link.anchor}</p>
+                      <div className={styles.linkActions}>
+                        <button type="button" className={styles.secondaryButton} onClick={() => addRelatedLink(link)}>Add to related section</button>
+                        <button type="button" className={styles.secondaryButton} onClick={() => insertInternalLink(link)}>Insert in body</button>
+                        <button type="button" className={styles.secondaryButton} onClick={() => copyInternalLink(link)}>{copiedLink === link.href ? "Copied" : "Copy markdown"}</button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ))}
           </section>
 
-          <label className={styles.label}>Internal links used<textarea className={styles.textareaSmall} value={form.internal_links_used} onChange={(event) => updateForm({ internal_links_used: event.target.value })} /></label>
+          <label className={styles.label}>Related links used / public cards<textarea className={styles.textareaSmall} value={form.internal_links_used} onChange={(event) => updateForm({ internal_links_used: event.target.value })} /></label>
           <label className={styles.label}>Internal link notes<textarea className={styles.textareaSmall} value={form.internal_link_notes} onChange={(event) => updateForm({ internal_link_notes: event.target.value })} /></label>
 
           {isMasterAdmin && <>

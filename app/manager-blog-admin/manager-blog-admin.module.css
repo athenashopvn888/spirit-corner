@@ -66,4 +66,13 @@
 .linkCard span, .linkCard p { margin: 0; overflow-wrap: anywhere; }
 .linkCard span { color: #2563eb; font-weight: 800; }
 .linkActions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.selectedLinksPanel { display: grid; gap: 10px; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px; margin-bottom: 14px; background: #eff6ff; }
+.selectedLinksPanel strong { display: block; margin-bottom: 4px; }
+.selectedLinkList { display: grid; gap: 8px; }
+.selectedLinkRow { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid #dbeafe; border-radius: 6px; padding: 8px; background: #ffffff; }
+.selectedLinkRow span { overflow-wrap: anywhere; font-weight: 800; }
+.linkGroup { margin-top: 16px; }
+.linkGroupTitle { margin: 0 0 8px; font-size: 13px; font-weight: 900; color: #1e40af; text-transform: uppercase; letter-spacing: 0.06em; }
+.linkCardHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.recommendationBadge { display: inline-flex; align-items: center; border-radius: 999px; padding: 3px 7px; background: #dcfce7; color: #166534 !important; font-size: 11px; font-weight: 900; text-transform: uppercase; }
 @media (max-width: 860px) { .linkGrid { grid-template-columns: 1fr; } }
