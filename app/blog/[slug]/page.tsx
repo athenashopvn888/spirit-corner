@@ -19,12 +19,18 @@ async function getManagerPost(slug: string, managerPreview: boolean) {
   try {
     if (managerPreview) {
       const session = await getManagerBlogSession();
-      return session ? await getPreviewManagerBlogPostBySlug(slug, session) : null;
+      const post = session ? await getPreviewManagerBlogPostBySlug(slug, session) : null;
+      return { post, isManagerPreview: Boolean(post) };
     }
 
-    return await getPublishedManagerBlogPostBySlug(slug);
+    const publishedPost = await getPublishedManagerBlogPostBySlug(slug);
+    if (publishedPost) return { post: publishedPost, isManagerPreview: false };
+
+    const session = await getManagerBlogSession();
+    const previewPost = session ? await getPreviewManagerBlogPostBySlug(slug, session) : null;
+    return { post: previewPost, isManagerPreview: Boolean(previewPost) };
   } catch {
-    return null;
+    return { post: null, isManagerPreview: false };
   }
 }
 
@@ -32,7 +38,8 @@ export async function generateMetadata({ params, searchParams }: BlogPostPagePro
   const { slug } = await params;
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const managerPreview = hasManagerPreviewFlag(resolvedSearchParams);
-  const managerPost = await getManagerPost(slug, managerPreview);
+  const result = await getManagerPost(slug, managerPreview);
+  const managerPost = result.post;
   const title = slug
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -44,7 +51,7 @@ export async function generateMetadata({ params, searchParams }: BlogPostPagePro
     alternates: {
       canonical: `https://spiritcornercannabis.com/blog/${slug}`,
     },
-    robots: managerPreview ? { index: false, follow: false } : undefined,
+    robots: result.isManagerPreview || managerPreview ? { index: false, follow: false } : undefined,
   };
 }
 
@@ -52,15 +59,15 @@ export default async function BlogPostPage({ params, searchParams }: BlogPostPag
   const { slug } = await params;
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const managerPreview = hasManagerPreviewFlag(resolvedSearchParams);
-  const managerPost = await getManagerPost(slug, managerPreview);
+  const result = await getManagerPost(slug, managerPreview);
   return (
     <PostContent
-      managerPost={managerPost}
+      managerPost={result.post}
       slug={slug}
       storeCode={managerBlogConfig.storeCode}
       storeName={managerBlogConfig.storeName}
       ctaLine="251 Dalhousie St, Ottawa - Open 24 Hours - (613) 612-2107"
-      isManagerPreview={managerPreview && Boolean(managerPost)}
+      isManagerPreview={result.isManagerPreview}
     />
   );
 }
