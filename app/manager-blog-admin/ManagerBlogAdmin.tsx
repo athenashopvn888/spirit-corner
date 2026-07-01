@@ -461,7 +461,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   async function runAction(post: ManagerPost, action: "publish" | "unpublish" | "archive" | "duplicate" | "delete") {
     if (!post.id || !storageConfigured) return;
     if (action === "delete" && !post.can_delete) return;
-    if (action === "delete" && !confirm("Permanently delete this manager blog post?")) return;
+    if (action === "delete" && !confirm("Permanently delete this manager blog post? This cannot be undone.")) return;
     if (action === "archive" && !confirm("Archive this manager blog post?")) return;
 
     setSaving(true);
@@ -523,7 +523,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
 
       {!storageConfigured && <section className={styles.notice}><strong>Storage setup required.</strong><p>Login/admin routes are installed, but live self-publishing stays blocked until MANAGER_BLOG_STORAGE_PROVIDER, MANAGER_BLOG_STORAGE_URL, and the server-side token are configured in Vercel.</p></section>}
       {canManageUsers && <section className={styles.notice}><strong>Master admin mode.</strong><p>This role can manage scheduled posts, publish timing, internal link notes, and manager-submitted CHC/SCC posts.</p></section>}
-      {!canManageUsers && <section className={styles.notice}><strong>Publisher mode.</strong><p>This account can create, edit, schedule, publish, unpublish, archive, duplicate, and preview its own manager-submitted posts for this store. Permanent delete is reserved for MasterAdmin.</p></section>}
+      {!canManageUsers && <section className={styles.notice}><strong>Publisher mode.</strong><p>This account can create, edit, schedule, publish, unpublish, archive, duplicate, preview, and delete its own manager-submitted posts for this store. MasterAdmin can manage all CHC/SCC manager posts.</p></section>}
       {error && <p className={styles.error}>{error}</p>}
       {message && <p className={styles.message}>{message}</p>}
 

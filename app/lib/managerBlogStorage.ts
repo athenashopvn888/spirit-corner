@@ -192,6 +192,10 @@ function canEditPost(post: ManagerBlogPost, session: ManagerBlogSession) {
   return post.manager_owner === session.manager_owner || post.manager_owner === session.username;
 }
 
+function canDeletePost(post: ManagerBlogPost, session: ManagerBlogSession) {
+  return canEditPost(post, session);
+}
+
 function cleanText(input: unknown, maxLength: number) {
   return String(input || "")
     .replace(/\0/g, "")
@@ -258,7 +262,7 @@ function normalizeStoredPost(post: Partial<ManagerBlogPost> & Record<string, unk
   return {
     ...normalized,
     can_edit: session ? canEditPost(normalized, session) : false,
-    can_delete: session ? session.role === "master_admin" && canEditPost(normalized, session) : false,
+    can_delete: session ? canDeletePost(normalized, session) : false,
     preview_url: normalized.slug ? `/blog/${normalized.slug}?manager_preview=1` : undefined,
   };
 }
@@ -547,15 +551,11 @@ export async function duplicateManagerBlogPost(input: Record<string, unknown>, s
 }
 
 export async function deleteManagerBlogPost(input: Record<string, unknown>, session: ManagerBlogSession) {
-  if (session.role !== "master_admin") {
-    throw new ManagerBlogStorageError("Only master admin can delete manager blog posts.", 403);
-  }
-
   const id = trimField(input.id, 120);
   if (!id) throw new ManagerBlogStorageError("Post id is required.", 400);
 
   const existing = await findEditablePost(id, session);
-  if (!existing) {
+  if (!existing || !canDeletePost(existing, session)) {
     throw new ManagerBlogStorageError("This post is not available for manager deletion.", 403);
   }
 
