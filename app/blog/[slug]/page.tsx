@@ -1,23 +1,38 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { managerBlogConfig } from "../../lib/managerBlogConfig";
-import { getPublishedManagerBlogPostBySlug } from "../../lib/managerBlogStorage";
+import { getManagerBlogSession } from "../../lib/managerBlogAuth";
+import { getPreviewManagerBlogPostBySlug, getPublishedManagerBlogPostBySlug } from "../../lib/managerBlogStorage";
 import PostContent from "./PostContent";
 
-async function getManagerPost(slug: string) {
+type BlogPostPageProps = {
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ manager_preview?: string | string[]; preview?: string | string[] }>;
+};
+
+function hasManagerPreviewFlag(searchParams?: { manager_preview?: string | string[]; preview?: string | string[] }) {
+  const value = searchParams?.manager_preview || searchParams?.preview;
+  const flag = Array.isArray(value) ? value[0] : value;
+  return flag === "1" || flag === "true" || flag === "manager";
+}
+
+async function getManagerPost(slug: string, managerPreview: boolean) {
   try {
+    if (managerPreview) {
+      const session = await getManagerBlogSession();
+      return session ? await getPreviewManagerBlogPostBySlug(slug, session) : null;
+    }
+
     return await getPublishedManagerBlogPostBySlug(slug);
   } catch {
     return null;
   }
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const managerPost = await getManagerPost(slug);
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const managerPreview = hasManagerPreviewFlag(resolvedSearchParams);
+  const managerPost = await getManagerPost(slug, managerPreview);
   const title = slug
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -29,12 +44,15 @@ export async function generateMetadata({
     alternates: {
       canonical: `https://spiritcornercannabis.com/blog/${slug}`,
     },
+    robots: managerPreview ? { index: false, follow: false } : undefined,
   };
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function BlogPostPage({ params, searchParams }: BlogPostPageProps) {
   const { slug } = await params;
-  const managerPost = await getManagerPost(slug);
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const managerPreview = hasManagerPreviewFlag(resolvedSearchParams);
+  const managerPost = await getManagerPost(slug, managerPreview);
   return (
     <PostContent
       managerPost={managerPost}
@@ -42,6 +60,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       storeCode={managerBlogConfig.storeCode}
       storeName={managerBlogConfig.storeName}
       ctaLine="251 Dalhousie St, Ottawa - Open 24 Hours - (613) 612-2107"
+      isManagerPreview={managerPreview && Boolean(managerPost)}
     />
   );
 }

@@ -259,7 +259,7 @@ function normalizeStoredPost(post: Partial<ManagerBlogPost> & Record<string, unk
     ...normalized,
     can_edit: session ? canEditPost(normalized, session) : false,
     can_delete: session ? session.role === "master_admin" && canEditPost(normalized, session) : false,
-    preview_url: normalized.slug ? `/blog/${normalized.slug}` : undefined,
+    preview_url: normalized.slug ? `/blog/${normalized.slug}?manager_preview=1` : undefined,
   };
 }
 
@@ -576,5 +576,11 @@ export async function listPublishedManagerBlogPosts(): Promise<ManagerBlogPost[]
 export async function getPublishedManagerBlogPostBySlug(slug: string): Promise<ManagerBlogPost | null> {
   const safeSlug = createSafeSlug(slug);
   const posts = await listPublishedManagerBlogPosts();
+  return posts.find((post) => post.slug === safeSlug) || null;
+}
+
+export async function getPreviewManagerBlogPostBySlug(slug: string, session: ManagerBlogSession): Promise<ManagerBlogPost | null> {
+  const safeSlug = createSafeSlug(slug);
+  const posts = await listManagerBlogPosts(session);
   return posts.find((post) => post.slug === safeSlug) || null;
 }

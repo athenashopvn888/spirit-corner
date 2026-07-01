@@ -29,6 +29,7 @@ type PostContentProps = {
   storeCode: string;
   storeName: string;
   ctaLine: string;
+  isManagerPreview?: boolean;
 };
 type RelatedLink = {
   href: string;
@@ -180,7 +181,7 @@ function renderFaq(raw?: string) {
   );
 }
 
-export default function PostContent({ managerPost = null, slug, storeCode, storeName, ctaLine }: PostContentProps) {
+export default function PostContent({ managerPost = null, slug, storeCode, storeName, ctaLine, isManagerPreview = false }: PostContentProps) {
   const [post, setPost] = useState<BlogPost | null>(managerPost);
   const [loading, setLoading] = useState(!managerPost);
 
@@ -235,6 +236,13 @@ export default function PostContent({ managerPost = null, slug, storeCode, store
           <span>/</span>
           <span className={styles.breadcrumbCurrent}>{post.title}</span>
         </nav>
+
+        {isManagerPreview && (
+          <div className={styles.previewNotice}>
+            <strong>Manager preview</strong>
+            <span>This draft or scheduled post is visible only while signed in. Public readers will not see scheduled posts before their publish time.</span>
+          </div>
+        )}
 
         <header className={styles.header}>
           <h1 className={styles.title}>{post.h1 || post.title}</h1>

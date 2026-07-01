@@ -285,7 +285,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   const editing = Boolean(form.id);
   const isMasterAdmin = role === "master_admin";
   const tabs: Tab[] = isMasterAdmin ? ["drafts", "scheduled", "published", "archived", "all", "experiment"] : ["drafts", "scheduled", "published", "archived", "all"];
-  const publicUrl = useMemo(() => (form.slug ? `/blog/${form.slug}` : "/blog/[slug]"), [form.slug]);
+  const previewUrl = useMemo(() => (form.slug ? `/blog/${form.slug}?manager_preview=1` : "/blog/[slug]?manager_preview=1"), [form.slug]);
   const internalLinks = internalLinksByStore[storeCode] ?? EMPTY_INTERNAL_LINKS;
   const linkGroups = useMemo(() => {
     return [...internalLinks].sort((a, b) => a.priority - b.priority).reduce<Record<string, InternalLinkSuggestion[]>>((groups, link) => {
@@ -622,7 +622,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
             </div>
           </>}
 
-          <div className={styles.metaGrid}><div><span className={styles.metaLabel}>Author</span><strong>Ottawa Manager</strong></div><div><span className={styles.metaLabel}>Preview URL</span><strong>{publicUrl}</strong></div></div>
+          <div className={styles.metaGrid}><div><span className={styles.metaLabel}>Author</span><strong>Ottawa Manager</strong></div><div><span className={styles.metaLabel}>Manager preview URL</span><strong>{previewUrl}</strong></div></div>
 
           <fieldset className={styles.publishOptions}>
             <legend>Publish mode</legend>
@@ -656,7 +656,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
                     <div><dt>Published</dt><dd>{postDate(post.published_at)}</dd></div>
                     <div><dt>Links used</dt><dd>{post.internal_links_used ? "Yes" : "No"}</dd></div>
                     {isMasterAdmin && <div><dt>Target keyword</dt><dd>{post.target_keyword || "Not set"}</dd></div>}
-                    <div><dt>Preview</dt><dd><a href={post.preview_url || `/blog/${post.slug}`} target="_blank" rel="noreferrer">Open</a></dd></div>
+                    <div><dt>Preview</dt><dd><a href={post.preview_url || `/blog/${post.slug}?manager_preview=1`} target="_blank" rel="noreferrer">Open</a></dd></div>
                   </dl>
                 </div>
                 <div className={styles.actions}>
