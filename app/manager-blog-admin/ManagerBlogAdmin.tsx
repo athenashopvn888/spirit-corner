@@ -4,6 +4,8 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./manager-blog-admin.module.css";
 
+type ManagerBlogStatus = "draft" | "scheduled" | "published" | "archived";
+
 type ManagerPost = {
   id?: string;
   title: string;
@@ -30,8 +32,12 @@ type ManagerPost = {
   gsc_impressions?: string;
   gsc_ctr?: string;
   gsc_position?: string;
+  internal_links_used?: string;
+  internal_link_notes?: string;
   author: string;
   date?: string;
+  status?: ManagerBlogStatus | string;
+  scheduled_at?: string;
   published: boolean | string;
   archived?: boolean | string;
   manager_owner?: string;
@@ -67,10 +73,13 @@ type FormState = {
   gsc_impressions: string;
   gsc_ctr: string;
   gsc_position: string;
-  published: boolean;
+  internal_links_used: string;
+  internal_link_notes: string;
+  status: ManagerBlogStatus;
+  scheduled_at: string;
 };
 
-type Tab = "drafts" | "published" | "archived" | "all" | "experiment";
+type Tab = "drafts" | "scheduled" | "published" | "archived" | "all" | "experiment";
 
 type ManagerBlogAdminProps = {
   storeName: string;
@@ -80,6 +89,41 @@ type ManagerBlogAdminProps = {
   username: string;
   role: "publisher" | "master_admin";
   canManageUsers: boolean;
+};
+
+type InternalLinkSuggestion = {
+  href: string;
+  label: string;
+  anchor: string;
+  note: string;
+};
+
+const STORE_TIME_ZONE = "America/Toronto";
+
+const internalLinksByStore: Record<string, InternalLinkSuggestion[]> = {
+  CHC01: [
+    { href: "/", label: "Homepage", anchor: "Castle Heights Cannabis", note: "Store homepage" },
+    { href: "/blog", label: "Blog", anchor: "Castle Heights cannabis blog", note: "Blog hub" },
+    { href: "/weed-dispensary-ottawa", label: "Local page", anchor: "Ottawa cannabis dispensary", note: "Local store guide" },
+    { href: "/items/prerolls", label: "Pre-rolls", anchor: "pre-roll menu category", note: "Category page" },
+    { href: "/items/edibles", label: "Edibles", anchor: "edibles menu category", note: "Category page" },
+    { href: "/items/vapes", label: "Vapes", anchor: "vape menu category", note: "Category page" },
+    { href: "/items/concentrates", label: "Concentrates", anchor: "concentrates menu category", note: "Category page" },
+    { href: "/exotic", label: "Flower", anchor: "flower menu tiers", note: "Flower tier page" },
+    { href: "/items/add-ons", label: "Accessories", anchor: "accessories and add-ons", note: "Category page" },
+  ],
+  SCC01: [
+    { href: "/", label: "Homepage", anchor: "Spirit Corner Cannabis", note: "Store homepage" },
+    { href: "/info/native-cigarettes-ottawa", label: "Native cigarettes", anchor: "native cigarettes in Ottawa", note: "Ranked info page" },
+    { href: "/blog", label: "Blog", anchor: "Spirit Corner cannabis blog", note: "Blog hub" },
+    { href: "/24-hour-ottawa-dispensary", label: "24-hour page", anchor: "24-hour Ottawa dispensary", note: "Local intent page" },
+    { href: "/items/prerolls", label: "Pre-rolls", anchor: "pre-roll menu category", note: "Category page" },
+    { href: "/items/edibles", label: "Edibles", anchor: "edibles menu category", note: "Category page" },
+    { href: "/items/vapes", label: "Vapes", anchor: "vape menu category", note: "Category page" },
+    { href: "/items/concentrates", label: "Concentrates", anchor: "concentrates menu category", note: "Category page" },
+    { href: "/exotic", label: "Flower", anchor: "flower menu tiers", note: "Flower tier page" },
+    { href: "/items/add-ons", label: "Accessories", anchor: "accessories and add-ons", note: "Category page" },
+  ],
 };
 
 const emptyForm: FormState = {
@@ -106,7 +150,10 @@ const emptyForm: FormState = {
   gsc_impressions: "",
   gsc_ctr: "",
   gsc_position: "",
-  published: false,
+  internal_links_used: "",
+  internal_link_notes: "",
+  status: "draft",
+  scheduled_at: "",
 };
 
 function makeSlug(value: string) {
@@ -122,21 +169,91 @@ function roleLabel(role: ManagerBlogAdminProps["role"]) {
   return role === "master_admin" ? "Master admin" : "Blog publisher";
 }
 
-function postStatus(post: ManagerPost) {
+function normalizedStatus(value?: string): ManagerBlogStatus | "" {
+  const status = String(value || "").toLowerCase();
+  return status === "draft" || status === "scheduled" || status === "published" || status === "archived" ? status : "";
+}
+
+function isScheduledDue(value?: string) {
+  if (!value) return false;
+  const date = new Date(value);
+  return !Number.isNaN(date.valueOf()) && date.getTime() <= Date.now();
+}
+
+function postStatus(post: ManagerPost): ManagerBlogStatus {
   if (isTrue(post.archived)) return "archived";
+  const status = normalizedStatus(post.status);
+  if (status === "archived") return "archived";
+  if (status === "scheduled") return isScheduledDue(post.scheduled_at) ? "published" : "scheduled";
+  if (status === "published" || status === "draft") return status;
   return isTrue(post.published) ? "published" : "draft";
+}
+
+function statusLabel(status: ManagerBlogStatus) {
+  if (status === "draft") return "Save draft";
+  if (status === "scheduled") return "Schedule publish";
+  if (status === "published") return "Publish immediately";
+  return "Archive";
 }
 
 function postDate(value?: string) {
   if (!value) return "Not set";
   const date = new Date(value);
   if (Number.isNaN(date.valueOf())) return value;
-  return date.toLocaleString("en-CA", { dateStyle: "medium", timeStyle: "short" });
+  return date.toLocaleString("en-CA", { dateStyle: "medium", timeStyle: "short", timeZone: STORE_TIME_ZONE });
 }
 
 function fieldFromPost(post: ManagerPost, key: keyof FormState) {
   const value = post[key as keyof ManagerPost];
   return typeof value === "string" ? value : "";
+}
+
+function timeZoneOffsetMs(date: Date, timeZone: string) {
+  const offsetName = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    timeZoneName: "shortOffset",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).formatToParts(date).find((part) => part.type === "timeZoneName")?.value || "GMT";
+  const match = offsetName.match(/GMT([+-])(\d{1,2})(?::?(\d{2}))?/);
+  if (!match) return 0;
+  const sign = match[1] === "-" ? -1 : 1;
+  const hours = Number(match[2] || 0);
+  const minutes = Number(match[3] || 0);
+  return sign * ((hours * 60 + minutes) * 60 * 1000);
+}
+
+function storeLocalInputToIso(value: string) {
+  const [datePart, timePart] = value.split("T");
+  const [year, month, day] = datePart.split("-").map(Number);
+  const [hour, minute] = (timePart || "00:00").split(":").map(Number);
+  if (!year || !month || !day || Number.isNaN(hour) || Number.isNaN(minute)) return "";
+  let utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
+  for (let i = 0; i < 2; i += 1) {
+    utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute) - timeZoneOffsetMs(utcDate, STORE_TIME_ZONE));
+  }
+  return utcDate.toISOString();
+}
+
+function isoToStoreLocalInput(value?: string) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.valueOf())) return "";
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: STORE_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(date);
+  const part = (type: string) => parts.find((item) => item.type === type)?.value || "";
+  return `${part("year")}-${part("month")}-${part("day")}T${part("hour")}:${part("minute")}`;
+}
+
+function markdownLink(link: InternalLinkSuggestion) {
+  return `[${link.anchor}](${link.href})`;
 }
 
 export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigured, storageProvider, username, role, canManageUsers }: ManagerBlogAdminProps) {
@@ -148,10 +265,12 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(storageConfigured ? "" : "Manager blog storage is not configured yet. Set the storage env vars before live publishing.");
+  const [copiedLink, setCopiedLink] = useState("");
   const editing = Boolean(form.id);
   const isMasterAdmin = role === "master_admin";
-  const tabs: Tab[] = isMasterAdmin ? ["drafts", "published", "archived", "all", "experiment"] : ["drafts", "published", "archived", "all"];
+  const tabs: Tab[] = isMasterAdmin ? ["drafts", "scheduled", "published", "archived", "all", "experiment"] : ["drafts", "scheduled", "published", "archived", "all"];
   const publicUrl = useMemo(() => (form.slug ? `/blog/${form.slug}` : "/blog/[slug]"), [form.slug]);
+  const internalLinks = internalLinksByStore[storeCode] || [];
 
   async function loadPosts() {
     setLoading(true);
@@ -189,15 +308,56 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
     }));
   }
 
+  function addUsedLink(link: InternalLinkSuggestion) {
+    const entry = `${link.anchor} -> ${link.href}`;
+    setForm((current) => {
+      const currentLinks = current.internal_links_used.split("\n").map((item) => item.trim()).filter(Boolean);
+      const nextLinks = currentLinks.includes(entry) ? currentLinks : [...currentLinks, entry];
+      return { ...current, internal_links_used: nextLinks.join("\n") };
+    });
+  }
+
+  function insertInternalLink(link: InternalLinkSuggestion) {
+    const insertion = markdownLink(link);
+    setForm((current) => ({
+      ...current,
+      content: `${current.content.trim()}${current.content.trim() ? "\n\n" : ""}${insertion}`,
+    }));
+    addUsedLink(link);
+    setMessage(`Inserted internal link: ${link.anchor}.`);
+  }
+
+  async function copyInternalLink(link: InternalLinkSuggestion) {
+    const text = markdownLink(link);
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedLink(link.href);
+      window.setTimeout(() => setCopiedLink(""), 1600);
+    } catch {
+      setError("Could not copy link. You can still insert it directly.");
+    }
+  }
+
   async function savePayload(payload: FormState) {
     if (!storageConfigured) return;
+    const scheduledAt = payload.status === "scheduled" ? storeLocalInputToIso(payload.scheduled_at) : "";
+    if (payload.status === "scheduled" && !scheduledAt) {
+      setError("Choose a valid schedule date/time in Ottawa/Toronto time.");
+      return;
+    }
+
     setSaving(true);
     setMessage("");
     setError("");
     const response = await fetch("/api/manager-blog/posts", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        ...payload,
+        scheduled_at: scheduledAt,
+        published: payload.status === "published",
+        archived: payload.status === "archived",
+      }),
     });
     const data = await response.json().catch(() => ({}));
     setSaving(false);
@@ -205,7 +365,7 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
       setError(data.error || "Unable to save post.");
       return;
     }
-    setMessage(payload.published ? "Post saved as published." : "Post saved as draft.");
+    setMessage(payload.status === "scheduled" ? "Post scheduled." : payload.status === "published" ? "Post saved as published." : payload.status === "archived" ? "Post archived." : "Post saved as draft.");
     setForm(emptyForm);
     await loadPosts();
   }
@@ -241,7 +401,10 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
       gsc_impressions: fieldFromPost(post, "gsc_impressions"),
       gsc_ctr: fieldFromPost(post, "gsc_ctr"),
       gsc_position: fieldFromPost(post, "gsc_position"),
-      published: isTrue(post.published),
+      internal_links_used: fieldFromPost(post, "internal_links_used"),
+      internal_link_notes: fieldFromPost(post, "internal_link_notes"),
+      status: postStatus(post),
+      scheduled_at: isoToStoreLocalInput(post.scheduled_at),
     });
     setMessage("");
     setError("");
@@ -280,16 +443,17 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
   const visiblePosts = posts.filter((post) => {
     const status = postStatus(post);
     if (activeTab === "all") return true;
-    if (activeTab === "experiment") return isMasterAdmin && Boolean(post.target_keyword || post.expected_result || post.baseline_query || post.manager_notes);
-    return status === activeTab;
+    if (activeTab === "experiment") return isMasterAdmin && Boolean(post.expected_result || post.baseline_query || post.manager_notes || post.gsc_clicks || post.gsc_impressions || post.gsc_ctr || post.gsc_position);
+    return status === activeTab.replace(/s$/, "");
   });
 
   const counts: Record<Tab, number> = {
     drafts: posts.filter((post) => postStatus(post) === "draft").length,
+    scheduled: posts.filter((post) => postStatus(post) === "scheduled").length,
     published: posts.filter((post) => postStatus(post) === "published").length,
     archived: posts.filter((post) => postStatus(post) === "archived").length,
     all: posts.length,
-    experiment: posts.filter((post) => post.target_keyword || post.expected_result || post.baseline_query || post.manager_notes).length,
+    experiment: posts.filter((post) => post.expected_result || post.baseline_query || post.manager_notes || post.gsc_clicks || post.gsc_impressions || post.gsc_ctr || post.gsc_position).length,
   };
 
   return (
@@ -311,8 +475,8 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
       </section>
 
       {!storageConfigured && <section className={styles.notice}><strong>Storage setup required.</strong><p>Login/admin routes are installed, but live self-publishing stays blocked until MANAGER_BLOG_STORAGE_PROVIDER, MANAGER_BLOG_STORAGE_URL, and the server-side token are configured in Vercel.</p></section>}
-      {canManageUsers && <section className={styles.notice}><strong>Master admin mode.</strong><p>User management remains environment-based. This role can manage manager-submitted CHC/SCC posts once storage is active.</p></section>}
-      {!canManageUsers && <section className={styles.notice}><strong>Publisher mode.</strong><p>This account can create, edit, publish, unpublish, archive, duplicate, and preview its own manager-submitted posts for this store. Permanent delete is reserved for MasterAdmin.</p></section>}
+      {canManageUsers && <section className={styles.notice}><strong>Master admin mode.</strong><p>This role can manage scheduled posts, publish timing, internal link notes, and manager-submitted CHC/SCC posts.</p></section>}
+      {!canManageUsers && <section className={styles.notice}><strong>Publisher mode.</strong><p>This account can create, edit, schedule, publish, unpublish, archive, duplicate, and preview its own manager-submitted posts for this store. Permanent delete is reserved for MasterAdmin.</p></section>}
       {error && <p className={styles.error}>{error}</p>}
       {message && <p className={styles.message}>{message}</p>}
 
@@ -331,12 +495,40 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
           <label className={styles.label}>FAQ section<textarea className={styles.textareaSmall} value={form.faq} onChange={(event) => updateForm({ faq: event.target.value })} /></label>
           <label className={styles.label}>Featured image URL<input className={styles.input} value={form.featured_image_url} onChange={(event) => updateForm({ featured_image_url: event.target.value })} /></label>
 
-          {isMasterAdmin && <>
-            <h3 className={styles.subhead}>Experiment tracking</h3>
-            <div className={styles.twoColumn}>
-              <label className={styles.label}>Target keyword<input className={styles.input} value={form.target_keyword} onChange={(event) => updateForm({ target_keyword: event.target.value })} /></label>
-              <label className={styles.label}>Supporting keywords<input className={styles.input} value={form.supporting_keywords} onChange={(event) => updateForm({ supporting_keywords: event.target.value })} /></label>
+          <h3 className={styles.subhead}>SEO focus</h3>
+          <div className={styles.twoColumn}>
+            <label className={styles.label}>Target keyword<input className={styles.input} value={form.target_keyword} onChange={(event) => updateForm({ target_keyword: event.target.value })} /></label>
+            <label className={styles.label}>Supporting keywords<input className={styles.input} value={form.supporting_keywords} onChange={(event) => updateForm({ supporting_keywords: event.target.value })} /></label>
+          </div>
+
+          <section className={styles.linkAssistant}>
+            <div className={styles.editorHeader}>
+              <div>
+                <h3 className={styles.subhead}>Suggested internal links</h3>
+                <p className={styles.helperText}>Store-specific links only. Use natural anchors and avoid stuffing.</p>
+              </div>
             </div>
+            <div className={styles.linkGrid}>
+              {internalLinks.map((link) => (
+                <article key={link.href} className={styles.linkCard}>
+                  <strong>{link.label}</strong>
+                  <span>{link.href}</span>
+                  <p>{link.note}</p>
+                  <p><b>Anchor:</b> {link.anchor}</p>
+                  <div className={styles.linkActions}>
+                    <button type="button" className={styles.secondaryButton} onClick={() => insertInternalLink(link)}>Insert</button>
+                    <button type="button" className={styles.secondaryButton} onClick={() => copyInternalLink(link)}>{copiedLink === link.href ? "Copied" : "Copy"}</button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <label className={styles.label}>Internal links used<textarea className={styles.textareaSmall} value={form.internal_links_used} onChange={(event) => updateForm({ internal_links_used: event.target.value })} /></label>
+          <label className={styles.label}>Internal link notes<textarea className={styles.textareaSmall} value={form.internal_link_notes} onChange={(event) => updateForm({ internal_link_notes: event.target.value })} /></label>
+
+          {isMasterAdmin && <>
+            <h3 className={styles.subhead}>Admin experiment tracking</h3>
             <label className={styles.label}>Expected result<textarea className={styles.textareaSmall} value={form.expected_result} onChange={(event) => updateForm({ expected_result: event.target.value })} /></label>
             <label className={styles.label}>Manager notes<textarea className={styles.textareaSmall} value={form.manager_notes} onChange={(event) => updateForm({ manager_notes: event.target.value })} /></label>
             <div className={styles.twoColumn}>
@@ -358,39 +550,52 @@ export default function ManagerBlogAdmin({ storeName, storeCode, storageConfigur
           </>}
 
           <div className={styles.metaGrid}><div><span className={styles.metaLabel}>Author</span><strong>Ottawa Manager</strong></div><div><span className={styles.metaLabel}>Preview URL</span><strong>{publicUrl}</strong></div></div>
-          <label className={styles.checkbox}><input type="checkbox" checked={form.published} onChange={(event) => updateForm({ published: event.target.checked })} />Publish immediately</label>
-          <button className={styles.primaryButton} disabled={saving || !storageConfigured}>{saving ? "Saving..." : form.published ? "Save and publish" : "Save draft"}</button>
+
+          <fieldset className={styles.publishOptions}>
+            <legend>Publish mode</legend>
+            <label><input type="radio" name="status" checked={form.status === "draft"} onChange={() => updateForm({ status: "draft", scheduled_at: "" })} /> Save draft</label>
+            <label><input type="radio" name="status" checked={form.status === "published"} onChange={() => updateForm({ status: "published", scheduled_at: "" })} /> Publish immediately</label>
+            <label><input type="radio" name="status" checked={form.status === "scheduled"} onChange={() => updateForm({ status: "scheduled" })} /> Schedule publish date/time</label>
+          </fieldset>
+          {form.status === "scheduled" && (
+            <label className={styles.label}>Schedule date/time <span className={styles.helperText}>Ottawa/Toronto time ({STORE_TIME_ZONE})</span><input className={styles.input} type="datetime-local" value={form.scheduled_at} onChange={(event) => updateForm({ scheduled_at: event.target.value })} required /></label>
+          )}
+          <button className={styles.primaryButton} disabled={saving || !storageConfigured}>{saving ? "Saving..." : statusLabel(form.status)}</button>
         </form>
 
         <section className={styles.postsPanel}>
           <div className={styles.editorHeader}><h2>Manager posts</h2><button type="button" className={styles.secondaryButton} onClick={loadPosts} disabled={!storageConfigured || loading}>Refresh</button></div>
           <div className={styles.tabs}>{tabs.map((tab) => <button key={tab} type="button" className={activeTab === tab ? styles.activeTab : styles.tab} onClick={() => setActiveTab(tab)}>{tab} ({counts[tab]})</button>)}</div>
           {loading ? <p>Loading posts...</p> : visiblePosts.length === 0 ? <p className={styles.empty}>No manager-submitted posts found for this view.</p> : (
-            <div className={styles.postList}>{visiblePosts.map((post) => (
+            <div className={styles.postList}>{visiblePosts.map((post) => {
+              const status = postStatus(post);
+              return (
               <article key={post.id || post.slug} className={styles.postRow}>
                 <div>
                   <h3>{post.title || "Untitled"}</h3>
                   <p>{post.slug}</p>
-                  <span className={styles[postStatus(post)]}>{postStatus(post)}</span>
+                  <span className={styles[status]}>{status}</span>
                   <dl className={styles.postMetaList}>
                     <div><dt>Author</dt><dd>{post.author || "Ottawa Manager"}</dd></div>
                     <div><dt>Owner</dt><dd>{post.manager_owner || "Not set"}</dd></div>
                     <div><dt>Updated</dt><dd>{postDate(post.updated_at)}</dd></div>
+                    <div><dt>Scheduled</dt><dd>{postDate(post.scheduled_at)}</dd></div>
                     <div><dt>Published</dt><dd>{postDate(post.published_at)}</dd></div>
+                    <div><dt>Links used</dt><dd>{post.internal_links_used ? "Yes" : "No"}</dd></div>
                     {isMasterAdmin && <div><dt>Target keyword</dt><dd>{post.target_keyword || "Not set"}</dd></div>}
                     <div><dt>Preview</dt><dd><a href={post.preview_url || `/blog/${post.slug}`} target="_blank" rel="noreferrer">Open</a></dd></div>
                   </dl>
                 </div>
                 <div className={styles.actions}>
                   <button type="button" className={styles.secondaryButton} onClick={() => editPost(post)}>Edit</button>
-                  {!isTrue(post.published) && !isTrue(post.archived) && <button type="button" className={styles.secondaryButton} onClick={() => runAction(post, "publish")}>Publish</button>}
-                  {isTrue(post.published) && <button type="button" className={styles.secondaryButton} onClick={() => runAction(post, "unpublish")}>Unpublish</button>}
-                  {!isTrue(post.archived) && <button type="button" className={styles.secondaryButton} onClick={() => runAction(post, "archive")}>Archive</button>}
+                  {status !== "published" && status !== "archived" && <button type="button" className={styles.secondaryButton} onClick={() => runAction(post, "publish")}>Publish now</button>}
+                  {status === "published" && <button type="button" className={styles.secondaryButton} onClick={() => runAction(post, "unpublish")}>Unpublish</button>}
+                  {status !== "archived" && <button type="button" className={styles.secondaryButton} onClick={() => runAction(post, "archive")}>Archive</button>}
                   <button type="button" className={styles.secondaryButton} onClick={() => runAction(post, "duplicate")}>Duplicate</button>
                   {post.can_delete && <button type="button" className={styles.dangerButton} onClick={() => runAction(post, "delete")}>Delete</button>}
                 </div>
               </article>
-            ))}</div>
+            );})}</div>
           )}
         </section>
       </section>

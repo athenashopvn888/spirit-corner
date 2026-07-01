@@ -1,6 +1,6 @@
-﻿"use client";
+"use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -29,16 +29,38 @@ type PostContentProps = {
   ctaLine: string;
 };
 
+function renderInline(text: string) {
+  const nodes: ReactNode[] = [];
+  const pattern = /(\*\*([^*]+)\*\*)|\[([^\]]+)\]\((\/[^)\s]+)\)/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) nodes.push(<span key={`text-${lastIndex}`}>{text.slice(lastIndex, match.index)}</span>);
+
+    if (match[2]) {
+      nodes.push(<strong key={`bold-${match.index}`}>{match[2]}</strong>);
+    } else if (match[3] && match[4]) {
+      nodes.push(<Link key={`link-${match.index}`} href={match[4]} className={styles.contentLink}>{match[3]}</Link>);
+    }
+
+    lastIndex = pattern.lastIndex;
+  }
+
+  if (lastIndex < text.length) nodes.push(<span key={`text-${lastIndex}`}>{text.slice(lastIndex)}</span>);
+  return nodes.length ? nodes : text;
+}
+
 function renderContent(raw: string) {
   return raw.split("\n\n").map((block, i) => {
     const trimmed = block.trim();
     if (!trimmed) return null;
 
     if (trimmed.startsWith("## ")) {
-      return <h2 key={i} className={styles.contentH2}>{trimmed.replace("## ", "")}</h2>;
+      return <h2 key={i} className={styles.contentH2}>{renderInline(trimmed.replace("## ", ""))}</h2>;
     }
     if (trimmed.startsWith("### ")) {
-      return <h3 key={i} className={styles.contentH3}>{trimmed.replace("### ", "")}</h3>;
+      return <h3 key={i} className={styles.contentH3}>{renderInline(trimmed.replace("### ", ""))}</h3>;
     }
 
     if (trimmed.startsWith("- ")) {
@@ -46,24 +68,13 @@ function renderContent(raw: string) {
       return (
         <ul key={i} className={styles.contentList}>
           {items.map((item, j) => (
-            <li key={j}>{item.replace(/^-\s*/, "")}</li>
+            <li key={j}>{renderInline(item.replace(/^-\s*/, ""))}</li>
           ))}
         </ul>
       );
     }
 
-    const parts = trimmed.split(/(\*\*[^*]+\*\*)/g);
-    return (
-      <p key={i} className={styles.contentP}>
-        {parts.map((part, j) =>
-          part.startsWith("**") && part.endsWith("**") ? (
-            <strong key={j}>{part.slice(2, -2)}</strong>
-          ) : (
-            <span key={j}>{part}</span>
-          )
-        )}
-      </p>
-    );
+    return <p key={i} className={styles.contentP}>{renderInline(trimmed)}</p>;
   });
 }
 
@@ -75,7 +86,7 @@ function renderFaq(raw?: string) {
   return (
     <section className={styles.body}>
       <h2 className={styles.contentH2}>FAQ</h2>
-      {entries.map((entry, index) => <p key={index} className={styles.contentP}>{entry}</p>)}
+      {entries.map((entry, index) => <p key={index} className={styles.contentP}>{renderInline(entry)}</p>)}
     </section>
   );
 }

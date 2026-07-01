@@ -1,6 +1,8 @@
 import type { ManagerBlogSession } from "./managerBlogAuth";
 import { managerBlogConfig } from "./managerBlogConfig";
 
+export type ManagerBlogStatus = "draft" | "scheduled" | "published" | "archived";
+
 export interface ManagerBlogPost {
   id?: string;
   title: string;
@@ -27,8 +29,12 @@ export interface ManagerBlogPost {
   gsc_impressions?: string;
   gsc_ctr?: string;
   gsc_position?: string;
+  internal_links_used?: string;
+  internal_link_notes?: string;
   author: string;
   date?: string;
+  status?: ManagerBlogStatus | string;
+  scheduled_at?: string;
   published: boolean | string;
   archived?: boolean | string;
   store?: string;
@@ -61,6 +67,8 @@ interface StorageConfig {
 
 type StorageAction = "create" | "update" | "publish" | "unpublish" | "archive" | "delete" | "duplicate";
 
+const managerBlogStatuses: ManagerBlogStatus[] = ["draft", "scheduled", "published", "archived"];
+
 const textFieldLimits: Record<string, number> = {
   title: managerBlogConfig.maxTitleLength,
   slug: 140,
@@ -84,6 +92,10 @@ const textFieldLimits: Record<string, number> = {
   gsc_impressions: 40,
   gsc_ctr: 40,
   gsc_position: 40,
+  internal_links_used: 2000,
+  internal_link_notes: 2000,
+  scheduled_at: 80,
+  status: 20,
 };
 
 export function isManagerBlogStorageConfigured() {
@@ -123,6 +135,35 @@ function boolFromStorage(value: unknown) {
   return ["true", "1", "yes", "published"].includes(normalized);
 }
 
+function normalizeStatusValue(value: unknown): ManagerBlogStatus | "" {
+  const normalized = String(value || "").trim().toLowerCase();
+  return managerBlogStatuses.includes(normalized as ManagerBlogStatus) ? (normalized as ManagerBlogStatus) : "";
+}
+
+function parsedTime(value?: string) {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.valueOf()) ? null : date;
+}
+
+function isScheduledDue(value?: string) {
+  const date = parsedTime(value);
+  return Boolean(date && date.getTime() <= Date.now());
+}
+
+function postStatusFromValues(post: Partial<ManagerBlogPost>): ManagerBlogStatus {
+  if (boolFromStorage(post.archived)) return "archived";
+
+  const storedStatus = normalizeStatusValue(post.status);
+  if (storedStatus === "archived") return "archived";
+  if (storedStatus === "scheduled") return isScheduledDue(post.scheduled_at) ? "published" : "scheduled";
+  if (storedStatus === "published") return "published";
+  if (storedStatus === "draft") return "draft";
+
+  if (boolFromStorage(post.published)) return "published";
+  return "draft";
+}
+
 function valueFromPost(post: Partial<ManagerBlogPost> & Record<string, unknown>, key: keyof ManagerBlogPost) {
   return post[key] ?? post[String(key).replace(/_([a-z])/g, (_, char: string) => char.toUpperCase())];
 }
@@ -139,6 +180,10 @@ function isManagerPost(post: Partial<ManagerBlogPost>) {
         post.manager_owner ||
         post.author === managerBlogConfig.defaultAuthor)
   );
+}
+
+function isPublicPost(post: Partial<ManagerBlogPost>) {
+  return postStatusFromValues(post) === "published" && !boolFromStorage(post.archived);
 }
 
 function canEditPost(post: ManagerBlogPost, session: ManagerBlogSession) {
@@ -164,6 +209,8 @@ function trimField(input: unknown, maxLength: number) {
 
 function normalizeStoredPost(post: Partial<ManagerBlogPost> & Record<string, unknown>, session?: ManagerBlogSession): ManagerBlogPost {
   const metaDescription = trimField(valueFromPost(post, "meta_description") || post.metaDescription || post.excerpt, managerBlogConfig.maxExcerptLength);
+  const effectiveStatus = postStatusFromValues(post);
+  const scheduledAt = trimField(valueFromPost(post, "scheduled_at"), textFieldLimits.scheduled_at);
   const normalized: ManagerBlogPost = {
     id: post.id ? String(post.id) : undefined,
     title: trimField(post.title, managerBlogConfig.maxTitleLength),
@@ -190,10 +237,14 @@ function normalizeStoredPost(post: Partial<ManagerBlogPost> & Record<string, unk
     gsc_impressions: trimField(valueFromPost(post, "gsc_impressions"), textFieldLimits.gsc_impressions),
     gsc_ctr: trimField(valueFromPost(post, "gsc_ctr"), textFieldLimits.gsc_ctr),
     gsc_position: trimField(valueFromPost(post, "gsc_position"), textFieldLimits.gsc_position),
+    internal_links_used: trimField(valueFromPost(post, "internal_links_used"), textFieldLimits.internal_links_used),
+    internal_link_notes: trimField(valueFromPost(post, "internal_link_notes"), textFieldLimits.internal_link_notes),
     author: String(post.author || managerBlogConfig.defaultAuthor),
     date: post.date ? String(post.date) : undefined,
-    published: boolFromStorage(post.published),
-    archived: boolFromStorage(post.archived),
+    status: effectiveStatus,
+    scheduled_at: scheduledAt || undefined,
+    published: effectiveStatus === "published",
+    archived: effectiveStatus === "archived",
     store: post.store ? String(post.store) : undefined,
     store_code: post.store_code ? String(post.store_code) : undefined,
     source: post.source ? String(post.source) : undefined,
@@ -201,7 +252,7 @@ function normalizeStoredPost(post: Partial<ManagerBlogPost> & Record<string, unk
     experiment_tag: post.experiment_tag ? String(post.experiment_tag) : undefined,
     created_at: post.created_at ? String(post.created_at) : undefined,
     updated_at: post.updated_at ? String(post.updated_at) : undefined,
-    published_at: post.published_at ? String(post.published_at) : undefined,
+    published_at: post.published_at ? String(post.published_at) : effectiveStatus === "published" && scheduledAt ? scheduledAt : undefined,
   };
 
   return {
@@ -235,9 +286,8 @@ export function createSafeSlug(input: string) {
 function cleanManagedField(input: Record<string, unknown>, field: string) {
   return cleanText(input[field], textFieldLimits[field] || 2000);
 }
-type ExperimentField =
-  | "target_keyword"
-  | "supporting_keywords"
+
+type AdminOnlyField =
   | "expected_result"
   | "manager_notes"
   | "baseline_query"
@@ -251,7 +301,7 @@ type ExperimentField =
   | "gsc_ctr"
   | "gsc_position";
 
-function cleanExperimentField(input: Record<string, unknown>, field: ExperimentField, session: ManagerBlogSession, existing?: ManagerBlogPost) {
+function cleanAdminOnlyField(input: Record<string, unknown>, field: AdminOnlyField, session: ManagerBlogSession, existing?: ManagerBlogPost) {
   if (session.role === "master_admin") return cleanManagedField(input, field);
   return existing ? trimField(existing[field], textFieldLimits[field] || 2000) : "";
 }
@@ -267,8 +317,22 @@ function normalizeInput(input: Record<string, unknown>, session: ManagerBlogSess
 
   const now = new Date().toISOString();
   const metaDescription = cleanText(input.meta_description || input.metaDescription || input.excerpt, managerBlogConfig.maxExcerptLength);
-  const published = Boolean(input.published);
-  const wasPublished = boolFromStorage(existing?.published);
+  const requestedStatus = normalizeStatusValue(input.status) || (Boolean(input.published) ? "published" : "draft");
+  const rawScheduledAt = cleanText(input.scheduled_at, textFieldLimits.scheduled_at);
+  let status: ManagerBlogStatus = requestedStatus;
+  let scheduledAt = rawScheduledAt;
+
+  if (status === "scheduled") {
+    const scheduledDate = parsedTime(scheduledAt);
+    if (!scheduledDate) throw new ManagerBlogStorageError("Scheduled posts need a valid scheduled date/time.", 400);
+    if (scheduledDate.getTime() <= Date.now()) status = "published";
+  } else {
+    scheduledAt = "";
+  }
+
+  const wasPublished = postStatusFromValues(existing || {}) === "published";
+  const published = status === "published";
+  const archived = status === "archived";
 
   return {
     action: existing?.id ? "update" : "create",
@@ -283,23 +347,27 @@ function normalizeInput(input: Record<string, unknown>, session: ManagerBlogSess
     content,
     faq: cleanManagedField(input, "faq"),
     featured_image_url: cleanManagedField(input, "featured_image_url"),
-    target_keyword: cleanExperimentField(input, "target_keyword", session, existing),
-    supporting_keywords: cleanExperimentField(input, "supporting_keywords", session, existing),
-    expected_result: cleanExperimentField(input, "expected_result", session, existing),
-    manager_notes: cleanExperimentField(input, "manager_notes", session, existing),
-    baseline_query: cleanExperimentField(input, "baseline_query", session, existing),
-    baseline_note: cleanExperimentField(input, "baseline_note", session, existing),
-    baseline_screenshot_url: cleanExperimentField(input, "baseline_screenshot_url", session, existing),
-    result_7_day_note: cleanExperimentField(input, "result_7_day_note", session, existing),
-    result_14_day_note: cleanExperimentField(input, "result_14_day_note", session, existing),
-    result_28_day_note: cleanExperimentField(input, "result_28_day_note", session, existing),
-    gsc_clicks: cleanExperimentField(input, "gsc_clicks", session, existing),
-    gsc_impressions: cleanExperimentField(input, "gsc_impressions", session, existing),
-    gsc_ctr: cleanExperimentField(input, "gsc_ctr", session, existing),
-    gsc_position: cleanExperimentField(input, "gsc_position", session, existing),
+    target_keyword: cleanManagedField(input, "target_keyword"),
+    supporting_keywords: cleanManagedField(input, "supporting_keywords"),
+    expected_result: cleanAdminOnlyField(input, "expected_result", session, existing),
+    manager_notes: cleanAdminOnlyField(input, "manager_notes", session, existing),
+    baseline_query: cleanAdminOnlyField(input, "baseline_query", session, existing),
+    baseline_note: cleanAdminOnlyField(input, "baseline_note", session, existing),
+    baseline_screenshot_url: cleanAdminOnlyField(input, "baseline_screenshot_url", session, existing),
+    result_7_day_note: cleanAdminOnlyField(input, "result_7_day_note", session, existing),
+    result_14_day_note: cleanAdminOnlyField(input, "result_14_day_note", session, existing),
+    result_28_day_note: cleanAdminOnlyField(input, "result_28_day_note", session, existing),
+    gsc_clicks: cleanAdminOnlyField(input, "gsc_clicks", session, existing),
+    gsc_impressions: cleanAdminOnlyField(input, "gsc_impressions", session, existing),
+    gsc_ctr: cleanAdminOnlyField(input, "gsc_ctr", session, existing),
+    gsc_position: cleanAdminOnlyField(input, "gsc_position", session, existing),
+    internal_links_used: cleanManagedField(input, "internal_links_used"),
+    internal_link_notes: cleanManagedField(input, "internal_link_notes"),
     author: managerBlogConfig.defaultAuthor,
+    status,
+    scheduled_at: scheduledAt,
     published,
-    archived: Boolean(input.archived),
+    archived,
     store: managerBlogConfig.storeCode,
     store_code: managerBlogConfig.storeCode,
     source: managerBlogConfig.source,
@@ -308,7 +376,7 @@ function normalizeInput(input: Record<string, unknown>, session: ManagerBlogSess
     date: String(input.date || existing?.date || now),
     created_at: existing?.created_at || now,
     updated_at: now,
-    published_at: published ? existing?.published_at || now : wasPublished ? existing?.published_at : undefined,
+    published_at: published ? existing?.published_at || scheduledAt || now : wasPublished ? existing?.published_at : undefined,
   };
 }
 
@@ -341,7 +409,11 @@ function payloadFromPost(post: ManagerBlogPost, action: StorageAction, extra: Re
     gsc_impressions: post.gsc_impressions || "",
     gsc_ctr: post.gsc_ctr || "",
     gsc_position: post.gsc_position || "",
+    internal_links_used: post.internal_links_used || "",
+    internal_link_notes: post.internal_link_notes || "",
     author: post.author || managerBlogConfig.defaultAuthor,
+    status: post.status || postStatusFromValues(post),
+    scheduled_at: post.scheduled_at || "",
     published: boolFromStorage(post.published),
     archived: boolFromStorage(post.archived),
     store: managerBlogConfig.storeCode,
@@ -378,6 +450,14 @@ async function fetchRawPosts(admin = false) {
   if (Array.isArray(data.posts)) return data.posts as Array<Partial<ManagerBlogPost> & Record<string, unknown>>;
   if (Array.isArray(data.data)) return data.data as Array<Partial<ManagerBlogPost> & Record<string, unknown>>;
   return [];
+}
+
+async function fetchPublicCandidatePosts() {
+  try {
+    return await fetchRawPosts(true);
+  } catch {
+    return fetchRawPosts(false);
+  }
 }
 
 async function postStoragePayload(payload: Record<string, unknown>) {
@@ -427,10 +507,13 @@ export async function changeManagerBlogPostStatus(input: Record<string, unknown>
   if (!existing) throw new ManagerBlogStorageError("This post is not available for manager editing.", 403);
 
   const now = new Date().toISOString();
+  const status: ManagerBlogStatus = action === "publish" ? "published" : action === "archive" ? "archived" : "draft";
   const payload = payloadFromPost(existing, action, {
-    published: action === "publish",
-    archived: action === "archive" ? true : boolFromStorage(existing.archived) && action !== "publish",
-    published_at: action === "publish" ? existing.published_at || now : existing.published_at,
+    status,
+    scheduled_at: "",
+    published: status === "published",
+    archived: status === "archived",
+    published_at: status === "published" ? existing.published_at || now : existing.published_at,
     updated_at: now,
   });
 
@@ -450,6 +533,8 @@ export async function duplicateManagerBlogPost(input: Record<string, unknown>, s
     id: undefined,
     title: `Copy of ${existing.title}`.slice(0, managerBlogConfig.maxTitleLength),
     slug: duplicateSlug,
+    status: "draft",
+    scheduled_at: "",
     published: false,
     archived: false,
     manager_owner: existing.manager_owner || session.manager_owner || session.username,
@@ -481,8 +566,8 @@ export async function listPublishedManagerBlogPosts(): Promise<ManagerBlogPost[]
   if (!isManagerBlogStorageConfigured()) return [];
 
   try {
-    const posts = (await fetchRawPosts(false)).map((post) => normalizeStoredPost(post));
-    return posts.filter((post) => isManagerPost(post) && boolFromStorage(post.published) && !boolFromStorage(post.archived));
+    const posts = (await fetchPublicCandidatePosts()).map((post) => normalizeStoredPost(post));
+    return posts.filter((post) => isManagerPost(post) && isPublicPost(post));
   } catch {
     return [];
   }
