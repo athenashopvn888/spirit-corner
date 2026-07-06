@@ -18,29 +18,37 @@ const ALL_LINKS = [
   { href: "/items/magic", label: "Magic Stuff" },
   { href: "/items/cigarettes", label: "Cigarettes" },
   { href: "/items/add-ons", label: "Accessories" },
-  { href: "/delivery", label: "🚗 Delivery" },
+  { href: "/delivery", label: "ðŸš— Delivery" },
   { href: "/faq", label: "FAQ" },
   { href: "/blog", label: "Blog" },
-  { href: "/games", label: "🎮" },
+  { href: "/games", label: "ðŸŽ®" },
 ];
+
+const DIRECTIONS_URL =
+  "https://www.google.com/maps/dir/?api=1&destination=251%20Dalhousie%20St%2C%20Ottawa%2C%20ON%20K1N%201E7";
+const ORDER_URL = "/#menu";
+const CTA_HIDDEN_ROUTES = ["/manager-blog", "/tv", "/tv2"];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const showQuickCtas = !CTA_HIDDEN_ROUTES.some((route) =>
+    pathname?.startsWith(route)
+  );
 
   return (
     <nav className={styles.navbar} id="main-nav">
-      {/* Top bar — logo + open now */}
+      {/* Top bar â€” logo + open now */}
       <div className={styles.topBar}>
         <Link href="/" className={styles.logo}>
           <img
             src="/banners/logo.jpg"
-            alt="Spirit Corner Cannabis — Ottawa Dispensary"
+            alt="Spirit Corner Cannabis â€” Ottawa Dispensary"
             className={styles.logoImg}
           />
         </Link>
         <div className={styles.topBarRight}>
           <Link href="/games" className={styles.gamesBtn}>
-            🎮 Play Games
+            ðŸŽ® Play Games
           </Link>
           <span className={styles.open}>
             <span className={styles.dot}></span>
@@ -66,6 +74,24 @@ export default function Navbar() {
           })}
         </div>
       </div>
+      {showQuickCtas && (
+        <div className={styles.quickCtaBar} aria-label="Spirit Corner quick actions">
+          <a
+            href={DIRECTIONS_URL}
+            className={`${styles.quickCtaButton} ${styles.quickCtaDirections}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Get Directions
+          </a>
+          <Link
+            href={ORDER_URL}
+            className={`${styles.quickCtaButton} ${styles.quickCtaOrder}`}
+          >
+            Order Now
+          </Link>
+        </div>
+      )}
     </nav>
   );
 }
