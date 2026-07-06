@@ -6,7 +6,7 @@
   max-height: 800px;
   overflow: hidden;
   background: #030712;
-  margin-top: 92px;
+  margin-top: 0;
 }
 
 @media (max-width: 768px) {
