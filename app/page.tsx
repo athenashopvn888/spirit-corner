@@ -134,6 +134,25 @@ function buildFeatured() {
 }
 const FEATURED_STRAINS = buildFeatured();
 
+const HOMEPAGE_HIGHLIGHTS = [
+  {
+    eyebrow: "Adult smoke products",
+    title: "Nicotine Pouches Ottawa",
+    description:
+      "Review nicotine pouch listings and visit-planning details for adults near ByWard Market before visiting Spirit Corner.",
+    href: "/nicotine-pouches-ottawa",
+    cta: "Explore nicotine pouches",
+  },
+  {
+    eyebrow: "Native cigarettes",
+    title: "Native Cigarettes Ottawa",
+    description:
+      "See the $25 per carton Native cigarettes page and current site listings before planning a downtown Ottawa visit.",
+    href: "/native-cigarettes-ottawa",
+    cta: "Explore Native cigarettes",
+  },
+];
+
 function getTypeLabel(type: string) {
   if (type.startsWith("IH")) return "Indica";
   if (type.startsWith("SH")) return "Sativa";
@@ -362,6 +381,37 @@ export default function HomePage() {
         </section>
 
         {/* ── HOT RIGHT NOW ── */}
+        {/* Featured local product pages */}
+        <section className={styles.localHighlightSection}>
+          <div className={styles.container}>
+            <div className={styles.localHighlightHeader}>
+              <span className={styles.localHighlightKicker}>Helpful local pages</span>
+              <h2 className={styles.localHighlightTitle}>
+                Popular Ottawa smoke product guides
+              </h2>
+            </div>
+
+            <div className={styles.localHighlightGrid}>
+              {HOMEPAGE_HIGHLIGHTS.map((highlight) => (
+                <Link
+                  key={highlight.href}
+                  href={highlight.href}
+                  className={styles.localHighlightCard}
+                >
+                  <span className={styles.localHighlightEyebrow}>
+                    {highlight.eyebrow}
+                  </span>
+                  <h3>{highlight.title}</h3>
+                  <p>{highlight.description}</p>
+                  <span className={styles.localHighlightButton}>
+                    {highlight.cta}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className={styles.featuredSection}>
           <div className={styles.container}>
             <div className={styles.sectionBanner}>
