@@ -34,7 +34,7 @@ export default function CannabisDeliveryPage() {
       <Navbar />
 
       {/* ── Banner Section ── */}
-      <section style={{ marginTop: "92px", position: "relative" }}>
+      <section style={{ marginTop: 0, position: "relative" }}>
         <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
           <img
             src="/banners/spirit-corner-cannabis-weed-delivery-coming-soon-banner.png"
