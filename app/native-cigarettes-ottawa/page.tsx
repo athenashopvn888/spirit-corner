@@ -18,7 +18,7 @@ export default function NativeCigarettesPage() {
       <Navbar />
 
       {/* Banner Section */}
-      <section style={{ marginTop: "92px", position: "relative" }}>
+      <section style={{ marginTop: 0, position: "relative" }}>
         <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
           <img
             src="/banners/native-cigarettes-ottawa-25-dollar-cartons-spirit-corner-cannabis.png"
