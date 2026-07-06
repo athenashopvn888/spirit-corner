@@ -12,7 +12,18 @@ export const gbpLocation = {
   phone: "(613) 612-2107",
   phoneIntl: "+16136122107",
   neighborhood: "Ottawa",
-  nearbyAreas: ["ByWard Market", "Lowertown", "Centretown", "Sandy Hill", "Ottawa", "Dalhousie Street", "Rideau River", "OC Transpo"],
+  nearbyAreas: [
+    "ByWard Market",
+    "Lowertown",
+    "Vanier",
+    "Orleans",
+    "Westboro",
+    "Barrhaven",
+    "Kanata",
+    "Stittsville",
+    "Aylmer",
+    "Hull"
+  ],
   products: [
     "Flower",
     "Pre-rolls",
@@ -29,12 +40,12 @@ export const gbpLocation = {
   latitude: "45.4292",
   longitude: "-75.6928",
   hours: ["Open 24 Hours"],
-  seoTitle: "Spirit Corner Cannabis | Weed Dispensary in Ottawa",
-  metaDescription: "Spirit Corner Cannabis is a local weed dispensary in Ottawa offering flower, pre-rolls, edibles, vapes, concentrates, CBD, and service for adults 19+.",
-  localLandmarks: ["ByWard Market", "Lowertown", "Centretown"],
-  introVariant: "If you are searching for a reliable weed dispensary in Ottawa, Spirit Corner Cannabis at 251 Dalhousie St is your go-to destination. We serve adults 19+ with a vast selection of weed products including cannabis flower, pre-rolls, edibles, THC vapes, shatter, and CBD oils. Serving customers near Ottawa and surrounding communities like Lowertown, our cannabis store and weed shop is focused on quality and convenience.",
-  neighborhoodDescription: "Located in the vibrant Ottawa district, our cannabis store fits right into this active and historic community, surrounded by local retail shops and convenient transit links.",
+  seoTitle: "Spirit Corner Cannabis | 24 Hour Ottawa Dispensary Near ByWard Market",
+  metaDescription: "Spirit Corner Cannabis is a 24 hour Ottawa cannabis store near ByWard Market and Lowertown, serving adults 19+ from Ottawa, Gatineau, Hull, Vanier, Orleans, Barrhaven, Kanata, and nearby areas.",
+  localLandmarks: ["ByWard Market", "Lowertown", "Rideau Centre"],
+  introVariant: "If you are searching for a 24 hour Ottawa cannabis store near ByWard Market, Spirit Corner Cannabis at 251 Dalhousie St is built for convenient adult 19+ visit planning. Shoppers use this page to compare menu categories, check directions, and plan visits from downtown Ottawa, Lowertown, Vanier, Hull, Aylmer, Orleans, Barrhaven, Kanata, Stittsville, Westboro, and nearby communities.",
+  neighborhoodDescription: "Located near ByWard Market and Lowertown, Spirit Corner Cannabis is positioned for downtown Ottawa shoppers, late-night visitors, Gatineau/Hull bridge traffic, and adults 19+ planning cannabis store visits from surrounding neighbourhoods.",
   parkingNote: "Street parking is available along Dalhousie Street",
-  transitNote: "Accessible by OC Transpo routes serving nearby Ottawa neighborhoods.",
-  sectionTitle: "Serving Customers Near ByWard Market and Ottawa"
+  transitNote: "Accessible by OC Transpo routes serving nearby Ottawa neighbourhoods and bridge routes from Gatineau/Hull.",
+  sectionTitle: "Serving Ottawa, Gatineau, Hull, Vanier, Orleans, Barrhaven, Kanata and Nearby Areas"
 };
