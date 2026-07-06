@@ -581,6 +581,207 @@
 }
 
 /* ── FEATURED SECTION ── */
+.localHighlightSection {
+  padding: 32px 0 76px;
+  background:
+    radial-gradient(circle at top left, rgba(82, 183, 136, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(248, 250, 249, 0.72), rgba(255, 255, 255, 0));
+}
+
+.localHighlightHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.localHighlightKicker {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--green-dark);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.localHighlightTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: 0;
+}
+
+.localHighlightGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.localHighlightCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 230px;
+  padding: 24px;
+  color: var(--text-primary);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(45, 106, 79, 0.14);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  transition: transform var(--transition-med), border-color var(--transition-med), box-shadow var(--transition-med);
+}
+
+.localHighlightCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(45, 106, 79, 0.3);
+  box-shadow: 0 24px 56px rgba(15, 23, 42, 0.12);
+}
+
+.localHighlightEyebrow {
+  width: fit-content;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: 900;
+  color: var(--green-dark);
+  background: rgba(45, 106, 79, 0.08);
+  border: 1px solid rgba(45, 106, 79, 0.16);
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.localHighlightCard h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--green-deep);
+  letter-spacing: 0;
+}
+
+.localHighlightCard p {
+  flex: 1;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.localHighlightButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 38px;
+  padding: 10px 16px;
+  color: white;
+  background: linear-gradient(135deg, #2D6A4F, #40916C);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.siteListingSection {
+  margin: 30px 0 34px;
+  padding: 24px;
+  background: rgba(248, 250, 249, 0.78);
+  border: 1px solid rgba(45, 106, 79, 0.12);
+  border-radius: var(--radius-lg);
+}
+
+.siteListingIntro {
+  margin-bottom: 18px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.siteListingGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.siteListingCard {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.siteListingImageWrap {
+  width: 92px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f8faf9;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+
+.siteListingImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.siteListingName {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.siteListingMeta {
+  margin-top: 5px;
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.siteListingFootnote {
+  margin-top: 16px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .localHighlightHeader {
+    display: block;
+  }
+
+  .localHighlightGrid,
+  .siteListingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .localHighlightCard {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 460px) {
+  .siteListingCard {
+    grid-template-columns: 78px 1fr;
+  }
+
+  .siteListingImageWrap {
+    width: 78px;
+  }
+}
+
 .featuredSection {
   padding: 80px 0 100px;
   background: linear-gradient(180deg, transparent, rgba(248, 250, 249, 0.3) 50%, transparent);
