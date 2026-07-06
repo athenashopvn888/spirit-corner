@@ -5,20 +5,8 @@ import Link from "next/link";
 import styles from "./Navbar.module.css";
 
 const ALL_LINKS = [
-  { href: "/exotic", label: "Exotic" },
-  { href: "/premium", label: "Premium" },
-  { href: "/aaa", label: "AAA+" },
-  { href: "/aa", label: "AA" },
-  { href: "/budget", label: "Budget" },
-  { href: "/items/edibles", label: "Edibles" },
-  { href: "/items/prerolls", label: "Pre-Rolls" },
-  { href: "/items/vapes", label: "Nic Vape" },
-  { href: "/items/vape-disposables", label: "THC Vape" },
-  { href: "/items/concentrates", label: "Concentrates" },
-  { href: "/items/magic", label: "Magic Stuff" },
-  { href: "/items/cigarettes", label: "Cigarettes" },
-  { href: "/items/add-ons", label: "Accessories" },
-  { href: "/delivery", label: "Delivery" },
+  { href: "/#menu", label: "Menu" },
+  { href: "/cannabis-delivery-ottawa", label: "Delivery" },
   { href: "/faq", label: "FAQ" },
   { href: "/blog", label: "Blog" },
   { href: "/games", label: "Games" },
