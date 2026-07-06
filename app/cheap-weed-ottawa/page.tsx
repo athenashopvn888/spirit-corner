@@ -18,7 +18,7 @@ export default function CheapWeedPage() {
       <Navbar />
 
       {/* ── Banner Section ── */}
-      <section style={{ marginTop: "92px", position: "relative" }}>
+      <section style={{ marginTop: 0, position: "relative" }}>
         <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
           <img
             src="/banners/cheap-weed-ottawa-dispensary-deals-spirit-corner-cannabis-24-hour.png"
@@ -40,7 +40,7 @@ export default function CheapWeedPage() {
 
           <div style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
             <p style={{ marginBottom: "20px" }}>
-              Spirit Corner Cannabis is a trusted destination for customers searching for cheap weed in Ottawa, affordable cannabis products, and consistent value across the region. Located at 251 Dalhousie St near the ByWard Market, we are dedicated to providing the best weed prices in town.
+              Spirit Corner Cannabis is a practical destination for customers searching for cheap weed in Ottawa, affordable cannabis products, and consistent value across the region. Located at 251 Dalhousie St near the ByWard Market, the store focuses on clear, value-friendly cannabis options for adult shoppers.
             </p>
 
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 800, color: "var(--text-primary)", marginTop: "32px", marginBottom: "12px" }}>
