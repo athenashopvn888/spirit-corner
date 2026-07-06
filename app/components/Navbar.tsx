@@ -5,7 +5,7 @@ import Link from "next/link";
 import styles from "./Navbar.module.css";
 
 const ALL_LINKS = [
-  { href: "/#menu", label: "Menu" },
+  { href: "/menu", label: "Menu" },
   { href: "/cannabis-delivery-ottawa", label: "Delivery" },
   { href: "/faq", label: "FAQ" },
   { href: "/blog", label: "Blog" },
@@ -14,7 +14,7 @@ const ALL_LINKS = [
 
 const DIRECTIONS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=251%20Dalhousie%20St%2C%20Ottawa%2C%20ON%20K1N%201E7";
-const ORDER_URL = "/#menu";
+const ORDER_URL = "/menu";
 const CTA_HIDDEN_ROUTES = ["/manager-blog", "/tv", "/tv2"];
 
 export default function Navbar() {
