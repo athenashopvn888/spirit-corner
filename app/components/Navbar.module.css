@@ -1,5 +1,5 @@
 .navbar {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -9,7 +9,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* â”€â”€ Top bar: logo + open now â”€â”€ */
+/* ── Top bar: logo + open now ── */
 .topBar {
   display: flex;
   align-items: center;
@@ -107,7 +107,7 @@
   box-shadow: 0 0 14px rgba(251, 191, 36, 0.2);
 }
 
-/* â”€â”€ Horizontal scrollable link bar â”€â”€ */
+/* ── Horizontal scrollable link bar ── */
 .scrollBar {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   overflow-x: auto;
@@ -152,7 +152,7 @@
   transform: scale(0.96);
 }
 
-/* â”€â”€ Active nav pill â€” green highlight â”€â”€ */
+/* ── Active nav pill — green highlight ── */
 .pillActive {
   color: #fff;
   background: rgba(45, 106, 79, 0.85);
@@ -165,10 +165,7 @@
 }
 
 .quickCtaBar {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  position: static;
   display: flex;
   justify-content: center;
   gap: 10px;
