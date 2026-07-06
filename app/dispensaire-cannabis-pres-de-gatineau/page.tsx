@@ -18,7 +18,7 @@ export default function GatineauPage() {
       <Navbar />
 
       {/* ── Banner Section ── */}
-      <section style={{ marginTop: "92px", position: "relative", overflow: "hidden" }}>
+      <section style={{ marginTop: 0, position: "relative", overflow: "hidden" }}>
         <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
           <img
             src="/banners/dispensaire-cannabis-pres-de-gatineau-hull-ottawa-spirit-corner-cannabis.png"
