@@ -18,10 +18,10 @@ const ALL_LINKS = [
   { href: "/items/magic", label: "Magic Stuff" },
   { href: "/items/cigarettes", label: "Cigarettes" },
   { href: "/items/add-ons", label: "Accessories" },
-  { href: "/delivery", label: "ðŸš— Delivery" },
+  { href: "/delivery", label: "Delivery" },
   { href: "/faq", label: "FAQ" },
   { href: "/blog", label: "Blog" },
-  { href: "/games", label: "ðŸŽ®" },
+  { href: "/games", label: "Games" },
 ];
 
 const DIRECTIONS_URL =
@@ -37,18 +37,18 @@ export default function Navbar() {
 
   return (
     <nav className={styles.navbar} id="main-nav">
-      {/* Top bar â€” logo + open now */}
+      {/* Top bar: logo + open now */}
       <div className={styles.topBar}>
         <Link href="/" className={styles.logo}>
           <img
             src="/banners/logo.jpg"
-            alt="Spirit Corner Cannabis â€” Ottawa Dispensary"
+            alt="Spirit Corner Cannabis - Ottawa Dispensary"
             className={styles.logoImg}
           />
         </Link>
         <div className={styles.topBarRight}>
           <Link href="/games" className={styles.gamesBtn}>
-            ðŸŽ® Play Games
+            Play Games
           </Link>
           <span className={styles.open}>
             <span className={styles.dot}></span>
