@@ -15,6 +15,39 @@ const categoryLinks: { [key: string]: string } = {
   "Accessories": "/items/add-ons"
 };
 
+const prioritySeoLinks = [
+  {
+    href: "/24-hour-ottawa-dispensary",
+    label: "24 Hour Dispensary Ottawa",
+    description: "Late-night Ottawa cannabis store visit planning near ByWard Market."
+  },
+  {
+    href: "/dispensaire-cannabis-pres-de-gatineau",
+    label: "Cannabis Store Near Gatineau & Hull",
+    description: "Cross-river visit planning for adults coming from Gatineau, Hull, and Aylmer."
+  },
+  {
+    href: "/cannabis-delivery-ottawa",
+    label: "Ottawa Delivery Updates",
+    description: "Delivery update sign-up for Ottawa, Gatineau, Barrhaven, Kanata, Orleans, and nearby areas."
+  },
+  {
+    href: "/cheap-weed-ottawa",
+    label: "Affordable Cannabis Ottawa",
+    description: "Value-focused Ottawa cannabis shopping information for adults 19+."
+  },
+  {
+    href: "/native-cigarettes-ottawa",
+    label: "Native Cigarettes Ottawa",
+    description: "Native cigarette carton information for adult tobacco shoppers near downtown Ottawa."
+  },
+  {
+    href: "/nicotine-pouches-ottawa",
+    label: "Nicotine Pouches Ottawa",
+    description: "Nicotine pouch visit-planning page for adult shoppers near ByWard Market."
+  }
+];
+
 type StoreSchemaMarkup = {
   "@context": string;
   "@type": string;
@@ -87,8 +120,8 @@ export function GBPLandingPage() {
 
       {/* Hero Header */}
       <header className={styles.hero}>
-        <h1 className={styles.h1}>{gbpLocation.storeName} — Weed Dispensary in {gbpLocation.city}</h1>
-        <p className={styles.heroTagline}>Serving {gbpLocation.city} & Nearby Neighborhoods</p>
+        <h1 className={styles.h1}>{gbpLocation.storeName} — 24 Hour Ottawa Dispensary Near ByWard Market & Gatineau</h1>
+        <p className={styles.heroTagline}>Serving downtown Ottawa, Lowertown, Vanier, Gatineau, Hull, Orleans, Barrhaven, Kanata, Stittsville, Westboro and nearby areas</p>
       </header>
 
       {/* Call to Actions */}
@@ -103,15 +136,15 @@ export function GBPLandingPage() {
 
       {/* Intro Section */}
       <section className={styles.section}>
-        <h2 className={styles.h2}>Your Trusted Local Weed Dispensary</h2>
+        <h2 className={styles.h2}>Ottawa & Gatineau Cannabis Store Visit Planning</h2>
         <p className={styles.introText}>{gbpLocation.introVariant}</p>
       </section>
 
       {/* Product Section */}
       <section className={styles.section}>
-        <h2 className={styles.h2}>Weed and Cannabis Products Available</h2>
+        <h2 className={styles.h2}>Cannabis Menu Categories for Ottawa Shoppers</h2>
         <p className={styles.infoText}>
-          At {gbpLocation.storeName}, we offer a curated selection of weed and cannabis products for adults 19+ in {gbpLocation.city}. Enjoy some of Ontario&apos;s finest quality and value in the following categories:
+          At {gbpLocation.storeName}, adults 19+ can browse helpful cannabis menu categories before visiting the downtown Ottawa store. Use the links below to compare the main sections customers ask about most often:
         </p>
         <div className={styles.productGrid}>
           {gbpLocation.products.map((p) => {
@@ -125,7 +158,7 @@ export function GBPLandingPage() {
         </div>
       </section>      {/* Visit Planning Section */}
       <section className={styles.section}>
-        <h2 className={styles.h2}>Plan a Visit to {gbpLocation.storeName}</h2>
+        <h2 className={styles.h2}>Plan a Visit from ByWard Market, Lowertown, Vanier, Gatineau or Hull</h2>
         <p className={styles.infoText}>
           Planning a visit to {gbpLocation.storeName} is easier when the main store details are in one place. Adults 19+ can use this page to confirm the store address, phone number, hours, local area, and menu-category links before heading to {gbpLocation.city}.
         </p>
@@ -138,9 +171,25 @@ export function GBPLandingPage() {
         </p>
       </section>
 
+      {/* Priority Internal Links Section */}
+      <section className={styles.section}>
+        <h2 className={styles.h2}>Helpful Ottawa & Gatineau Store Pages</h2>
+        <p className={styles.infoText}>
+          Use these store-scoped pages to plan the right Spirit Corner visit, compare key menu sections, and find the most relevant local information before heading to the shop.
+        </p>
+        <div className={styles.seoLinkGrid}>
+          {prioritySeoLinks.map((link) => (
+            <Link key={link.href} href={link.href} className={styles.seoLinkCard}>
+              <span className={styles.seoLinkTitle}>{link.label}</span>
+              <span className={styles.seoLinkDescription}>{link.description}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Location & NAP Section */}
       <section className={styles.section}>
-        <h2 className={styles.h2}>Visit {gbpLocation.storeName} in {gbpLocation.city}</h2>
+        <h2 className={styles.h2}>Visit {gbpLocation.storeName} at 251 Dalhousie St in Downtown Ottawa</h2>
         <div className={styles.napGrid}>
           <div className={styles.napDetails}>
             <div className={styles.napItem}>
@@ -206,9 +255,9 @@ export function GBPLandingPage() {
         </div>
       </section>      {/* Category Link Context Section */}
       <section className={styles.section}>
-        <h2 className={styles.h2}>Compare Menu Categories Before You Visit</h2>
+        <h2 className={styles.h2}>Compare Flower, Pre-Rolls, Edibles, Vapes and Accessories Before You Visit</h2>
         <p className={styles.infoText}>
-          These category links help adults 19+ browse general menu sections before visiting. Product selection can change, so use the live menu for current details rather than assuming availability from this guide.
+          These category links help adults 19+ browse general menu sections before visiting. Use the live menu for current details and ask staff if you want help comparing categories during your visit.
         </p>
         <div className={styles.productGrid}>
           {categoryGuideLinks.map((link) => (
@@ -224,9 +273,9 @@ export function GBPLandingPage() {
         <h2 className={styles.h2}>Frequently Asked Questions</h2>
         <div className={styles.faqList}>
           <div className={styles.faqItem}>
-            <h3 className={styles.faqQuestion}>How should I plan a visit to {gbpLocation.storeName}?</h3>
+            <h3 className={styles.faqQuestion}>How should I plan a Spirit Corner visit from Ottawa or Gatineau?</h3>
             <p className={styles.faqAnswer}>
-              Check the store address, phone number, hours, menu links, and nearby-area notes on this page before visiting. {gbpLocation.storeName} serves adults 19+ near {gbpLocation.neighborhood || gbpLocation.city} and surrounding {gbpLocation.city} areas.
+              Check the store address, phone number, hours, directions, menu links, and nearby-area notes on this page before visiting. Spirit Corner serves adults 19+ from downtown Ottawa, ByWard Market, Lowertown, Vanier, Gatineau, Hull, and nearby areas.
             </p>
           </div>
           <div className={styles.faqItem}>
