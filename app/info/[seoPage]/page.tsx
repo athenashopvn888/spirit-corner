@@ -49,7 +49,7 @@ export default async function SeoLandingPage({
 
       {/* Banner Section */}
       {page.banner && (
-        <section style={{ marginTop: "92px", position: "relative" }}>
+        <section style={{ marginTop: 0, position: "relative" }}>
           <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
             <img
               src={page.banner}
