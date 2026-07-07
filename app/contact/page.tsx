@@ -1,17 +1,17 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "./contact.module.css";
 
 export const metadata: Metadata = {
-  title: "Contact Us — Spirit Corner Cannabis | 251 Dalhousie St, Ottawa",
+  title: "Contact Us - Spirit Corner Cannabis | 251 Dalhousie St, Ottawa",
   description:
     "Visit Spirit Corner Cannabis at 251 Dalhousie St, Ottawa, ON K1N 1E7. Open 24 Hours a day, 7 days a week. Walk-ins welcome.",
   alternates: {
     canonical: "https://spiritcornercannabis.com/contact",
   },
   openGraph: {
-    title: "Contact Spirit Corner Cannabis — Ottawa Dispensary",
+    title: "Contact Spirit Corner Cannabis - Ottawa Dispensary",
     description:
       "251 Dalhousie St, Ottawa. Open 24 Hours a day, 7 days a week. Premium cannabis, always fire.",
   },
@@ -22,25 +22,25 @@ export default function ContactPage() {
     <main className={styles.main}>
       <Navbar />
 
-      {/* â”€â”€ Hero â”€â”€ */}
+      {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
             Visit <span className={styles.heroAccent}>Spirit Corner</span>
           </h1>
           <p className={styles.heroSub}>
-            251 Dalhousie St Â· Ottawa, ON K1N 1E7
+            251 Dalhousie St - Ottawa, ON K1N 1E7
           </p>
         </div>
       </section>
 
-      {/* â”€â”€ Info Cards â”€â”€ */}
+      {/* Info Cards */}
       <section className={styles.infoSection}>
         <div className={styles.container}>
           <div className={styles.infoGrid}>
             {/* Location */}
             <div className={styles.infoCard}>
-              <div className={styles.infoIcon}>ðŸ“</div>
+              <div className={styles.infoIcon}>PIN</div>
               <h2 className={styles.infoTitle}>Location</h2>
               <p className={styles.infoText}>
                 251 Dalhousie St
@@ -53,7 +53,7 @@ export default function ContactPage() {
 
             {/* Hours */}
             <div className={styles.infoCard}>
-              <div className={styles.infoIcon}>ðŸ•’</div>
+              <div className={styles.infoIcon}>24H</div>
               <h2 className={styles.infoTitle}>Hours</h2>
               <div className={styles.hoursTable}>
                 <div className={styles.hoursRow}>
@@ -87,13 +87,13 @@ export default function ContactPage() {
               </div>
               <div className={styles.openBadge}>
                 <span className={styles.openDot}></span>
-                Open 24/7 â€” Never Closed
+                Open 24/7 - Never Closed
               </div>
             </div>
 
             {/* Walk-in */}
             <div className={styles.infoCard}>
-              <div className={styles.infoIcon}>ðŸ”¥</div>
+              <div className={styles.infoIcon}>SHOP</div>
               <h2 className={styles.infoTitle}>Walk In</h2>
               <p className={styles.infoText}>
                 No appointment needed.
@@ -104,19 +104,19 @@ export default function ContactPage() {
               </p>
               <div className={styles.featureList}>
                 <div className={styles.featureItem}>
-                  <span className={styles.featureCheck}>âœ“</span>
+                  <span className={styles.featureCheck}>OK</span>
                   200+ strains in stock
                 </div>
                 <div className={styles.featureItem}>
-                  <span className={styles.featureCheck}>âœ“</span>
+                  <span className={styles.featureCheck}>OK</span>
                   Lab-tested &amp; safe
                 </div>
                 <div className={styles.featureItem}>
-                  <span className={styles.featureCheck}>âœ“</span>
+                  <span className={styles.featureCheck}>OK</span>
                   Knowledgeable budtenders
                 </div>
                 <div className={styles.featureItem}>
-                  <span className={styles.featureCheck}>âœ“</span>
+                  <span className={styles.featureCheck}>OK</span>
                   Debit &amp; cash accepted
                 </div>
               </div>
@@ -129,9 +129,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* â”€â”€ Footer â”€â”€ */}
+      {/* Footer */}
       <Footer />
     </main>
   );
 }
-

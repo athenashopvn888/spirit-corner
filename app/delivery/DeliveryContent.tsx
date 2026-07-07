@@ -17,7 +17,7 @@ export default function DeliveryContent() {
 
     try {
       // Save to Google Sheets via Apps Script
-      const res = await fetch(
+      await fetch(
         `https://script.google.com/macros/s/AKfycbx09_sDal1eMVF1r-hUck4e7oq_XBHEWhGvA79JuhZNQ6P4CdhCas0xE3FfexWQ3hq4/exec?action=delivery_email&email=${encodeURIComponent(email)}&store=SCC01`,
         { method: "GET", mode: "no-cors" }
       );
@@ -32,18 +32,18 @@ export default function DeliveryContent() {
     <main className={styles.main}>
       <Navbar />
       <div className={styles.content}>
-        <span className={styles.icon}>🚗</span>
+        <span className={styles.icon}>Delivery</span>
         <h1 className={styles.pageTitle}>
           Delivery <span className={styles.highlight}>Coming Soon</span>
         </h1>
         <p className={styles.pageSubtitle}>
           Spirit Corner Cannabis is launching delivery across Ottawa &amp; Gatineau.
-          Sign up below to be the first to know when we go live — and get an exclusive launch-day deal.
+          Sign up below to be the first to know when we go live.
         </p>
 
         {/* Email signup */}
         <div className={styles.formSection}>
-          <h2 className={styles.formTitle}>🔔 Get Notified When We Launch</h2>
+          <h2 className={styles.formTitle}>Get Notified When We Launch</h2>
           <p className={styles.formDesc}>
             Enter your email to join our delivery waitlist. We&apos;ll send you one email when delivery goes live.
           </p>
@@ -69,7 +69,7 @@ export default function DeliveryContent() {
           </form>
           {status === "success" && (
             <p className={styles.successMsg}>
-              ✅ You&apos;re on the list! We&apos;ll notify you when delivery launches.
+              You&apos;re on the list! We&apos;ll notify you when delivery launches.
             </p>
           )}
           {status === "error" && (
@@ -82,17 +82,17 @@ export default function DeliveryContent() {
         {/* Info cards */}
         <div className={styles.infoGrid}>
           <div className={styles.infoCard}>
-            <span className={styles.infoIcon}>📦</span>
+            <span className={styles.infoIcon}>Delivery</span>
             <h3 className={styles.infoTitle}>Same-Day Delivery</h3>
             <p className={styles.infoDesc}>Order before 6 PM, delivered same day across Ottawa.</p>
           </div>
           <div className={styles.infoCard}>
-            <span className={styles.infoIcon}>🌉</span>
+            <span className={styles.infoIcon}>Area</span>
             <h3 className={styles.infoTitle}>Ottawa & Gatineau</h3>
             <p className={styles.infoDesc}>Serving the entire National Capital Region.</p>
           </div>
           <div className={styles.infoCard}>
-            <span className={styles.infoIcon}>💰</span>
+            <span className={styles.infoIcon}>Value</span>
             <h3 className={styles.infoTitle}>Same Great Prices</h3>
             <p className={styles.infoDesc}>All in-store promotions apply to delivery orders too.</p>
           </div>
@@ -101,7 +101,7 @@ export default function DeliveryContent() {
         {/* CTA */}
         <div className={styles.ctaSection}>
           <p className={styles.ctaText}>
-            Can&apos;t wait? Visit us in-store at <strong>251 Dalhousie St, Ottawa</strong> —
+            Can&apos;t wait? Visit us in-store at <strong>251 Dalhousie St, Ottawa</strong> -
             open <strong>24 hours</strong>. Call <strong>(613) 612-2107</strong>.
           </p>
         </div>

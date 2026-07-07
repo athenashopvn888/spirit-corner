@@ -105,8 +105,41 @@
   line-height: 1.35;
 }
 
+.filterDisclosure {
+  margin-top: 16px;
+}
+
+.filterToggle {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 42px;
+  padding: 10px 14px;
+  color: #1b4332;
+  background: rgba(45, 106, 79, 0.08);
+  border: 1px solid rgba(45, 106, 79, 0.18);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.filterToggle::-webkit-details-marker {
+  display: none;
+}
+
+.filterToggle::after {
+  content: "+";
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.filterDisclosure[open] .filterToggle::after {
+  content: "-";
+}
+
 .filterPanel {
-  margin-top: 18px;
+  margin-top: 12px;
   padding: 16px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(45, 106, 79, 0.14);

@@ -6,7 +6,7 @@ import HeroSlider from "./components/HeroSlider";
 import { allFlowers } from "./lib/products";
 import Link from "next/link";
 
-/* ── HOMEPAGE METADATA ── */
+/* Homepage metadata */
 export const metadata: Metadata = {
   title: "24 Hour Downtown Ottawa Dispensary | Spirit Corner Cannabis",
   description:
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-/* ── Tier data ── */
+/* Tier data */
 const TIERS = [
   {
     name: "EXOTIC",
@@ -28,7 +28,7 @@ const TIERS = [
     deal6g: "6g bundle for $60",
     color: "#f59e0b",
     glow: "rgba(245, 158, 11, 0.2)",
-    icon: "🔥",
+    icon: "EX",
     count: 42,
     banner: "/banners/exotic_premium_cannabis_with_glowing_accents.webp",
   },
@@ -42,7 +42,7 @@ const TIERS = [
     deal6g: "6g bundle for $45",
     color: "#a78bfa",
     glow: "rgba(167, 139, 250, 0.2)",
-    icon: "💎",
+    icon: "PR",
     count: 38,
     banner: "/banners/premium_cannabis_with_glowing_accents.webp",
   },
@@ -56,7 +56,7 @@ const TIERS = [
     deal6g: "6g bundle for $30",
     color: "#22d3ee",
     glow: "rgba(34, 211, 238, 0.2)",
-    icon: "⚡",
+    icon: "AA+",
     count: 55,
     banner: "/banners/electric_neon_cannabis_ad_banner.webp",
   },
@@ -70,7 +70,7 @@ const TIERS = [
     deal6g: null,
     color: "#34d399",
     glow: "rgba(52, 211, 153, 0.2)",
-    icon: "✦",
+    icon: "AA",
     count: 35,
     banner: "/banners/neon_cannabis_product_showcase.webp",
   },
@@ -84,7 +84,7 @@ const TIERS = [
     deal6g: null,
     color: "#94a3b8",
     glow: "rgba(148, 163, 184, 0.15)",
-    icon: "💰",
+    icon: "BG",
     count: 18,
     banner: "/banners/premium_budget_cannabis_deal_showcase.webp",
   },
@@ -98,13 +98,13 @@ const TIERS = [
     deal6g: null,
     color: "#fb923c",
     glow: "rgba(251, 146, 60, 0.2)",
-    icon: "🍬",
+    icon: "ED",
     count: 80,
     banner: "/banners/neon_lit_edible_product_promotion_banner.webp",
   },
 ];
 
-/* ── Build featured strains dynamically from real inventory ── */
+/* Build featured strains dynamically from real inventory */
 function buildFeatured() {
   const hot = allFlowers.filter((f) => f.isHot);
   const sale = allFlowers.filter((f) => f.isSale && !f.isHot);
@@ -128,7 +128,7 @@ function buildFeatured() {
     tier: f.tier.toUpperCase(),
     thc: f.thc,
     type: f.type === "indica" ? "IH" : f.type === "sativa" ? "SH" : "H",
-    price3g: f.price3g ? `$${f.price3g.sale ?? f.price3g.regular}` : "—",
+    price3g: f.price3g ? `$${f.price3g.sale ?? f.price3g.regular}` : "-",
     image: f.image,
   }));
 }
@@ -264,7 +264,7 @@ export default function HomePage() {
         name: "Why is the ByWard Market location important?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "The ByWard Market is one of Ottawa’s busiest downtown districts and provides convenient access for both Ottawa residents and visitors travelling from Gatineau and nearby communities.",
+          text: "The ByWard Market is one of Ottawa's busiest downtown districts and provides convenient access for both Ottawa residents and visitors travelling from Gatineau and nearby communities.",
         },
       },
       {
@@ -306,19 +306,19 @@ export default function HomePage() {
       />
 
       <main className={styles.main}>
-        {/* ── NAVBAR ── */}
+        {/* Navbar */}
         <Navbar />
 
-        {/* ── HIGH-FIDELITY HERO SLIDER ── */}
+        {/* Hero slider */}
         <HeroSlider />
 
-        {/* ── SHOP BY TIER SECTION ── */}
+        {/* Shop by tier section */}
         <section className={styles.tierSection} id="menu">
           <div className={styles.container}>
             <div className={styles.sectionBanner}>
               <img
                 src="/banners/cheap-weed-ottawa-cannabis-tier-nnabis.png"
-                alt="Shop by Tier — From exotic craft flower to value budget OZs at Spirit Corner Cannabis"
+                alt="Shop by Tier - From exotic craft flower to value budget OZs at Spirit Corner Cannabis"
                 className={styles.sectionBannerImg}
               />
             </div>
@@ -349,7 +349,7 @@ export default function HomePage() {
                       className={styles.tierCardName}
                       style={{ color: tier.color }}
                     >
-                      {tier.icon} {tier.name}
+                      {tier.name}
                     </h3>
                     <div className={styles.tierCardMeta}>
                       <span className={styles.tierCardThc}>
@@ -368,19 +368,19 @@ export default function HomePage() {
                     </div>
                     {tier.deal3g && (
                       <div className={styles.tierCardDeals}>
-                        <span className={styles.tierCardDeal}>🎁 {tier.deal3g}</span>
-                        {tier.deal6g && <span className={styles.tierCardDeal}>🎁 {tier.deal6g}</span>}
+                        <span className={styles.tierCardDeal}>{tier.deal3g}</span>
+                        {tier.deal6g && <span className={styles.tierCardDeal}>{tier.deal6g}</span>}
                       </div>
                     )}
                   </div>
-                  <div className={styles.tierCardArrow}>→</div>
+                  <div className={styles.tierCardArrow}>View</div>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── HOT RIGHT NOW ── */}
+        {/* Hot right now */}
         {/* Featured local product pages */}
         <section className={styles.localHighlightSection}>
           <div className={styles.container}>
@@ -417,7 +417,7 @@ export default function HomePage() {
             <div className={styles.sectionBanner}>
               <img
                 src="/banners/hot_right_now_in_neon_glow.webp"
-                alt="Hot Right Now — Staff picks and top sellers"
+                alt="Hot Right Now - Staff picks and top sellers"
                 className={styles.sectionBannerImg}
               />
             </div>
@@ -465,7 +465,7 @@ export default function HomePage() {
                       </span>
                       <span className={styles.productPriceUnit}>/ 3g</span>
                     </div>
-                    <div className={styles.productCta}>View Strain →</div>
+                    <div className={styles.productCta}>View Strain</div>
                   </div>
                 </Link>
               ))}
@@ -473,7 +473,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── SEO DETAILED COPYWRITING SECTION ── */}
+        {/* SEO detailed copy section */}
         <section style={{ padding: "60px 0", background: "var(--bg-secondary)", borderTop: "1px solid var(--border-subtle)" }}>
           <div className={styles.container} style={{ maxWidth: "900px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", alignItems: "center", marginBottom: "20px", borderBottom: "1px solid var(--border-subtle)", paddingBottom: "10px" }}>
@@ -684,7 +684,7 @@ export default function HomePage() {
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
                   <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Why is the ByWard Market location important?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>The ByWard Market is one of Ottawa’s busiest downtown districts and provides convenient access for both Ottawa residents and visitors travelling from Gatineau and nearby communities.</p>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>The ByWard Market is one of Ottawa&apos;s busiest downtown districts and provides convenient access for both Ottawa residents and visitors travelling from Gatineau and nearby communities.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
@@ -706,18 +706,18 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── GAMES ARCADE BANNER ── */}
+        {/* Games arcade banner */}
         <section className={styles.promoSection}>
           <Link href="/games" className={styles.promoBannerLink}>
             <img
               src="/banners/neon_arcade_gaming_promotion_banner.webp"
-              alt="Games Arcade — Flappy Bud, Snake Munchies, Brick Breaker 420 Promotion Banner"
+              alt="Games Arcade - Flappy Bud, Snake Munchies, Brick Breaker 420 Promotion Banner"
               className={styles.promoBannerImg}
             />
           </Link>
         </section>
 
-        {/* ── STORE INFO ── */}
+        {/* Store info */}
         <section className={styles.storeSection} id="contact">
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
@@ -727,7 +727,7 @@ export default function HomePage() {
             </div>
             <div className={styles.storeGrid}>
               <div className={styles.storeCard}>
-                <div className={styles.storeIcon}>📍</div>
+                <div className={styles.storeIcon}>PIN</div>
                 <h3 className={styles.storeCardTitle}>Location</h3>
                 <p className={styles.storeCardText}>
                   251 Dalhousie St
@@ -737,7 +737,7 @@ export default function HomePage() {
                 </p>
               </div>
               <div className={styles.storeCard}>
-                <div className={styles.storeIcon}>🕒</div>
+                <div className={styles.storeIcon}>24H</div>
                 <h3 className={styles.storeCardTitle}>Hours</h3>
                 <p className={styles.storeCardText}>
                   Open 7 Days a Week
@@ -746,7 +746,7 @@ export default function HomePage() {
                 </p>
               </div>
               <div className={styles.storeCard}>
-                <div className={styles.storeIcon}>🔥</div>
+                <div className={styles.storeIcon}>SHOP</div>
                 <h3 className={styles.storeCardTitle}>Walk In</h3>
                 <p className={styles.storeCardText}>
                   No appointment needed
@@ -764,7 +764,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── FOOTER ── */}
+        {/* Footer */}
         <Footer />
       </main>
     </>

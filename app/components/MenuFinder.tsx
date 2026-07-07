@@ -257,12 +257,12 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
   return (
     <div className={styles.finder} id="menu-finder">
       <div className={styles.header}>
-        <span className={styles.kicker}>Menu finder</span>
-        <h2>Find the right Spirit Corner menu section faster</h2>
+        <span className={styles.kicker}>Shop by category</span>
+        <h2>Pick your menu section first</h2>
         <p>
-          Use quick category buttons, search, and filters to compare flower tiers,
-          weights, THC ranges, product types, smoke products, and accessories before
-          opening the full product page.
+          Start with Spirit Corner&apos;s simple category shortcuts. If you want to
+          narrow things down, open the filter helper below for price, weight, THC,
+          effect, product type, and sorting.
         </p>
       </div>
 
@@ -282,6 +282,11 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
           </button>
         ))}
       </div>
+
+      <details className={styles.filterDisclosure}>
+        <summary className={styles.filterToggle}>
+          Filter by price, weight, THC, effect, product type, and sort
+        </summary>
 
       <div className={styles.filterPanel}>
         <label className={styles.searchField}>
@@ -354,6 +359,7 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
           </button>
         </div>
       </div>
+      </details>
 
       <div className={styles.resultGrid}>
         {visible.map((product) => (

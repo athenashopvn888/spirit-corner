@@ -1002,8 +1002,17 @@
 }
 
 .storeIcon {
-  font-size: 36px;
+  display: inline-flex;
   margin-bottom: 14px;
+  padding: 5px 10px;
+  color: var(--green-dark);
+  background: rgba(45, 106, 79, 0.08);
+  border: 1px solid rgba(45, 106, 79, 0.16);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .storeCardTitle {

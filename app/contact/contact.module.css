@@ -76,8 +76,17 @@
 }
 
 .infoIcon {
-  font-size: 40px;
+  display: inline-flex;
   margin-bottom: 16px;
+  padding: 5px 10px;
+  color: #95d5b2;
+  background: rgba(149, 213, 178, 0.08);
+  border: 1px solid rgba(149, 213, 178, 0.16);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .infoTitle {

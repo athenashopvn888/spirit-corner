@@ -3,9 +3,14 @@ import styles from "../page.module.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Link from "next/link";
+import { allItems } from "../lib/products";
+
+const cigaretteItems = allItems.filter((item) =>
+  item.category.toUpperCase().includes("CIGARETTE")
+);
 
 export const metadata: Metadata = {
-  title: "Native Cigarettes Ottawa | $25 Per Carton | Spirit Corner Cannabis",
+  title: "Native Cigarettes Ottawa - $25 Per Carton | Spirit Corner Cannabis",
   description: "Spirit Corner Cannabis offers Native cigarette cartons in downtown Ottawa at $25 Per Carton, with popular brands near ByWard Market for adult customers.",
   alternates: {
     canonical: "https://spiritcornercannabis.com/native-cigarettes-ottawa",
@@ -31,7 +36,7 @@ export default function NativeCigarettesPage() {
       <section style={{ padding: "60px 24px", background: "var(--bg-primary)" }}>
         <div style={{ maxWidth: "900px", margin: "0 auto" }}>
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "36px", fontWeight: 900, color: "var(--green-deep)", marginBottom: "20px" }}>
-            Native Cigarettes Ottawa — $25 Per Carton
+            Native Cigarettes Ottawa - $25 Per Carton
           </h1>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: 800, color: "var(--green-dark)", marginBottom: "30px", marginTop: "-10px" }}>
             Discount Native Cigarettes Near Downtown Ottawa
@@ -93,6 +98,35 @@ export default function NativeCigarettesPage() {
               </Link>{" "}
               page before visiting.
             </p>
+
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 800, color: "var(--text-primary)", marginTop: "32px", marginBottom: "12px" }}>
+              Native Cigarette Menu Listings
+            </h3>
+            <p style={{ marginBottom: "16px" }}>
+              Browse the Spirit Corner cigarette menu section below and jump into individual product listings before planning your downtown Ottawa visit.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", margin: "18px 0 28px" }}>
+              {cigaretteItems.map((item) => (
+                <Link
+                  key={item.sku}
+                  href={`/item/${item.slug}`}
+                  style={{ display: "grid", gridTemplateColumns: "58px 1fr", gap: "10px", alignItems: "center", minHeight: "82px", padding: "10px", color: "inherit", textDecoration: "none", background: "white", border: "1px solid var(--border-subtle)", borderRadius: "12px" }}
+                >
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "58px", height: "62px", overflow: "hidden", background: "#f8faf9", borderRadius: "9px" }}>
+                    <img
+                      src={item.image}
+                      alt={`${item.name} native cigarette product listing at Spirit Corner Cannabis Ottawa`}
+                      loading="lazy"
+                      style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                    />
+                  </span>
+                  <span>
+                    <strong style={{ display: "block", color: "var(--text-primary)", fontSize: "13px", lineHeight: 1.2, textTransform: "uppercase" }}>{item.name}</strong>
+                    <small style={{ display: "block", marginTop: "5px", color: "var(--text-muted)", fontWeight: 800 }}>{item.price || "See menu"}</small>
+                  </span>
+                </Link>
+              ))}
+            </div>
 
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 800, color: "var(--text-primary)", marginTop: "32px", marginBottom: "12px" }}>
               Frequently Asked Questions

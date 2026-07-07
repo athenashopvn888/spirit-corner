@@ -26,7 +26,7 @@ const ALL_LINKS = [
 
 const DIRECTIONS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=251%20Dalhousie%20St%2C%20Ottawa%2C%20ON%20K1N%201E7";
-const CALL_URL = "tel:+16136122107";
+const ORDER_URL = "/cannabis-delivery-ottawa";
 const CTA_HIDDEN_ROUTES = ["/manager-blog", "/tv", "/tv2"];
 
 export default function Navbar() {
@@ -84,12 +84,12 @@ export default function Navbar() {
           >
             Get Directions
           </a>
-          <a
-            href={CALL_URL}
+          <Link
+            href={ORDER_URL}
             className={`${styles.quickCtaButton} ${styles.quickCtaOrder}`}
           >
-            Call Now
-          </a>
+            Order Now
+          </Link>
         </div>
       )}
     </nav>
