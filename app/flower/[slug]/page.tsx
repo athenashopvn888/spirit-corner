@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
@@ -126,6 +126,9 @@ export default async function FlowerPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  if (slug.toLowerCase().includes("mike-tyson-ko") && slug !== "mike-tyson-ko-super-exotics") {
+    redirect("/flower/mike-tyson-ko-super-exotics");
+  }
   const flower = allFlowers.find((f) => f.slug === slug);
   if (!flower) notFound();
 

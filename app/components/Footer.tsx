@@ -6,27 +6,20 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.grid}>
-          {/* Column 1 — Store Description */}
           <div className={styles.col}>
-            <div className={styles.brand}>
-              SPIRIT<span className={styles.fire}>✨</span>CORNER
-            </div>
+            <div className={styles.brand}>SPIRIT CORNER</div>
             <p className={styles.desc}>
               Your Local Cannabis Dispensary At 251 Dalhousie St, Ottawa. Visit
               Spirit Corner Cannabis For Premium Flower, Edibles, Vapes &amp; More.
               Open 24 Hours.
             </p>
             <div className={styles.buttons}>
-              <a
-                href="tel:+16136122107"
-                className={styles.btnPrimary}
-              >
+              <a href="tel:+16136122107" className={styles.btnPrimary}>
                 Call Now
               </a>
             </div>
           </div>
 
-          {/* Column 2 — Contact Info */}
           <div className={styles.col}>
             <h3 className={styles.colTitle}>Contact Info</h3>
             <div className={styles.infoBlock}>
@@ -37,7 +30,11 @@ export default function Footer() {
             </div>
             <div className={styles.infoBlock}>
               <span className={styles.infoLabel}>Phone:</span>
-              <span><a href="tel:+16136122107" style={{color: "inherit"}}>(613) 612-2107</a></span>
+              <span>
+                <a href="tel:+16136122107" style={{ color: "inherit" }}>
+                  (613) 612-2107
+                </a>
+              </span>
             </div>
             <div className={styles.infoBlock}>
               <span className={styles.infoLabel}>Hours:</span>
@@ -45,7 +42,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 3 — Quick Links */}
           <div className={styles.col}>
             <h3 className={styles.colTitle}>Quick Links</h3>
             <nav className={styles.links}>
@@ -60,7 +56,7 @@ export default function Footer() {
               <Link href="/items/vapes">Vape Pens</Link>
               <Link href="/blog">Blog</Link>
               <Link href="/faq">FAQ</Link>
-              <Link href="/delivery">Delivery (Coming Soon)</Link>
+              <Link href="/cannabis-delivery-ottawa">Delivery Updates</Link>
               <Link href="/games">Games Arcade</Link>
               <Link href="/info/ottawa-weed-dispensary">Ottawa Dispensary</Link>
               <Link href="/info/cheap-weed-ottawa">Cheap Weed Ottawa</Link>
@@ -70,6 +66,13 @@ export default function Footer() {
               <Link href="/contact">Contact Us</Link>
             </nav>
           </div>
+        </div>
+
+        <div className={styles.trustStrip} aria-label="Payment and convenience options">
+          <span>Interac Flash accepted</span>
+          <span>Credit cards accepted</span>
+          <span>Contactless tap</span>
+          <span>24/7 ATM on site</span>
         </div>
 
         <div className={styles.bottom}>
