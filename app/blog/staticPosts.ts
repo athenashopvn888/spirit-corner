@@ -39,7 +39,7 @@ export const STATIC_POSTS: StaticBlogPost[] = [
     meta_description: "Adult 19+ guide to Spirit Corner Cannabis near ByWard Market in downtown Ottawa, with local store-page checks, menu-category context, and safe visit planning.",
     h1: "How Adults 19+ Can Plan a Visit to Spirit Corner Cannabis Near ByWard Market",
     excerpt: "Spirit Corner Cannabis guide for adults 19+ reviewing store information near ByWard Market in downtown Ottawa.",
-    author: "Athena SEO Team",
+    author: "The Spirit Corner Cannabis Team",
     date: "2026-07-02",
     category: "Store Guide",
     readTime: "4 min",
