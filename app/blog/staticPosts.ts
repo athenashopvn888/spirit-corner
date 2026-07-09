@@ -230,19 +230,17 @@ Use the live menu for current store-specific selection, then use the store page 
     title: "Spirit Corner Cannabis Local Visit Guide for Adults 19+",
     seoTitle: "Spirit Corner Cannabis Local Visit Guide | Ottawa",
     seo_title: "Spirit Corner Cannabis Local Visit Guide | Ottawa",
-    metaDescription: "Plan a visit to Spirit Corner Cannabis around Dalhousie St, ByWard Market, and downtown Ottawa with adult 19+ store-page checks, menu-category paths, and local directions context.",
-    meta_description: "Plan a visit to Spirit Corner Cannabis around Dalhousie St, ByWard Market, and downtown Ottawa with adult 19+ store-page checks, menu-category paths, and local directions context.",
+    metaDescription: "Plan a visit to Spirit Corner Cannabis in Ottawa with adult 19+ store-page checks, menu-category paths, and local directions context.",
+    meta_description: "Plan a visit to Spirit Corner Cannabis in Ottawa with adult 19+ store-page checks, menu-category paths, and local directions context.",
     h1: "Spirit Corner Cannabis Local Visit Guide for Adults 19+",
     excerpt: "Spirit Corner Cannabis local visit guide for adults 19+ around Dalhousie St, ByWard Market, and downtown Ottawa.",
     author: "The Spirit Corner Cannabis Team",
     date: "2026-07-09",
     category: "Local Guide",
     readTime: "4 min",
-    content: `## Spirit Corner Cannabis Local Visit Guide For Adults 19+
+    content: `Use this guide to confirm the right Spirit Corner Cannabis storefront around Dalhousie St, ByWard Market, and downtown Ottawa, understand nearby street context, and choose the most useful store page or menu path before visiting.
 
-When adults 19+ search for a cannabis store around Dalhousie St, ByWard Market, and downtown Ottawa, the most useful page should make three things easy: confirm the right storefront, understand the nearby street context, and move quickly to the store page or menu categories before visiting.
-
-This guide is for shoppers researching Spirit Corner Cannabis in Ottawa. It does not replace current store details, current hours, or live menu information. Use the official store page or contact staff before leaving.
+For current details, start with the official store page or contact staff before leaving.
 
 ## Confirm The Right Storefront
 
@@ -250,7 +248,7 @@ Spirit Corner Cannabis is tied to Dalhousie St, ByWard Market, Rideau, and Lower
 
 If you are checking directions, start with the official store page and confirm the destination there. That keeps the visit focused on the right storefront instead of relying on a copied listing or an old search result.
 
-## Browse The Useful Menu Paths
+## Use The Menu Before Visiting
 
 Start with the menu category that matches what you want to compare. Most shoppers move fastest when they check flower tiers, pre-rolls, vapes, edibles, concentrates, and accessories first, then ask staff if they need help choosing between options.
 
@@ -263,7 +261,7 @@ The live menu is the best place for current product details. This guide gives lo
 - Menu categories you want to compare before asking staff.
 - Valid adult 19+ identification for the visit.
 
-## Why Local Context Helps
+## Why The Local Context Matters
 
 Good local store pages should answer real visit-planning questions instead of repeating a city name. Clear store identity, nearby street context, and helpful internal links make it easier for adults 19+ to decide whether they are looking at the right store.
 
@@ -281,9 +279,9 @@ For Spirit Corner Cannabis, that means keeping the page focused on Dalhousie St,
 
 Yes. It is written for Spirit Corner Cannabis and its Ottawa local context.
 
-### Does this page confirm current product availability?
+### How can shoppers check current product details?
 
-No. Use the live menu or contact staff for current store-specific details before visiting.
+Use the live menu or contact staff for current store-specific details before visiting.
 
 ### What should shoppers check first?
 
