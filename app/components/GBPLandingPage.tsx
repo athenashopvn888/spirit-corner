@@ -167,7 +167,7 @@ export function GBPLandingPage() {
         </p>
         <p className={styles.infoText}>
           For a fuller local overview, read the{" "}
-          <Link href="/blog/spirit-corner-byward-market-visit-guide">Spirit Corner ByWard Market visit guide</Link>.
+          <Link href="/">Home</Link>.
         </p>
       </section>
 

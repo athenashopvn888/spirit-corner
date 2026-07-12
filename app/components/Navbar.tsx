@@ -20,7 +20,6 @@ const ALL_LINKS = [
   { href: "/items/add-ons", label: "Accessories" },
   { href: "/cannabis-delivery-ottawa", label: "Delivery" },
   { href: "/faq", label: "FAQ" },
-  { href: "/blog", label: "Blog" },
   { href: "/games", label: "Games" },
 ];
 
