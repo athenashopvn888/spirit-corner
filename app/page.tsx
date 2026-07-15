@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import styles from "./page.module.css";
 import Navbar from "./components/Navbar";
+import HiringCallout from "./components/HiringCallout";
 import Footer from "./components/Footer";
 import HeroSlider from "./components/HeroSlider";
 import { allFlowers } from "./lib/products";
@@ -308,6 +309,7 @@ export default function HomePage() {
       <main className={styles.main}>
         {/* Navbar */}
         <Navbar />
+      <HiringCallout />
 
         {/* Hero slider */}
         <HeroSlider />
