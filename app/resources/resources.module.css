@@ -1,0 +1,165 @@
+.main {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(250, 245, 255, 0.92), #fff 44%),
+    var(--bg-primary);
+}
+
+.hero {
+  padding: 132px 24px 42px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.wrap {
+  width: min(100%, 1060px);
+  margin: 0 auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  margin: 0 0 14px;
+  padding: 8px 12px;
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  border-radius: var(--radius-pill);
+  background: rgba(168, 85, 247, 0.1);
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 930px;
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6.4vw, 76px);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.intro {
+  max-width: 780px;
+  margin: 20px 0 0;
+  color: var(--text-secondary);
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.bannerFrame {
+  margin: 30px 0 0;
+  border: 1px solid rgba(168, 85, 247, 0.24);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #1a0b2e;
+  box-shadow: 0 24px 70px rgba(59, 7, 100, 0.14);
+}
+
+.bannerImg {
+  width: 100%;
+  aspect-ratio: 16 / 6;
+  object-fit: cover;
+}
+
+.cardsSection {
+  padding: 34px 24px 10px;
+}
+
+.grid {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  min-height: 162px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 22px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.93);
+  color: inherit;
+  box-shadow: 0 14px 40px rgba(59, 7, 100, 0.06);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(168, 85, 247, 0.34);
+  box-shadow: 0 18px 46px rgba(59, 7, 100, 0.1);
+}
+
+.card span {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+.body {
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: 24px 24px 78px;
+  display: grid;
+  gap: 26px;
+}
+
+.section {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 28px;
+}
+
+.section h2 {
+  margin: 0 0 12px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(25px, 4vw, 38px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.section p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.section ul {
+  margin: 18px 0 0;
+  padding-left: 22px;
+  color: var(--text-secondary);
+}
+
+.section li {
+  margin: 8px 0;
+  line-height: 1.65;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding-top: 116px;
+  }
+
+  .intro,
+  .section p {
+    font-size: 16px;
+  }
+
+  .bannerImg {
+    aspect-ratio: 16 / 8;
+  }
+}
