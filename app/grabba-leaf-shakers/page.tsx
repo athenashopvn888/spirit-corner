@@ -9,23 +9,33 @@ import styles from "./grabba.module.css";
 const PAGE_URL = "https://spiritcornercannabis.com/grabba-leaf-shakers";
 const DIRECTIONS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=251%20Dalhousie%20St%2C%20Ottawa%2C%20ON%20K1N%201E7";
+const SHAKER_SLUG = "grabba-shaker-redrose-red-herring";
+const grabbaItems = allItems.filter(
+  (item) => item.slug === "grabba" || item.slug === SHAKER_SLUG
+);
+const hasShaker = grabbaItems.some((item) => item.slug === SHAKER_SLUG);
+const menuDescription = hasShaker
+  ? "Grabba and Grabba Shaker menu options at Spirit Corner Cannabis in downtown Ottawa."
+  : "Published Grabba menu information and a direct way to ask Spirit Corner Cannabis about Grabba Shaker options in downtown Ottawa.";
 
 export const metadata: Metadata = {
   title: "Grabba Leaf & Grabba Shakers Ottawa",
-  description:
-    "Compare Grabba and Grabba Shaker menu options at Spirit Corner Cannabis, 251 Dalhousie St in downtown Ottawa. Open 24 hours for adults 19+.",
+  description: `${menuDescription} Visit 251 Dalhousie St, open 24 hours for adults 19+.`,
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Grabba Leaf & Grabba Shakers Ottawa",
-    description:
-      "Grabba and Grabba Shaker menu options at Spirit Corner Cannabis in downtown Ottawa. Open 24 hours.",
+    description: `${menuDescription} Open 24 hours.`,
     url: PAGE_URL,
     images: [
       {
-        url: "https://spiritcornercannabis.com/products/GrabbaShaker.webp",
-        width: 800,
-        height: 800,
-        alt: "Grabba Shaker at Spirit Corner Cannabis in downtown Ottawa",
+        url: hasShaker
+          ? "https://spiritcornercannabis.com/products/GrabbaShaker.webp"
+          : "https://spiritcornercannabis.com/products/GRABBA-2G.webp",
+        width: hasShaker ? 800 : 600,
+        height: hasShaker ? 800 : 600,
+        alt: hasShaker
+          ? "Grabba Shaker at Spirit Corner Cannabis in downtown Ottawa"
+          : "Grabba leaf product at Spirit Corner Cannabis in downtown Ottawa",
       },
     ],
   },
@@ -49,10 +59,6 @@ const imageDetails: Record<
   },
 };
 
-const grabbaItems = allItems
-  .filter((item) => /grabba/i.test(`${item.name} ${item.slug}`))
-  .filter((item) => imageDetails[item.slug]);
-
 function displayName(name: string) {
   return name.replace(/\*/g, "").replace(/\s+/g, " ").trim();
 }
@@ -63,8 +69,7 @@ const pageJsonLd = {
   "@id": `${PAGE_URL}#webpage`,
   url: PAGE_URL,
   name: "Grabba Leaf & Grabba Shakers Ottawa",
-  description:
-    "Grabba and Grabba Shaker menu options at Spirit Corner Cannabis in downtown Ottawa.",
+  description: menuDescription,
   about: { "@id": "https://spiritcornercannabis.com" },
 };
 
@@ -129,12 +134,24 @@ export default function GrabbaLeafShakersPage() {
         <section className={styles.content}>
           <div className={styles.container}>
             <div className={styles.section}>
-              <h2>Choose Grabba or a Grabba Shaker</h2>
-              <p>
-              The site menu lists a Grabba item and a Grabba Shaker with
-                RedRose and Red Herring variants. Listed prices appear below; selection
-                and pricing can change, so call ahead when a specific option matters.
-              </p>
+              <h2>
+                {hasShaker
+                  ? "Choose Grabba or a Grabba Shaker"
+                  : "Review the Published Grabba Menu Listing"}
+              </h2>
+              {hasShaker ? (
+                <p>
+                  The site menu lists a Grabba item and a Grabba Shaker with
+                  RedRose and Red Herring variants. Listed prices appear below; selection
+                  and pricing can change, so call ahead when a specific option matters.
+                </p>
+              ) : (
+                <p>
+                  The published menu currently lists Grabba below. Shaker listings can
+                  change, so call (343) 308-8998 to ask about Grabba Shaker options before
+                  visiting. The listed price reflects the published menu snapshot.
+                </p>
+              )}
 
               <div className={styles.productGrid}>
                 {grabbaItems.map((item) => {
@@ -198,8 +215,9 @@ export default function GrabbaLeafShakersPage() {
                 <details>
                   <summary>Which Grabba products are listed?</summary>
                   <p>
-                  The site menu lists Grabba and a Grabba Shaker with RedRose
-                    and Red Herring variants. Selection can change.
+                    {hasShaker
+                      ? "The site menu lists Grabba and a Grabba Shaker with RedRose and Red Herring variants. Selection can change."
+                      : "The published menu currently lists Grabba. Call (343) 308-8998 to ask about Grabba Shaker options before visiting; selection can change."}
                   </p>
                 </details>
                 <details>
