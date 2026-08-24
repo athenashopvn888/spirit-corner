@@ -74,7 +74,7 @@ export default function CheapWeedPage() {
               Budget-Friendly Cannabis Menus for Westboro, Glebe, Kanata & Barrhaven
             </h2>
             <p style={{ marginBottom: "16px" }}>
-              The live menu keeps flower tiers easy to compare: <Link href="/budget" style={linkStyle}>Budget</Link>, <Link href="/aa" style={linkStyle}>AA</Link>, <Link href="/aaa" style={linkStyle}>AAA+</Link>, <Link href="/premium" style={linkStyle}>Premium</Link>, and <Link href="/exotic" style={linkStyle}>Exotic</Link>. That gives shoppers a direct path from price-first browsing to higher-tier flower when they want something stronger or more premium.
+              Compare <Link href="/budget" style={linkStyle}>Budget</Link>, <Link href="/aa" style={linkStyle}>AA</Link>, <Link href="/aaa" style={linkStyle}>AAA+</Link>, <Link href="/premium" style={linkStyle}>Premium</Link>, and <Link href="/exotic" style={linkStyle}>Exotic</Link> flower tiers. Start with Budget or AA for lower-priced choices, or explore AAA+, Premium, and Exotic when you want to compare higher-tier options.
             </p>
 
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: 900, color: "var(--text-primary)", marginTop: "34px", marginBottom: "12px" }}>
