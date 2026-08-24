@@ -37,15 +37,14 @@ export default function DeliveryContent() {
           Delivery <span className={styles.highlight}>Coming Soon</span>
         </h1>
         <p className={styles.pageSubtitle}>
-          Spirit Corner Cannabis is launching delivery across Ottawa &amp; Gatineau.
-          Sign up below to be the first to know when we go live.
+          Delivery is not available yet. Sign up for a notification when it becomes available.
         </p>
 
         {/* Email signup */}
         <div className={styles.formSection}>
           <h2 className={styles.formTitle}>Get Notified When We Launch</h2>
           <p className={styles.formDesc}>
-            Enter your email to join our delivery waitlist. We&apos;ll send you one email when delivery goes live.
+            Enter your email if you want a delivery launch update.
           </p>
           <form onSubmit={handleSubmit}>
             <div className={styles.inputRow}>
@@ -69,7 +68,7 @@ export default function DeliveryContent() {
           </form>
           {status === "success" && (
             <p className={styles.successMsg}>
-              You&apos;re on the list! We&apos;ll notify you when delivery launches.
+              Thanks. Your email was submitted for delivery updates.
             </p>
           )}
           {status === "error" && (
@@ -83,18 +82,18 @@ export default function DeliveryContent() {
         <div className={styles.infoGrid}>
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>Delivery</span>
-            <h3 className={styles.infoTitle}>Same-Day Delivery</h3>
-            <p className={styles.infoDesc}>Order before 6 PM, delivered same day across Ottawa.</p>
+            <h3 className={styles.infoTitle}>Coming Soon</h3>
+            <p className={styles.infoDesc}>Delivery is still being prepared and is not available yet.</p>
           </div>
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>Area</span>
-            <h3 className={styles.infoTitle}>Ottawa & Gatineau</h3>
-            <p className={styles.infoDesc}>Serving the entire National Capital Region.</p>
+            <h3 className={styles.infoTitle}>Visit the Store</h3>
+            <p className={styles.infoDesc}>Shop in person at 251 Dalhousie St in downtown Ottawa.</p>
           </div>
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>Value</span>
-            <h3 className={styles.infoTitle}>Same Great Prices</h3>
-            <p className={styles.infoDesc}>All in-store promotions apply to delivery orders too.</p>
+            <h3 className={styles.infoTitle}>Open 24 Hours</h3>
+            <p className={styles.infoDesc}>The storefront is open 24 hours a day, seven days a week.</p>
           </div>
         </div>
 
@@ -102,7 +101,7 @@ export default function DeliveryContent() {
         <div className={styles.ctaSection}>
           <p className={styles.ctaText}>
             Can&apos;t wait? Visit us in-store at <strong>251 Dalhousie St, Ottawa</strong> -
-            open <strong>24 hours</strong>. Call <strong>(613) 612-2107</strong>.
+            open <strong>24 hours</strong>. Call <strong>(343) 308-8998</strong>.
           </p>
         </div>
       </div>

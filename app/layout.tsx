@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | Spirit Corner Cannabis",
   },
   description:
-    "Shop 200+ premium cannabis strains at Spirit Corner Cannabis. Exotic, Premium, AAA+, AA & Budget flower from $3/g. Ottawa's uplifting dispensary at 251 Dalhousie St. Open 24 Hours.",
+    "Spirit Corner Cannabis offers Budget, AA, AAA+, Premium, and Exotic flower tiers plus edibles, vapes, pre-rolls, and accessories at 251 Dalhousie St. Open 24 hours.",
   keywords: [
     "cannabis dispensary Ottawa",
     "weed store Dalhousie",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Spirit Corner Cannabis",
     title: "Spirit Corner Cannabis - Premium Ottawa Cannabis Dispensary",
     description:
-      "200+ strains from $3/g. Exotic to Budget. Ottawa's uplifting dispensary at 251 Dalhousie St. Open 24 Hours.",
+      "Five flower tiers plus edibles, vapes, pre-rolls, and accessories at 251 Dalhousie St. Open 24 hours.",
     images: [
       {
         url: "/banners/spirit_corner_cannabis_showcase.webp",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Spirit Corner Cannabis - Ottawa's Uplifting Dispensary",
     description:
-      "200+ strains from $3/g. Open 24 Hours at 251 Dalhousie St, Ottawa.",
+      "Five flower tiers and more at 251 Dalhousie St, Ottawa. Open 24 hours.",
     images: ["/banners/spirit_corner_cannabis_showcase.webp"],
   },
   robots: {
@@ -77,7 +77,7 @@ const jsonLd = {
   description:
     "Cannabis dispensary at 251 Dalhousie St in Ottawa, ON. Shop exotic, premium, AAA+, AA, and budget flower tiers plus edibles, prerolls, and vapes. Open 24 Hours.",
   url: "https://spiritcornercannabis.com",
-  telephone: "+16136122107",
+  telephone: "+13433088998",
   image: "https://spiritcornercannabis.com/wp-content/uploads/2026/04/7Clmh.jpg",
   priceRange: "$3 - $12/g",
   paymentAccepted: "Cash, Credit Card, Interac, Contactless Tap",
@@ -96,8 +96,8 @@ const jsonLd = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 45.4292,
-    longitude: -75.6928,
+    latitude: 45.4310488,
+    longitude: -75.6927362,
   },
   openingHoursSpecification: [
     {

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import DeliveryContent from "./DeliveryContent";
 
 export const metadata: Metadata = {
-  title: "Delivery Coming Soon — Spirit Corner Cannabis | Ottawa",
-  description: "Get notified when Spirit Corner Cannabis launches same-day weed delivery across Ottawa and surrounding areas.",
+  title: "Cannabis Delivery Coming Soon in Ottawa",
+  description: "Spirit Corner Cannabis delivery is coming soon. The store remains open 24 hours at 251 Dalhousie St in Ottawa.",
   alternates: {
     canonical: "https://spiritcornercannabis.com/delivery",
   },
