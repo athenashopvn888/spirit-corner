@@ -4,16 +4,16 @@ import Footer from "../components/Footer";
 import styles from "./contact.module.css";
 
 export const metadata: Metadata = {
-  title: "Contact Us - Spirit Corner Cannabis | 251 Dalhousie St, Ottawa",
+  title: "Contact and Store Hours",
   description:
     "Visit Spirit Corner Cannabis at 251 Dalhousie St, Ottawa, ON K1N 1E7. Open 24 Hours a day, 7 days a week. Walk-ins welcome.",
   alternates: {
     canonical: "https://spiritcornercannabis.com/contact",
   },
   openGraph: {
-    title: "Contact Spirit Corner Cannabis - Ottawa Dispensary",
+    title: "Contact Spirit Corner Cannabis",
     description:
-      "251 Dalhousie St, Ottawa. Open 24 Hours a day, 7 days a week. Premium cannabis, always fire.",
+      "Visit 251 Dalhousie St in Ottawa. Spirit Corner Cannabis is open 24 hours a day, seven days a week.",
   },
 };
 
@@ -47,7 +47,7 @@ export default function ContactPage() {
                 <br />
                 Ottawa, ON K1N 1E7
                 <br />
-                <span className={styles.infoMuted}>ByWard Market &amp; Bathurst</span>
+                <span className={styles.infoMuted}>Near ByWard Market</span>
               </p>
             </div>
 
@@ -100,20 +100,20 @@ export default function ContactPage() {
                 <br />
                 Just walk in and our staff will
                 <br />
-                help you find the perfect strain.
+                help you compare listed flower tiers.
               </p>
               <div className={styles.featureList}>
                 <div className={styles.featureItem}>
                   <span className={styles.featureCheck}>OK</span>
-                  200+ strains in stock
+                  Five flower tiers
                 </div>
                 <div className={styles.featureItem}>
                   <span className={styles.featureCheck}>OK</span>
-                  Lab-tested &amp; safe
+                  Edibles, vapes, and pre-rolls
                 </div>
                 <div className={styles.featureItem}>
                   <span className={styles.featureCheck}>OK</span>
-                  Knowledgeable budtenders
+                  Staff help with store questions
                 </div>
                 <div className={styles.featureItem}>
                   <span className={styles.featureCheck}>OK</span>

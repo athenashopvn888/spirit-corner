@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Nicotine Pouches Ottawa | $20 Tins & Smoke Essentials | Spirit Corner",
+  title: "Nicotine Pouches in Downtown Ottawa",
   description:
     "Shop nicotine pouches in Ottawa at Spirit Corner Cannabis near ByWard Market. $20 tins, native cigarettes at $25 per carton, vapes, accessories, and 24-hour storefront help.",
   alternates: {
@@ -31,7 +31,7 @@ export default function NicotinePouchesPage() {
               Downtown Ottawa 19+ smoke essentials
             </p>
             <h1 style={{ fontFamily: "var(--font-display)", fontSize: "40px", fontWeight: 900, color: "white", marginBottom: "14px" }}>
-              Nicotine Pouches Ottawa: Premium Pouch Store in ByWard Market, Centretown & Downtown Core
+              Nicotine Pouches in Downtown Ottawa
             </h1>
             <p style={{ color: "#d1fae5", fontSize: "16px", lineHeight: 1.7, marginBottom: "18px" }}>
               Visit Spirit Corner Cannabis at 251 Dalhousie St for $20 nicotine pouch tins, disposable vapes, accessories, and native cigarette cartons. Call <a href="tel:+13433088998" style={{ color: "#bbf7d0", fontWeight: 900 }}>(343) 308-8998</a> for quick store help.
@@ -50,7 +50,7 @@ export default function NicotinePouchesPage() {
       <section style={{ padding: "60px 24px", background: "var(--bg-primary)" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: 900, color: "var(--text-primary)", marginBottom: "12px" }}>
-            In-Store Pouch Selection Serving Rideau, Sandy Hill, Lowertown & Vanier Customers
+            $20 Nicotine Pouch Tins at Spirit Corner
           </h2>
 
           <div style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
@@ -63,10 +63,10 @@ export default function NicotinePouchesPage() {
 
             <div style={{ background: "white", border: "1px solid var(--border-subtle)", borderRadius: "16px", padding: "22px", margin: "30px 0" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 900, color: "var(--text-primary)", marginBottom: "12px" }}>
-                Fresh Pouches, Disposable Vapes & Smoke Essentials
+                Pouch Styles and Smoke Essentials
               </h3>
               <p style={{ marginBottom: "12px" }}>
-                Customers commonly compare Zyn, Velo, Killa, Pablo, mint, wintergreen, citrus, and extra-strong pouch styles. The page is built to help adult shoppers quickly understand where to visit, what related categories to browse, and how to call the store.
+                Listed pouch options include Zyn, Velo, Killa, and Pablo, with styles such as mint, wintergreen, and citrus. Selection can change, so call the store if you want to ask about a particular option.
               </p>
               <p style={{ marginBottom: 0 }}>
                 For fast help, call <a href="tel:+13433088998" style={linkStyle}>(343) 308-8998</a> before visiting Spirit Corner Cannabis at 251 Dalhousie St.
@@ -74,10 +74,10 @@ export default function NicotinePouchesPage() {
             </div>
 
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: 900, color: "var(--text-primary)", marginTop: "34px", marginBottom: "12px" }}>
-              Worth the Short Trip from Kanata, Stittsville, Barrhaven, Gatineau & Hull
+              Open 24 Hours in Downtown Ottawa
             </h2>
             <p style={{ marginBottom: "22px" }}>
-              The downtown Ottawa location is useful for adult shoppers coming from Kanata, Stittsville, Barrhaven, Nepean, Orleans, Gatineau, Hull, Aylmer, Manotick, and Kemptville who want a simple storefront stop for pouches, vapes, native cigarettes, and cannabis menu items.
+              Visit 251 Dalhousie St near ByWard Market at any hour, or call (343) 308-8998 before your trip.
             </p>
 
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 800, color: "var(--text-primary)", marginTop: "32px", marginBottom: "12px" }}>
@@ -90,7 +90,7 @@ export default function NicotinePouchesPage() {
               </details>
               <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
                 <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>What related smoke products can I browse?</summary>
-                <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px" }}>Adult shoppers can browse disposable vapes, vape accessories, native cigarettes, add-ons, and the broader live menu before visiting.</p>
+                <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px" }}>Adult shoppers can also compare disposable vapes, vape accessories, Native cigarettes, and other smoking accessories in store.</p>
               </details>
               <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
                 <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Where is the store?</summary>

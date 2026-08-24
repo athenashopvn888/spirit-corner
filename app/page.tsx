@@ -9,7 +9,7 @@ import Link from "next/link";
 
 /* Homepage metadata */
 export const metadata: Metadata = {
-  title: "24 Hour Downtown Ottawa Dispensary | Spirit Corner Cannabis",
+  title: "24 Hour Downtown Ottawa Cannabis Store",
   description:
     "Spirit Corner Cannabis is a downtown Ottawa cannabis store near ByWard Market with flower, pre-rolls, vapes, edibles, concentrates, accessories, and adult 19+ store info.",
   alternates: {
@@ -230,66 +230,66 @@ export default function HomePage() {
       },
       {
         "@type": "Question",
-        name: "Why do visitors search for downtown Ottawa cannabis stores?",
+        name: "When is Spirit Corner Cannabis open?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Many visitors search for downtown Ottawa cannabis stores because of convenient access near nightlife districts, hotels, restaurants, entertainment venues, concerts, and major transportation routes.",
+          text: "Spirit Corner Cannabis is open 24 hours a day, seven days a week.",
         },
       },
       {
         "@type": "Question",
-        name: "Do visitors from Gatineau shop in Ottawa?",
+        name: "Which flower tiers are listed?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Many visitors from Gatineau, Hull, Aylmer, Chelsea, Cantley, and nearby Outaouais communities regularly visit downtown Ottawa cannabis stores.",
+          text: "The store lists Budget, AA, AAA+, Premium, and Exotic flower tiers.",
         },
       },
       {
         "@type": "Question",
-        name: "What cannabis products do visitors commonly search for?",
+        name: "What other product categories are listed?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Visitors commonly search for flower, pre-rolls, vaporizers, concentrates, edibles, smoking accessories, affordable cannabis products, and downtown Ottawa cannabis options.",
+          text: "Listings include edibles, vapes, concentrates, pre-rolls, Native cigarettes, nicotine pouches, and accessories.",
         },
       },
       {
         "@type": "Question",
-        name: "Why do visitors search for cannabis stores open late in Ottawa?",
+        name: "Is delivery available?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Many visitors throughout Ottawa and Gatineau search for accessible downtown cannabis stores near nightlife districts, concerts, entertainment venues, and weekend activity.",
+          text: "No. Delivery is coming soon and is not available yet. The storefront remains open 24 hours.",
         },
       },
       {
         "@type": "Question",
-        name: "Why is the ByWard Market location important?",
+        name: "Where is the store?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "The ByWard Market is one of Ottawa's busiest downtown districts and provides convenient access for both Ottawa residents and visitors travelling from Gatineau and nearby communities.",
+          text: "Spirit Corner Cannabis is at 251 Dalhousie St in downtown Ottawa near ByWard Market.",
         },
       },
       {
         "@type": "Question",
-        name: "Can visitors stay updated on future announcements?",
+        name: "Can I get a delivery launch update?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Visitors can register through the delivery updates page to receive future announcements, updates, and local Ottawa cannabis information.",
+          text: "Yes. The delivery page has an email form for a launch notification.",
         },
       },
       {
         "@type": "Question",
-        name: "Do visitors also search for nicotine pouches and vape products in Ottawa?",
+        name: "Does the store list nicotine pouches and vapes?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Many downtown Ottawa visitors also search for nicotine pouches, vape products, smoking accessories, and related smoke products near the downtown core.",
+          text: "Yes. Spirit Corner lists nicotine pouches, disposable vapes, vape products, and smoking accessories.",
         },
       },
       {
         "@type": "Question",
-        name: "What nearby communities does Spirit Corner Cannabis attract visitors from?",
+        name: "Can I call before visiting?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Spirit Corner Cannabis continues attracting visitors from Ottawa, Gatineau, Hull, Barrhaven, Kanata, Orleans, Nepean, Gloucester, Stittsville, Riverside South, Findlay Creek, Greely, and nearby communities.",
+          text: "Yes. Call (343) 308-8998 for store directions or product questions.",
         },
       },
     ],
@@ -475,7 +475,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SEO detailed copy section */}
+        {/* Store details */}
         <section style={{ padding: "60px 0", background: "var(--bg-secondary)", borderTop: "1px solid var(--border-subtle)" }}>
           <div className={styles.container} style={{ maxWidth: "900px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", alignItems: "center", marginBottom: "20px", borderBottom: "1px solid var(--border-subtle)", paddingBottom: "10px" }}>
@@ -494,57 +494,51 @@ export default function HomePage() {
             {/* Section 1 */}
             <div style={{ marginBottom: "32px" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: 800, marginBottom: "12px", color: "var(--text-primary)" }}>
-                24 Hour Cannabis Accessibility In Downtown Ottawa
+                Open 24 Hours in Downtown Ottawa
               </h3>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px" }}>
                 Spirit Corner Cannabis is located at 251 Dalhousie St near the ByWard Market, Rideau Centre, Parliament area, and major Gatineau access routes in downtown Ottawa.
               </p>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px" }}>
-                Visitors searching for 24 hour dispensary access, downtown Ottawa cannabis, and convenient late-night cannabis accessibility continue discovering Spirit Corner Cannabis while exploring the downtown core.
+                The storefront is open 24 hours a day, seven days a week for adult in-store shopping.
               </p>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px", fontWeight: "bold" }}>
-                Customers throughout Ottawa and nearby communities continue searching for:
+                Store details:
               </p>
               <ul style={{ listStyleType: "circle", paddingLeft: "24px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.8", marginBottom: "14px" }}>
-                <li>24 hour dispensary Ottawa</li>
-                <li>Cannabis store open late</li>
-                <li>Downtown Ottawa dispensary</li>
-                <li>Ottawa weed store</li>
-                <li>Cannabis near ByWard Market</li>
-                <li>Cannabis near Gatineau</li>
-                <li>Cannabis near me Ottawa</li>
-                <li>Downtown Ottawa cannabis</li>
+                <li>251 Dalhousie St, Ottawa</li>
+                <li>Open 24 hours</li>
+                <li>Near ByWard Market</li>
+                <li>Call (343) 308-8998</li>
               </ul>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
-                Visitors from Ottawa, Gatineau, Hull, Barrhaven, Kanata, Orleans, Nepean, Gloucester, Stittsville, Riverside South, Findlay Creek, Greely, and surrounding communities regularly search for accessible downtown Ottawa cannabis stores near nightlife districts, hotels, restaurants, entertainment venues, concerts, and major transportation routes.
+                Call the store for directions or product questions before visiting.
               </p>
             </div>
 
             {/* Section 2 */}
             <div style={{ marginBottom: "32px" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: 800, marginBottom: "12px", color: "var(--text-primary)" }}>
-                Why Visitors Search For Cannabis In Downtown Ottawa
+                Five Flower Tiers
               </h3>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px" }}>
-                Downtown Ottawa continues attracting visitors from across the city and nearby Outaouais communities because of nightlife districts, entertainment venues, tourism areas, hotels, restaurants, concerts, and major transportation routes near the ByWard Market.
+                Compare Budget, AA, AAA+, Premium, and Exotic flower tiers, with listed prices and sizes shown for each product.
               </p>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px" }}>
-                Many downtown visitors searching for cannabis stores open late continue discovering Spirit Corner Cannabis while exploring downtown Ottawa nightlife, hotels, entertainment districts, and nearby attractions.
+                The five tiers offer a straightforward way to compare value and higher-tier flower during an in-store visit.
               </p>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px", fontWeight: "bold" }}>
-                Visitors staying near the ByWard Market, Rideau Centre, Parliament area, and Macdonald-Cartier Bridge routes continue searching for:
+                Flower options include:
               </p>
               <ul style={{ listStyleType: "circle", paddingLeft: "24px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.8", marginBottom: "14px" }}>
-                <li>Downtown Ottawa cannabis</li>
-                <li>Cannabis near Rideau Centre</li>
+                <li>Budget and AA value flower</li>
+                <li>AAA+, Premium, and Exotic flower</li>
                 <li>
                   <Link href="/dispensaire-cannabis-pres-de-gatineau" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Ottawa dispensary near Gatineau
+                    Store information for visitors from Gatineau
                   </Link>
                 </li>
-                <li>Weed store near me Ottawa</li>
-                <li>Cannabis near Parliament</li>
-                <li>Cannabis near downtown nightlife</li>
+                <li>3g, 5g or 6g, 14g, and 28g listings depending on tier</li>
               </ul>
             </div>
 
@@ -554,26 +548,22 @@ export default function HomePage() {
                 Affordable Cannabis & Popular Products
               </h3>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px" }}>
-                Many Ottawa cannabis customers continue comparing flower, pre-roll, concentrate, edible, and vaporizer options while searching for accessible cannabis products and convenient downtown Ottawa access.
+                Spirit Corner also lists pre-rolls, concentrates, edibles, and vape products.
               </p>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px", fontWeight: "bold" }}>
-                Spirit Corner Cannabis continues attracting visitors searching for:
+                Adults can compare:
               </p>
               <ul style={{ listStyleType: "circle", paddingLeft: "24px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.8", marginBottom: "14px" }}>
                 <li>
                   <Link href="/cheap-weed-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Affordable cannabis Ottawa
+                    Budget flower and value ounces
                   </Link>
                 </li>
-                <li>Budget-friendly cannabis</li>
-                <li>Ottawa cannabis deals</li>
-                <li>Affordable flower Ottawa</li>
-                <li>Affordable pre-rolls</li>
-                <li>Downtown Ottawa cannabis products</li>
-                <li>Affordable cannabis near me</li>
+                <li>Pre-rolls and concentrates</li>
+                <li>Edibles and vapes</li>
               </ul>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
-                Visitors throughout Ottawa continue searching for cannabis stores that balance accessibility, downtown convenience, product variety, and value.
+                Selection can change, so call the store if you want to ask about a particular item.
               </p>
             </div>
 
@@ -583,25 +573,22 @@ export default function HomePage() {
                 Late-Night Cannabis Convenience
               </h3>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px" }}>
-                Many visitors throughout Ottawa and Gatineau continue searching for cannabis stores open late near downtown nightlife districts, entertainment venues, concerts, hotels, and weekend activity.
+                Spirit Corner remains open 24 hours for adult in-store shopping.
               </p>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px", fontWeight: "bold" }}>
-                Spirit Corner Cannabis continues building strong downtown Ottawa visibility for visitors searching for:
+                Visit details:
               </p>
               <ul style={{ listStyleType: "circle", paddingLeft: "24px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.8", marginBottom: "14px" }}>
                 <li>
                   <Link href="/24-hour-ottawa-dispensary" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Late-night cannabis Ottawa
+                    24-hour store information
                   </Link>
                 </li>
-                <li>Cannabis store open late</li>
-                <li>Downtown Ottawa weed store</li>
-                <li>Cannabis near downtown Ottawa</li>
-                <li>Ottawa cannabis near me</li>
-                <li>24 hour cannabis Ottawa</li>
+                <li>Open every day</li>
+                <li>251 Dalhousie St</li>
               </ul>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
-                Visitors exploring Ottawa nightlife districts, restaurants, and entertainment venues continue discovering Spirit Corner Cannabis while searching for accessible cannabis products near the downtown core.
+                No appointment is needed for an in-store visit.
               </p>
             </div>
 
@@ -611,42 +598,41 @@ export default function HomePage() {
                 Smoking Accessories, Nicotine Pouches & Vape Products
               </h3>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px" }}>
-                Many downtown Ottawa visitors searching for cannabis products also search for nearby smoking accessories, vaporizers, nicotine pouch products, vape products, rolling papers, and other popular smoke-related products near the ByWard Market.
+                Adults can also compare smoking accessories, nicotine pouches, vape products, and rolling papers.
               </p>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "14px", fontWeight: "bold" }}>
-                Visitors throughout Ottawa continue searching for:
+                Listed categories include:
               </p>
               <ul style={{ listStyleType: "circle", paddingLeft: "24px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.8", marginBottom: "14px" }}>
                 <li>
                   <Link href="/nicotine-pouches-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Nicotine pouches Ottawa
+                    Nicotine pouches
                   </Link>
                 </li>
                 <li>
                   <Link href="/5-percent-vapes-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Vape products Ottawa
+                    5% disposable vapes
                   </Link>
                 </li>
-                <li>Smoking accessories Ottawa</li>
-                <li>Downtown Ottawa smoke products</li>
+                <li>Smoking accessories</li>
                 <li>
                   <Link href="/native-cigarettes-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Popular smoking products
+                    Native cigarettes
                   </Link>
                 </li>
-                <li>Ottawa nicotine products</li>
+                <li>Rolling papers</li>
               </ul>
             </div>
 
             {/* Section 6 */}
             <div style={{ marginBottom: "40px" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: 800, marginBottom: "12px", color: "var(--text-primary)" }}>
-                Stay Connected With Spirit Corner Cannabis
+                Delivery Updates
               </h3>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
-                As more visitors throughout Ottawa and Gatineau continue searching for downtown cannabis accessibility, future updates, and local cannabis information, Spirit Corner Cannabis continues expanding visibility through helpful local content and regional relevance. Visitors interested in future announcements and local updates can also register through the{" "}
+                Delivery is coming soon and is not available yet. Adults who want a launch notification can use the{" "}
                 <Link href="/cannabis-delivery-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                  delivery updates page
+                  delivery page
                 </Link>
                 .
               </p>
@@ -665,43 +651,43 @@ export default function HomePage() {
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Why do visitors search for downtown Ottawa cannabis stores?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Many visitors search for downtown Ottawa cannabis stores because of convenient access near nightlife districts, hotels, restaurants, entertainment venues, concerts, and major transportation routes.</p>
+                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>When is Spirit Corner Cannabis open?</summary>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Spirit Corner Cannabis is open 24 hours a day, seven days a week.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Do visitors from Gatineau shop in Ottawa?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Yes. Many visitors from Gatineau, Hull, Aylmer, Chelsea, Cantley, and nearby Outaouais communities regularly visit downtown Ottawa cannabis stores.</p>
+                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Which flower tiers are listed?</summary>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>The store lists Budget, AA, AAA+, Premium, and Exotic flower tiers.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>What cannabis products do visitors commonly search for?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Visitors commonly search for flower, pre-rolls, vaporizers, concentrates, edibles, smoking accessories, affordable cannabis products, and downtown Ottawa cannabis options.</p>
+                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>What other product categories are listed?</summary>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Listings include edibles, vapes, concentrates, pre-rolls, Native cigarettes, nicotine pouches, and accessories.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Why do visitors search for cannabis stores open late in Ottawa?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Many visitors throughout Ottawa and Gatineau search for accessible downtown cannabis stores near nightlife districts, concerts, entertainment venues, and weekend activity.</p>
+                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Is delivery available?</summary>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>No. Delivery is coming soon and is not available yet. The storefront remains open 24 hours.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Why is the ByWard Market location important?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>The ByWard Market is one of Ottawa&apos;s busiest downtown districts and provides convenient access for both Ottawa residents and visitors travelling from Gatineau and nearby communities.</p>
+                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Where is the store?</summary>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Spirit Corner Cannabis is at 251 Dalhousie St in downtown Ottawa near ByWard Market.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Can visitors stay updated on future announcements?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Yes. Visitors can register through the delivery updates page to receive future announcements, updates, and local Ottawa cannabis information.</p>
+                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Can I get a delivery launch update?</summary>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Yes. The delivery page has an email form for a launch notification.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Do visitors also search for nicotine pouches and vape products in Ottawa?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Yes. Many downtown Ottawa visitors also search for nicotine pouches, vape products, smoking accessories, and related smoke products near the downtown core.</p>
+                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Does the store list nicotine pouches and vapes?</summary>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Yes. Spirit Corner lists nicotine pouches, disposable vapes, vape products, and smoking accessories.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>What nearby communities does Spirit Corner Cannabis attract visitors from?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Spirit Corner Cannabis continues attracting visitors from Ottawa, Gatineau, Hull, Barrhaven, Kanata, Orleans, Nepean, Gloucester, Stittsville, Riverside South, Findlay Creek, Greely, and nearby communities.</p>
+                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Can I call before visiting?</summary>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Yes. Call (343) 308-8998 for directions or product questions.</p>
                 </details>
               </div>
             </div>

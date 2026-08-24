@@ -18,7 +18,7 @@ export default function ContactUsPage() {
     additionalType: "https://schema.org/Store",
     "@id": "https://spiritcornercannabis.com",
     name: "Spirit Corner Cannabis",
-    description: "Contact Spirit Corner Cannabis near the ByWard Market in downtown Ottawa for cannabis-related questions, local updates, and store information.",
+    description: "Contact Spirit Corner Cannabis at 251 Dalhousie St in downtown Ottawa. Open 24 hours.",
     url: "https://spiritcornercannabis.com/contact-spirit-corner-cannabis",
     telephone: "+13433088998",
     image: "https://spiritcornercannabis.com/banners/spirit-corner-cannabis-logo-NEW.png",
@@ -81,10 +81,10 @@ export default function ContactUsPage() {
                 Spirit Corner Cannabis is located at 251 Dalhousie St near the ByWard Market in downtown Ottawa.
               </p>
               <p style={{ marginBottom: "14px" }}>
-                Visitors throughout Ottawa, Gatineau, Hull, Barrhaven, Kanata, Orleans, Nepean, Gloucester, Stittsville, Riverside South, and nearby communities continue contacting Spirit Corner Cannabis for local updates, cannabis information, downtown Ottawa accessibility, and general store inquiries.
+                Call (343) 308-8998 for directions, store information, or product questions before visiting.
               </p>
               <p>
-                Located near the ByWard Market, Rideau Centre, Parliament area, and major Gatineau access routes, Spirit Corner Cannabis continues attracting visitors searching for downtown Ottawa cannabis accessibility and nearby cannabis information.
+                The storefront is open 24 hours a day, seven days a week.
               </p>
             </div>
 
@@ -142,31 +142,31 @@ export default function ContactUsPage() {
               )}
             </div>
 
-            {/* Location & Accessibility links */}
+            {/* Visit details */}
             <div style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7", marginBottom: "40px" }}>
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 800, color: "var(--text-primary)", marginBottom: "16px" }}>
-                Location & Accessibility
+                Visit the Store
               </h2>
               <p style={{ marginBottom: "14px" }}>
-                Visitors throughout Ottawa and Gatineau continue searching for convenient, accessible downtown cannabis:
+                Adults can visit Spirit Corner Cannabis at 251 Dalhousie St near ByWard Market for:
               </p>
               <ul style={{ listStyleType: "circle", paddingLeft: "24px", lineHeight: "1.8" }}>
-                <li>Downtown Ottawa cannabis</li>
-                <li>Cannabis near ByWard Market</li>
-                <li>Ottawa cannabis store</li>
+                <li>Budget, AA, AAA+, Premium, and Exotic flower tiers</li>
+                <li>Edibles, vapes, concentrates, and pre-rolls</li>
+                <li>Native cigarettes, nicotine pouches, and smoking accessories</li>
                 <li>
                   <Link href="/dispensaire-cannabis-pres-de-gatineau" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Cannabis near Gatineau
+                    Store information for visitors from Gatineau
                   </Link>
                 </li>
                 <li>
                   <Link href="/cheap-weed-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Affordable cannabis Ottawa
+                    Budget flower and value ounces
                   </Link>
                 </li>
                 <li>
                   <Link href="/24-hour-ottawa-dispensary" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Downtown Ottawa dispensary
+                    24-hour store details
                   </Link>
                 </li>
               </ul>
