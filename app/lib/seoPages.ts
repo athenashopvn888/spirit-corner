@@ -44,7 +44,7 @@ export const SEO_PAGES: SeoPageData[] = [
       },
       {
         heading: "Serving Ottawa & Gatineau",
-        body: "Spirit Corner Cannabis proudly serves customers from across the National Capital Region. Whether you're coming from ByWard Market, Sandy Hill, Lower Town, Centretown, the Glebe, Old Ottawa South, Vanier, Orleans, Kanata, Barrhaven, or across the bridge from Gatineau and Hull, we welcome you. Our 24-hour operation means you can visit on your own schedule. Call us at (613) 612-2107 or visit us at 251 Dalhousie St, Ottawa, ON K1N 1E7.",
+        body: "Spirit Corner Cannabis proudly serves customers from across the National Capital Region. Whether you're coming from ByWard Market, Sandy Hill, Lower Town, Centretown, the Glebe, Old Ottawa South, Vanier, Orleans, Kanata, Barrhaven, or across the bridge from Gatineau and Hull, we welcome you. Our 24-hour operation means you can visit on your own schedule. Call us at (343) 308-8998 or visit us at 251 Dalhousie St, Ottawa, ON K1N 1E7.",
       },
     ],
     faqs: [

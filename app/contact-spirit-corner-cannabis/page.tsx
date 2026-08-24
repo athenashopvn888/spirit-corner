@@ -20,7 +20,7 @@ export default function ContactUsPage() {
     name: "Spirit Corner Cannabis",
     description: "Contact Spirit Corner Cannabis near the ByWard Market in downtown Ottawa for cannabis-related questions, local updates, and store information.",
     url: "https://spiritcornercannabis.com/contact-spirit-corner-cannabis",
-    telephone: "+16136122107",
+    telephone: "+13433088998",
     image: "https://spiritcornercannabis.com/banners/spirit-corner-cannabis-logo-NEW.png",
     address: {
       "@type": "PostalAddress",

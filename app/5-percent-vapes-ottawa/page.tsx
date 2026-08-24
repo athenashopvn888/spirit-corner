@@ -21,7 +21,7 @@ export default function VapesPage() {
     name: "Spirit Corner Cannabis",
     description: "Spirit Corner Cannabis offers popular 5% disposable vape products in downtown Ottawa near ByWard Market including OVNS Truth Puff, Elf Bar 10K, Geek Max 40K, and more.",
     url: "https://spiritcornercannabis.com/5-percent-vapes-ottawa",
-    telephone: "+16136122107",
+    telephone: "+13433088998",
     image: "https://spiritcornercannabis.com/banners/5-percent-vapes-ottawa-spirit-corner-cannabis.png",
     priceRange: "$10 - $60",
     address: {

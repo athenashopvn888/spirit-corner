@@ -59,7 +59,7 @@ export default function CannabisDeliveryPage() {
 
           <div style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
             <p style={{ marginBottom: "20px" }}>
-              Spirit Corner Cannabis is preparing Ottawa weed delivery while the storefront remains open now at 251 Dalhousie St for adult customers. For immediate help with pickup planning, directions, or menu questions, call <a href="tel:+16136122107" style={linkStyle}>(613) 612-2107</a>.
+              Spirit Corner Cannabis is preparing Ottawa weed delivery while the storefront remains open now at 251 Dalhousie St for adult customers. For immediate help with pickup planning, directions, or menu questions, call <a href="tel:+13433088998" style={linkStyle}>(343) 308-8998</a>.
             </p>
 
             <div style={{ background: "white", border: "1px solid var(--border-subtle)", borderRadius: "16px", padding: "22px", margin: "28px 0" }}>
@@ -128,7 +128,7 @@ export default function CannabisDeliveryPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "16px" }}>
               <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
                 <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>What can I do before delivery launches?</summary>
-                <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px" }}>Use the live menu, call (613) 612-2107, or visit Spirit Corner Cannabis at 251 Dalhousie St for 24-hour storefront help.</p>
+                <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px" }}>Use the live menu, call (343) 308-8998, or visit Spirit Corner Cannabis at 251 Dalhousie St for 24-hour storefront help.</p>
               </details>
               <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
                 <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Which areas are being planned?</summary>

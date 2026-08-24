@@ -9,8 +9,8 @@ export const gbpLocation = {
   address: "251 Dalhousie St, Ottawa, ON K1N 1E7",
   streetAddress: "251 Dalhousie St",
   postalCode: "K1N 1E7",
-  phone: "(613) 612-2107",
-  phoneIntl: "+16136122107",
+  phone: "(343) 308-8998",
+  phoneIntl: "+13433088998",
   neighborhood: "Ottawa",
   nearbyAreas: [
     "ByWard Market",

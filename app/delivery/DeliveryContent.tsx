@@ -102,7 +102,7 @@ export default function DeliveryContent() {
         <div className={styles.ctaSection}>
           <p className={styles.ctaText}>
             Can&apos;t wait? Visit us in-store at <strong>251 Dalhousie St, Ottawa</strong> -
-            open <strong>24 hours</strong>. Call <strong>(613) 612-2107</strong>.
+            open <strong>24 hours</strong>. Call <strong>(343) 308-8998</strong>.
           </p>
         </div>
       </div>

@@ -34,7 +34,7 @@ export default function NicotinePouchesPage() {
               Nicotine Pouches Ottawa: Premium Pouch Store in ByWard Market, Centretown & Downtown Core
             </h1>
             <p style={{ color: "#d1fae5", fontSize: "16px", lineHeight: 1.7, marginBottom: "18px" }}>
-              Visit Spirit Corner Cannabis at 251 Dalhousie St for $20 nicotine pouch tins, disposable vapes, accessories, and native cigarette cartons. Call <a href="tel:+16136122107" style={{ color: "#bbf7d0", fontWeight: 900 }}>(613) 612-2107</a> for quick store help.
+              Visit Spirit Corner Cannabis at 251 Dalhousie St for $20 nicotine pouch tins, disposable vapes, accessories, and native cigarette cartons. Call <a href="tel:+13433088998" style={{ color: "#bbf7d0", fontWeight: 900 }}>(343) 308-8998</a> for quick store help.
             </p>
           </div>
           <div style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(187,247,208,0.25)", borderRadius: "22px", padding: "20px", textAlign: "center" }}>
@@ -69,7 +69,7 @@ export default function NicotinePouchesPage() {
                 Customers commonly compare Zyn, Velo, Killa, Pablo, mint, wintergreen, citrus, and extra-strong pouch styles. The page is built to help adult shoppers quickly understand where to visit, what related categories to browse, and how to call the store.
               </p>
               <p style={{ marginBottom: 0 }}>
-                For fast help, call <a href="tel:+16136122107" style={linkStyle}>(613) 612-2107</a> before visiting Spirit Corner Cannabis at 251 Dalhousie St.
+                For fast help, call <a href="tel:+13433088998" style={linkStyle}>(343) 308-8998</a> before visiting Spirit Corner Cannabis at 251 Dalhousie St.
               </p>
             </div>
 

@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 export const metadata: Metadata = {
   title: "Cheap Weed Ottawa | Ounces from $40 | Spirit Corner Cannabis",
   description:
-    "Visit Spirit Corner Cannabis in downtown Ottawa for cheap weed, budget flower, value ounces, edibles, vapes, native cigarettes, and nicotine pouches. Call (613) 612-2107.",
+    "Visit Spirit Corner Cannabis in downtown Ottawa for cheap weed, budget flower, value ounces, edibles, vapes, native cigarettes, and nicotine pouches. Call (343) 308-8998.",
   alternates: {
     canonical: "https://spiritcornercannabis.com/cheap-weed-ottawa",
   },
@@ -45,7 +45,7 @@ export default function CheapWeedPage() {
 
           <div style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
             <p style={{ marginBottom: "20px" }}>
-              Spirit Corner Cannabis is a 24-hour downtown Ottawa storefront for adult customers comparing cheap weed, budget flower, value ounces, vapes, edibles, native cigarettes, and nicotine pouches near ByWard Market. Visit 251 Dalhousie St or call <a href="tel:+16136122107" style={linkStyle}>(613) 612-2107</a> for quick store help before you arrive.
+              Spirit Corner Cannabis is a 24-hour downtown Ottawa storefront for adult customers comparing cheap weed, budget flower, value ounces, vapes, edibles, native cigarettes, and nicotine pouches near ByWard Market. Visit 251 Dalhousie St or call <a href="tel:+13433088998" style={linkStyle}>(343) 308-8998</a> for quick store help before you arrive.
             </p>
 
             <div style={{ background: "white", border: "1px solid var(--border-subtle)", borderRadius: "16px", padding: "22px", margin: "28px 0" }}>
@@ -81,7 +81,7 @@ export default function CheapWeedPage() {
               Value Menus for Gatineau, Hull, Aylmer & South Ottawa
             </h2>
             <p style={{ marginBottom: "24px" }}>
-              Spirit Corner is built for simple adult shopping across downtown Ottawa, Gatineau, Hull, Aylmer, Manotick, Greely, Findlay Creek, and nearby communities. Call <a href="tel:+16136122107" style={linkStyle}>(613) 612-2107</a> for quick help, directions, or menu questions before heading to Dalhousie St.
+              Spirit Corner is built for simple adult shopping across downtown Ottawa, Gatineau, Hull, Aylmer, Manotick, Greely, Findlay Creek, and nearby communities. Call <a href="tel:+13433088998" style={linkStyle}>(343) 308-8998</a> for quick help, directions, or menu questions before heading to Dalhousie St.
             </p>
 
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 800, color: "var(--text-primary)", marginTop: "32px", marginBottom: "12px" }}>
@@ -98,7 +98,7 @@ export default function CheapWeedPage() {
               </details>
               <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
                 <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>How do I check current menu options?</summary>
-                <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px" }}>Use the live menu categories or call (613) 612-2107 for quick help from the store team before visiting.</p>
+                <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px" }}>Use the live menu categories or call (343) 308-8998 for quick help from the store team before visiting.</p>
               </details>
             </div>
           </div>

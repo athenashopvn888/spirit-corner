@@ -181,7 +181,7 @@ export default function HomePage() {
     name: "Spirit Corner Cannabis",
     description: "Spirit Corner Cannabis is a downtown Ottawa cannabis store near the ByWard Market serving Ottawa, Gatineau, Hull, Barrhaven, Kanata, Orleans, Nepean, and surrounding communities.",
     url: "https://spiritcornercannabis.com",
-    telephone: "+16136122107",
+    telephone: "+13433088998",
     image: "https://spiritcornercannabis.com/banners/spirit-corner-cannabis-logo-NEW.png",
     priceRange: "$3 - $12/g",
     address: {

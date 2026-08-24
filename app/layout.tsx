@@ -77,7 +77,7 @@ const jsonLd = {
   description:
     "Cannabis dispensary at 251 Dalhousie St in Ottawa, ON. Shop exotic, premium, AAA+, AA, and budget flower tiers plus edibles, prerolls, and vapes. Open 24 Hours.",
   url: "https://spiritcornercannabis.com",
-  telephone: "+16136122107",
+  telephone: "+13433088998",
   image: "https://spiritcornercannabis.com/wp-content/uploads/2026/04/7Clmh.jpg",
   priceRange: "$3 - $12/g",
   paymentAccepted: "Cash, Credit Card, Interac, Contactless Tap",

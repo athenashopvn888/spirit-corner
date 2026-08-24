@@ -103,7 +103,7 @@ export default function FAQPage() {
           <div className={styles.ctaSection}>
             <h2 className={styles.ctaTitle}>Still have questions?</h2>
             <p className={styles.ctaText}>
-              Call us at <strong>(613) 612-2107</strong> or visit us at 251 Dalhousie St, Ottawa.
+              Call us at <strong>(343) 308-8998</strong> or visit us at 251 Dalhousie St, Ottawa.
             </p>
           </div>
         </div>
