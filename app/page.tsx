@@ -194,8 +194,8 @@ export default function HomePage() {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 45.4292,
-      longitude: -75.6928,
+      latitude: 45.4310488,
+      longitude: -75.6927362,
     },
     openingHoursSpecification: [
       {
