@@ -10,7 +10,7 @@ const SLIDES = [
     alt: "Spirit Corner Cannabis downtown Ottawa 24 hour dispensary near Gatineau with premium weed native cigarettes vapes edibles and cannabis deals",
     title: "Downtown Ottawa 24 Hour Dispensary Near Gatineau",
     caption: "24 hour cannabis, native cigarettes, weed deals, vapes and edibles in downtown Ottawa near Gatineau",
-    description: "Spirit Corner Cannabis is a downtown Ottawa cannabis dispensary near Gatineau offering premium cannabis flower, cheap weed deals, native cigarettes, prerolls, vapes, edibles, and loyalty rewards.",
+    description: "Spirit Corner Cannabis is a downtown Ottawa cannabis dispensary near Gatineau offering premium cannabis flower, cheap weed deals, Native cigarettes, pre-rolls, vapes, and edibles.",
     link: "/24-hour-ottawa-dispensary",
     btnText: "Browse Late Night Menu",
   },

@@ -148,7 +148,7 @@ const HOMEPAGE_HIGHLIGHTS = [
     eyebrow: "Native cigarettes",
     title: "Native Cigarettes Ottawa",
     description:
-      "See the $25 per carton Native cigarettes page and current site listings before planning a downtown Ottawa visit.",
+      "Native cigarette cartons are $25 at Spirit Corner Cannabis, open 24 hours at 251 Dalhousie St.",
     href: "/native-cigarettes-ottawa",
     cta: "Explore Native cigarettes",
   },

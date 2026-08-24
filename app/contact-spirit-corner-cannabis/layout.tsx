@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Spirit Corner Cannabis",
+  title: "Contact, Hours, and Directions",
   description: "Call or visit Spirit Corner Cannabis at 251 Dalhousie St in downtown Ottawa. Open 24 hours.",
   alternates: { canonical: "https://spiritcornercannabis.com/contact-spirit-corner-cannabis" },
 };
