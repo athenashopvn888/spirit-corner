@@ -175,7 +175,7 @@ export default function ContactUsPage() {
             {/* Embedded Google Map */}
             <div style={{ borderRadius: "24px", overflow: "hidden", border: "1px solid var(--border-subtle)" }}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2800.0!2d-75.6928!3d45.4292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce04c8524ed59b%3A0x5836a82438336497!2s251+Dalhousie+St%2C+Ottawa%2C+ON+K1N+1E7!5e0!3m2!1sen!2sca!4v1"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2800.0!2d-75.6927362!3d45.4310488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce058c5246d59b%3A0x5836a82438336497!2s251+Dalhousie+St%2C+Ottawa%2C+ON+K1N+1E7!5e0!3m2!1sen!2sca!4v1"
                 width="100%"
                 height="350"
                 style={{ border: 0, display: "block" }}
