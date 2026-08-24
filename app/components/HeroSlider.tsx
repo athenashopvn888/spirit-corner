@@ -19,7 +19,7 @@ const SLIDES = [
     alt: "Cheap weed Ottawa near Gatineau with exotic flower premium cannabis AAA plus flower and budget weed deals at Spirit Corner Cannabis downtown Ottawa",
     title: "Cheap Weed Ottawa Near Gatineau Cannabis Deals",
     caption: "Exotic flower, premium weed, AAA plus cannabis and budget weed in downtown Ottawa near Gatineau",
-    description: "Spirit Corner Cannabis offers cheap weed in Ottawa with 4 cannabis tiers including exotic flower, premium cannabis, AAA plus flower, and budget weed deals near Gatineau and downtown Ottawa.",
+    description: "Spirit Corner Cannabis offers cheap weed in Ottawa across five flower tiers: Exotic, Premium, AAA+, AA, and Budget, near Gatineau and downtown Ottawa.",
     link: "/cheap-weed-ottawa",
     btnText: "Shop Cannabis Deals",
   },
