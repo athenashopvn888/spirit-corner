@@ -1,5 +1,3 @@
-/* ── Tier-specific SEO content for below-the-fold sections ── */
-
 export interface TierSeoData {
   seoTitle: string;
   seoIntro: string;
@@ -9,110 +7,138 @@ export interface TierSeoData {
 
 export const TIER_SEO: Record<string, TierSeoData> = {
   EXOTIC: {
-    seoTitle: "Exotic Cannabis Flower Ottawa — Ultra-Rare, Top-Shelf Genetics",
-    seoIntro: "Explore the Exotic tier at Spirit Corner Cannabis — our most exclusive cannabis flower selection. Hand-picked strains with THC levels up to 39%, stunning bag appeal, and unique terpene profiles you won't find anywhere else in Ottawa.",
+    seoTitle: "Exotic Cannabis Flower Ottawa | Spirit Corner Cannabis",
+    seoIntro:
+      "Compare Exotic flower listings by name, type, THC label, weight, and listed price at Spirit Corner Cannabis in downtown Ottawa.",
     sections: [
       {
-        heading: "What Makes Exotic Flower Special?",
-        body: "Exotic cannabis flower represents the absolute pinnacle of cannabis cultivation. These strains are grown by elite craft cultivators, hand-trimmed to perfection, and selected for their exceptional terpene profiles, bag appeal, and potency. At Spirit Corner Cannabis, our Exotic tier features strains with THC levels ranging from 35% to 39% — the highest potency flower available in Ottawa.",
+        heading: "Compare Exotic Flower Listings",
+        body:
+          "Each listing shows the flower name, Indica, Sativa, or Hybrid type, its listed THC value, and the weights and prices supplied with the menu snapshot.",
       },
       {
-        heading: "Exotic Pricing — $20/g with 3g bundle pricing",
-        body: "Our Exotic flower starts at $20 per gram. With our 3g bundle pricing, you get 3 grams for just $40 — that's $13.33/g. For even better value, our 6g bundle offer gives you 6 grams for $60 — just $10.00/g. 14g is available for $140 ($10/g) and full ounces (28g) for $250 ($8.93/g).",
-      },
-      {
-        heading: "Why Shop Exotic at Spirit Corner?",
-        body: "Spirit Corner Cannabis is located at 251 Dalhousie St in the heart of Ottawa's ByWard Market neighbourhood. Our live digital menu is updated in real time, so you can check exactly what Exotic strains are in stock before you visit. Our knowledgeable budtenders can help you find the perfect strain based on your preferred effects, aroma, and potency level.",
+        heading: "Visit Spirit Corner in Downtown Ottawa",
+        body:
+          "Spirit Corner Cannabis is at 251 Dalhousie St near ByWard Market and is open 24 hours for adults 19+. Call ahead when a particular flower matters to your visit because listings and prices can change.",
       },
     ],
     faqs: [
-      { q: "What is Exotic cannabis flower?", a: "Exotic flower is our top-tier cannabis, featuring ultra-rare genetics with THC levels from 35% to 39%. These strains are hand-selected for exceptional bag appeal, unique terpene profiles, and maximum potency." },
-      { q: "How much does Exotic flower cost?", a: "Exotic flower is $20/g. With our 3g bundle pricing, 3g is just $40. 6g bundle pricing gives you 6g for $60. 14g is $140 and 28g is $250." },
-      { q: "What strains are available in the Exotic tier?", a: "Our Exotic selection rotates frequently. Check our live online menu for the current strains in stock — it updates in real time." },
-      { q: "Is Exotic worth the price?", a: "If you value the highest potency, rarest genetics, and best bag appeal, Exotic is absolutely worth it. Our bundle pricing brings the per-gram price down significantly — as low as $8.93/g for an ounce." },
+      {
+        q: "What information is shown for Exotic flower?",
+        a: "Listings show the flower name, type, THC label, listed menu sizes, and listed prices.",
+      },
+      {
+        q: "Can I call before visiting?",
+        a: "Yes. Call (343) 308-8998 to ask about a particular listing before travelling.",
+      },
     ],
   },
-
   PREMIUM: {
-    seoTitle: "Premium Cannabis Flower Ottawa — Hand-Picked Connoisseur Grade",
-    seoIntro: "Shop Premium cannabis flower at Spirit Corner Cannabis, Ottawa. Connoisseur-grade strains with THC 32-34%, exceptional flavour, and smooth smoke. Starting at $15/g.",
+    seoTitle: "Premium Cannabis Flower Ottawa | Spirit Corner Cannabis",
+    seoIntro:
+      "Compare Premium flower listings by name, type, THC label, weight, and listed price at Spirit Corner Cannabis in downtown Ottawa.",
     sections: [
       {
-        heading: "What is Premium Cannabis Flower?",
-        body: "Premium flower sits just below Exotic in our quality hierarchy. These are connoisseur-grade strains with THC levels between 32% and 34%, offering exceptional flavour, smooth smoke, and consistent potency. Premium is the sweet spot for cannabis enthusiasts who want top-quality flower without the Exotic price tag.",
+        heading: "Premium Flower Details at a Glance",
+        body:
+          "Use the listed type, THC value, weights, and prices to compare Premium flower choices before an adult in-store visit.",
       },
       {
-        heading: "Premium Pricing — $15/g with Bundle Pricing",
-        body: "Premium flower starts at $15 per gram. Our 3g bundle pricing gets you 3 grams for $30 ($10/g). The 6g bundle offer delivers 6 grams for just $45 ($7.50/g). 14g is available for $100 ($7.14/g) and 28g for $180 ($6.43/g).",
-      },
-      {
-        heading: "Best Value in ByWard Market",
-        body: "At Spirit Corner Cannabis on Dalhousie St, our Premium tier offers the best quality-to-price ratio in the neighbourhood. Every strain in this tier has been personally vetted by our team for potency, flavour, and bag appeal.",
+        heading: "Open 24 Hours on Dalhousie Street",
+        body:
+          "The store is at 251 Dalhousie St near ByWard Market. Listings and prices can change, so call ahead if you are travelling for a particular flower.",
       },
     ],
     faqs: [
-      { q: "What is Premium cannabis flower?", a: "Premium is our connoisseur-grade tier featuring strains with THC 32-34%. Hand-picked for exceptional flavour, smooth smoke, and consistent quality." },
-      { q: "How much does Premium flower cost?", a: "Premium starts at $15/g. 3g bundle pricing = $30/3g. 6g bundle pricing = $45/6g. 14g = $100. 28g = $180." },
-      { q: "What's the difference between Exotic and Premium?", a: "Exotic features ultra-rare genetics with THC 35-39%, while Premium offers excellent connoisseur-grade strains at THC 32-34% — still top-shelf, but at a lower price point." },
+      {
+        q: "Which Premium flower details can I compare?",
+        a: "You can compare listed flower names, types, THC values, sizes, and prices.",
+      },
+      {
+        q: "When is Spirit Corner Cannabis open?",
+        a: "The Ottawa storefront is open 24 hours for adults 19+.",
+      },
     ],
   },
-
   "AAA+": {
-    seoTitle: "AAA+ Cannabis Flower Ottawa — Heavy Hitters at Great Prices",
-    seoIntro: "Shop AAA+ cannabis flower at Spirit Corner Cannabis, Ottawa. Strong, reliable strains with THC 30-32% starting at just $10/g. The best value for experienced smokers.",
+    seoTitle: "AAA+ Cannabis Flower Ottawa | Spirit Corner Cannabis",
+    seoIntro:
+      "Browse AAA+ flower listings with their supplied type, THC label, weights, and prices at Spirit Corner Cannabis in Ottawa.",
     sections: [
       {
-        heading: "What is AAA+ Cannabis Flower?",
-        body: "AAA+ is where potency meets value. These heavy-hitting strains deliver THC levels from 30% to 32%, making them perfect for daily smokers who want solid potency without paying the premium markup. AAA+ flower at Spirit Corner Cannabis is sourced from trusted Canadian craft growers.",
+        heading: "Compare AAA+ Flower",
+        body:
+          "Flower listings include the name, Indica, Sativa, or Hybrid type, THC label, and the sizes and prices shown in the menu snapshot.",
       },
       {
-        heading: "AAA+ Pricing — $10/g with Bundle Pricing",
-        body: "AAA+ flower starts at just $10 per gram. Our 3g bundle pricing delivers 3 grams for $20 ($6.67/g). The 6g bundle offer gives you 6 grams for $30 — just $5.00/g. 14g is $60 ($4.29/g) and full ounces (28g) start at $100 ($3.57/g).",
+        heading: "Plan an Adult In-Store Visit",
+        body:
+          "Spirit Corner Cannabis is open 24 hours at 251 Dalhousie St. Call (343) 308-8998 when you want to ask about a specific AAA+ listing before visiting.",
       },
     ],
     faqs: [
-      { q: "What is AAA+ cannabis flower?", a: "AAA+ is our value-potency tier featuring strains with THC 30-32%. Heavy hitters with proven genetics at unbeatable prices." },
-      { q: "How much does AAA+ flower cost?", a: "AAA+ starts at $10/g. 3g bundle pricing = $20/3g. 6g bundle pricing = $30/6g. 14g = $60. 28g from $100." },
-      { q: "Is AAA+ good quality?", a: "Absolutely. AAA+ strains deliver THC 30-32% with excellent potency and smoke quality. They're the best value-to-potency ratio in our lineup." },
+      {
+        q: "What does each AAA+ listing show?",
+        a: "Each listing shows the flower name, type, THC label, menu sizes, and listed prices.",
+      },
+      {
+        q: "Can AAA+ listings change?",
+        a: "Yes. Listings and prices can change, so call ahead when a particular flower matters to your visit.",
+      },
     ],
   },
-
   AA: {
-    seoTitle: "AA Cannabis Flower Ottawa — Quality Daily Drivers",
-    seoIntro: "Shop AA cannabis flower at Spirit Corner Cannabis, Ottawa. Solid everyday strains with THC 27-29% at just $5/g. Perfect for regular smokers on a budget.",
+    seoTitle: "AA Cannabis Flower Ottawa | Spirit Corner Cannabis",
+    seoIntro:
+      "Compare AA flower listings, supplied THC labels, menu sizes, and listed prices at Spirit Corner Cannabis in downtown Ottawa.",
     sections: [
       {
-        heading: "What is AA Cannabis Flower?",
-        body: "AA flower is designed for the everyday smoker. These quality daily drivers deliver consistent THC levels between 27% and 29%, providing reliable effects at an affordable price. AA is perfect for regular smokers who want quality without overspending.",
+        heading: "AA Flower Names, Types, and Sizes",
+        body:
+          "Compare each listed flower by name, Indica, Sativa, or Hybrid type, THC label, listed menu sizes, and listed prices.",
       },
       {
-        heading: "AA Pricing — $5/g, 5g bundle for $20",
-        body: "AA flower is just $5 per gram. Our 5g bundle for $20 gives you 5 grams total ($4.00/g). 14g is available for $50 ($3.57/g) and 28g for $90 ($3.21/g). Great value for daily use.",
+        heading: "Downtown Ottawa Store Information",
+        body:
+          "Visit 251 Dalhousie St near ByWard Market. The storefront is open 24 hours for adults 19+, and shoppers can call ahead about a particular listing.",
       },
     ],
     faqs: [
-      { q: "What is AA cannabis flower?", a: "AA is our everyday-value tier with strains at THC 27-29%. Reliable quality at an affordable price point." },
-      { q: "How much does AA flower cost?", a: "AA starts at $5/g. 5g bundle = $20/5g ($4.00/g). 14g = $50. 28g = $90." },
+      {
+        q: "What can I compare in the AA selection?",
+        a: "You can compare listed flower names, types, THC labels, sizes, and prices.",
+      },
+      {
+        q: "Where is Spirit Corner Cannabis?",
+        a: "The store is at 251 Dalhousie St in downtown Ottawa near ByWard Market.",
+      },
     ],
   },
-
   BUDGET: {
-    seoTitle: "Budget Cannabis Ottawa — Cheap Weed From $3/g",
-    seoIntro: "Cheap weed in Ottawa starting at $3/g. Spirit Corner Cannabis Budget tier features shreds and value ounces for cost-conscious smokers. Check current store hours before visiting Spirit Corner Cannabis.",
+    seoTitle: "Budget Cannabis Ottawa | Listed Flower Prices | Spirit Corner Cannabis",
+    seoIntro:
+      "Compare Budget flower names, types, sizes, and listed prices at Spirit Corner Cannabis, 251 Dalhousie St in downtown Ottawa.",
     sections: [
       {
-        heading: "Affordable Cannabis Without Compromise",
-        body: "Our Budget tier proves that affordable cannabis doesn't mean low quality. With THC levels from 24% to 27%, these value strains deliver solid effects at rock-bottom prices. Whether you're looking for shreds or value ounces, Spirit Corner Cannabis has the cheapest weed in Ottawa's ByWard Market neighbourhood.",
+        heading: "Compare Budget Flower Prices and Sizes",
+        body:
+          "Each Budget listing shows the supplied flower name, type, THC label, menu sizes, and listed prices so adults can compare choices before visiting.",
       },
       {
-        heading: "Budget Pricing — From $3/g, OZs from $40",
-        body: "Budget flower starts at just $3 per gram. Value ounces start from $40 — some of the best prices you'll find in Ottawa. Selected Budget flower may show value bundle pricing on the flower bundle menu.",
+        heading: "Call Ahead for a Particular Budget Listing",
+        body:
+          "Menu listings and prices can change. Call (343) 308-8998 if a particular Budget flower or size matters to your visit. The downtown Ottawa storefront is open 24 hours.",
       },
     ],
     faqs: [
-      { q: "What is the cheapest weed at Spirit Corner?", a: "Our Budget tier starts at $3/g with value ounces from $40. These are quality strains at the lowest possible price." },
-      { q: "Is budget flower still good quality?", a: "Yes! Budget strains still deliver THC 24-27%. They're perfect for daily smokers who want value without sacrificing potency." },
-      { q: "Do you have shreds?", a: "Yes, our Budget tier includes shredded flower options — great for rolling and value pricing." },
+      {
+        q: "What details are shown for Budget flower?",
+        a: "Listings show the flower name, type, THC label, menu sizes, and listed prices.",
+      },
+      {
+        q: "Are the listed Budget prices guaranteed?",
+        a: "Listings and prices can change. Call the store before travelling when a particular flower or price matters.",
+      },
     ],
   },
 };

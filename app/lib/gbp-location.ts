@@ -1,4 +1,3 @@
-// Auto-generated Google Business Profile Local SEO Location Configuration
 export const gbpLocation = {
   storeName: "Spirit Corner Cannabis",
   domain: "spiritcornercannabis.com",
@@ -11,41 +10,18 @@ export const gbpLocation = {
   postalCode: "K1N 1E7",
   phone: "(343) 308-8998",
   phoneIntl: "+13433088998",
-  neighborhood: "Ottawa",
-  nearbyAreas: [
-    "ByWard Market",
-    "Lowertown",
-    "Vanier",
-    "Orleans",
-    "Westboro",
-    "Barrhaven",
-    "Kanata",
-    "Stittsville",
-    "Aylmer",
-    "Hull"
-  ],
   products: [
     "Flower",
     "Pre-rolls",
     "Edibles",
     "THC vapes",
     "Concentrates",
-    "Shatter",
-    "CBD oils",
-    "Accessories"
+    "Accessories",
   ],
-  menuUrl: "/",
-  directionsUrl: "",
-  mapEmbedUrl: "",
   latitude: "45.4310488",
   longitude: "-75.6927362",
   hours: ["Open 24 Hours"],
-  seoTitle: "Spirit Corner Cannabis | 24 Hour Ottawa Dispensary Near ByWard Market",
-  metaDescription: "Spirit Corner Cannabis is a 24 hour Ottawa cannabis store near ByWard Market and Lowertown, serving adults 19+ from Ottawa, Gatineau, Hull, Vanier, Orleans, Barrhaven, Kanata, and nearby areas.",
-  localLandmarks: ["ByWard Market", "Lowertown", "Rideau Centre"],
-  introVariant: "If you are searching for a 24 hour Ottawa cannabis store near ByWard Market, Spirit Corner Cannabis at 251 Dalhousie St is built for convenient adult 19+ visit planning. Shoppers use this page to compare menu categories, check directions, and plan visits from downtown Ottawa, Lowertown, Vanier, Hull, Aylmer, Orleans, Barrhaven, Kanata, Stittsville, Westboro, and nearby communities.",
-  neighborhoodDescription: "Located near ByWard Market and Lowertown, Spirit Corner Cannabis is positioned for downtown Ottawa shoppers, late-night visitors, Gatineau/Hull bridge traffic, and adults 19+ planning cannabis store visits from surrounding neighbourhoods.",
-  parkingNote: "Street parking is available along Dalhousie Street",
-  transitNote: "Accessible by OC Transpo routes serving nearby Ottawa neighbourhoods and bridge routes from Gatineau/Hull.",
-  sectionTitle: "Serving Ottawa, Gatineau, Hull, Vanier, Orleans, Barrhaven, Kanata and Nearby Areas"
+  seoTitle: "24 Hour Ottawa Dispensary Near ByWard Market | Spirit Corner Cannabis",
+  metaDescription:
+    "Spirit Corner Cannabis is open 24 hours at 251 Dalhousie St near ByWard Market in downtown Ottawa. Adults 19+ can compare listed flower and other product categories.",
 };

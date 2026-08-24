@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Navbar.module.css";
 
 const ALL_LINKS = [
@@ -72,9 +73,11 @@ export default function Navbar() {
       {/* Top bar: logo + open now */}
       <div className={styles.topBar}>
         <Link href="/" className={styles.logo}>
-          <img
+          <Image
             src="/banners/logo.jpg"
             alt="Spirit Corner Cannabis - Ottawa Dispensary"
+            width={52}
+            height={52}
             className={styles.logoImg}
           />
         </Link>

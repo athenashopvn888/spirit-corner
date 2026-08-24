@@ -56,21 +56,17 @@ export default function GamesContent() {
         }}
       >
         <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <div
+          <h1
             style={{
-              maxWidth: 1000,
-              margin: "0 auto 24px",
-              borderRadius: "var(--radius-xl)",
-              overflow: "hidden",
-              border: "1px solid var(--border-subtle)",
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(32px, 7vw, 54px)",
+              fontWeight: 900,
+              marginBottom: 16,
+              color: "var(--green-deep)",
             }}
           >
-            <img
-              src="/banners/neon_arcade_gaming_promotion_banner.webp"
-              alt="Games Arcade — Flappy Bud, Snake Munchies, Brick Breaker 420"
-              style={{ width: "100%", height: "auto", display: "block" }}
-            />
-          </div>
+            Spirit Corner Cannabis Arcade
+          </h1>
           <p
             style={{
               fontSize: 16,
@@ -79,8 +75,7 @@ export default function GamesContent() {
               margin: "0 auto",
             }}
           >
-            Kill time while your order&apos;s ready. Beat the high score. No
-            dispensary in Ottawa has this.
+            Pick a cannabis-themed browser game and chase a new high score.
           </p>
         </div>
 

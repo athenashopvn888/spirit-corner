@@ -4,16 +4,24 @@ import Navbar from "./components/Navbar";
 import HiringCallout from "./components/HiringCallout";
 import Footer from "./components/Footer";
 import HeroSlider from "./components/HeroSlider";
-import { allFlowers } from "./lib/products";
+import Image from "next/image";
+import { allFlowers, allItems } from "./lib/products";
 import Link from "next/link";
 
 /* Homepage metadata */
 export const metadata: Metadata = {
-  title: "24 Hour Downtown Ottawa Cannabis Store",
+  title: "24 Hour Downtown Ottawa Cannabis Store | Spirit Corner Cannabis",
   description:
     "Spirit Corner Cannabis is a downtown Ottawa cannabis store near ByWard Market with flower, pre-rolls, vapes, edibles, concentrates, accessories, and adult 19+ store info.",
   alternates: {
     canonical: "https://spiritcornercannabis.com",
+  },
+  openGraph: {
+    title: "24 Hour Downtown Ottawa Cannabis Store | Spirit Corner Cannabis",
+    description:
+      "Spirit Corner Cannabis is a downtown Ottawa cannabis store near ByWard Market with five flower tiers and listed smoke-product categories.",
+    url: "https://spiritcornercannabis.com",
+    images: ["/banners/spirit_corner_cannabis_showcase.webp"],
   },
 };
 
@@ -22,86 +30,62 @@ const TIERS = [
   {
     name: "EXOTIC",
     slug: "exotic",
-    tagline: "Ultra-rare, top-shelf genetics",
-    thc: "35-39%",
-    unitPrice: 20,
-    deal3g: "3g bundle for $40",
-    deal6g: "6g bundle for $60",
+    tagline: "Compare listed Exotic flower details and prices",
     color: "#f59e0b",
     glow: "rgba(245, 158, 11, 0.2)",
     icon: "EX",
-    count: 42,
-    banner: "/banners/exotic_premium_cannabis_with_glowing_accents.webp",
+    count: allFlowers.filter((flower) => flower.tier === "EXOTIC").length,
+    countLabel: "flower listings",
   },
   {
     name: "PREMIUM",
     slug: "premium",
-    tagline: "Hand-picked connoisseur grade",
-    thc: "32-34%",
-    unitPrice: 15,
-    deal3g: "3g bundle for $30",
-    deal6g: "6g bundle for $45",
+    tagline: "Compare listed Premium flower details and prices",
     color: "#a78bfa",
     glow: "rgba(167, 139, 250, 0.2)",
     icon: "PR",
-    count: 38,
-    banner: "/banners/premium_cannabis_with_glowing_accents.webp",
+    count: allFlowers.filter((flower) => flower.tier === "PREMIUM").length,
+    countLabel: "flower listings",
   },
   {
     name: "AAA+",
     slug: "aaa",
-    tagline: "Heavy hitters, proven strains",
-    thc: "30-32%",
-    unitPrice: 10,
-    deal3g: "3g bundle for $20",
-    deal6g: "6g bundle for $30",
+    tagline: "Compare listed AAA+ flower details and prices",
     color: "#22d3ee",
     glow: "rgba(34, 211, 238, 0.2)",
     icon: "AA+",
-    count: 55,
-    banner: "/banners/electric_neon_cannabis_ad_banner.webp",
+    count: allFlowers.filter((flower) => flower.tier === "AAA+").length,
+    countLabel: "flower listings",
   },
   {
     name: "AA",
     slug: "aa",
-    tagline: "Quality daily drivers",
-    thc: "27-29%",
-    unitPrice: 4,
-    deal3g: null,
-    deal6g: null,
+    tagline: "Compare listed AA flower details and prices",
     color: "#34d399",
     glow: "rgba(52, 211, 153, 0.2)",
     icon: "AA",
-    count: 35,
-    banner: "/banners/neon_cannabis_product_showcase.webp",
+    count: allFlowers.filter((flower) => flower.tier === "AA").length,
+    countLabel: "flower listings",
   },
   {
     name: "BUDGET",
     slug: "budget",
-    tagline: "Shreds & value OZs",
-    thc: "24-27%",
-    unitPrice: 3,
-    deal3g: "3g bundle for $10",
-    deal6g: null,
+    tagline: "Compare listed Budget flower details and prices",
     color: "#94a3b8",
     glow: "rgba(148, 163, 184, 0.15)",
     icon: "BG",
-    count: 18,
-    banner: "/banners/premium_budget_cannabis_deal_showcase.webp",
+    count: allFlowers.filter((flower) => flower.tier === "BUDGET").length,
+    countLabel: "flower listings",
   },
   {
-    name: "EDIBLES & MORE",
+    name: "EDIBLES",
     slug: "items/edibles",
-    tagline: "Gummies, vapes, pre-rolls, hash",
-    thc: "Up to 98%",
-    unitPrice: null,
-    deal3g: null,
-    deal6g: null,
+    tagline: "Compare listed edible names, details, and prices",
     color: "#fb923c",
     glow: "rgba(251, 146, 60, 0.2)",
     icon: "ED",
-    count: 80,
-    banner: "/banners/neon_lit_edible_product_promotion_banner.webp",
+    count: allItems.filter((item) => item.category === "EDIBLES").length,
+    countLabel: "item listings",
   },
 ];
 
@@ -124,18 +108,35 @@ function buildFeatured() {
     tierCounts[f.tier] = tc + 1;
   }
   return picked.map((f) => ({
+    slug: f.slug,
     name: f.name,
     sku: f.sku,
     tier: f.tier.toUpperCase(),
     thc: f.thc,
     type: f.type === "indica" ? "IH" : f.type === "sativa" ? "SH" : "H",
-    price3g: f.price3g ? `$${f.price3g.sale ?? f.price3g.regular}` : "-",
+    price3g: f.price3g ? `$${f.price3g.sale ?? f.price3g.regular}` : null,
     image: f.image,
   }));
 }
 const FEATURED_STRAINS = buildFeatured();
 
 const HOMEPAGE_HIGHLIGHTS = [
+  {
+    eyebrow: "Late-night store information",
+    title: "24 Hour Ottawa Dispensary",
+    description:
+      "Plan an adult in-store visit to 251 Dalhousie St near ByWard Market at any hour.",
+    href: "/24-hour-ottawa-dispensary",
+    cta: "View 24-hour store details",
+  },
+  {
+    eyebrow: "Budget flower",
+    title: "Cheap Weed Ottawa",
+    description:
+      "Compare listed Budget flower names, sizes, and prices before visiting the downtown Ottawa store.",
+    href: "/cheap-weed-ottawa",
+    cta: "Compare Budget flower",
+  },
   {
     eyebrow: "Adult smoke products",
     title: "Nicotine Pouches Ottawa",
@@ -146,11 +147,11 @@ const HOMEPAGE_HIGHLIGHTS = [
   },
   {
     eyebrow: "Native cigarettes",
-    title: "Native Cigarettes Ottawa",
+    title: "Native Smokes Ottawa",
     description:
-      "Native cigarette cartons are $25 at Spirit Corner Cannabis, open 24 hours at 251 Dalhousie St.",
+      "Compare Native smoke listings and visit details for adults shopping at 251 Dalhousie St in downtown Ottawa.",
     href: "/native-cigarettes-ottawa",
-    cta: "Explore Native cigarettes",
+    cta: "Browse Native smokes",
   },
 ];
 
@@ -172,50 +173,6 @@ function getTierColor(tier: string) {
 }
 
 export default function HomePage() {
-  // JSON-LD Structured Data
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "Store",
-    additionalType: "https://schema.org/Store",
-    "@id": "https://spiritcornercannabis.com",
-    name: "Spirit Corner Cannabis",
-    description: "Spirit Corner Cannabis is a downtown Ottawa cannabis store near the ByWard Market serving Ottawa, Gatineau, Hull, Barrhaven, Kanata, Orleans, Nepean, and surrounding communities.",
-    url: "https://spiritcornercannabis.com",
-    telephone: "+13433088998",
-    image: "https://spiritcornercannabis.com/banners/spirit-corner-cannabis-logo-NEW.png",
-    priceRange: "$3 - $12/g",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "251 Dalhousie St",
-      addressLocality: "Ottawa",
-      addressRegion: "ON",
-      postalCode: "K1N 1E7",
-      addressCountry: "CA",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 45.4310488,
-      longitude: -75.6927362,
-    },
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        opens: "00:00",
-        closes: "23:59",
-      },
-    ],
-    areaServed: [
-      { "@type": "City", name: "Ottawa" },
-      { "@type": "City", name: "Gatineau" },
-      { "@type": "City", name: "Hull" },
-      { "@type": "City", name: "Barrhaven" },
-      { "@type": "City", name: "Kanata" },
-      { "@type": "City", name: "Orleans" },
-      { "@type": "City", name: "Nepean" }
-    ],
-  };
-
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -249,39 +206,7 @@ export default function HomePage() {
         name: "What other product categories are listed?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Listings include edibles, vapes, concentrates, pre-rolls, Native cigarettes, nicotine pouches, and accessories.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Is delivery available?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "No. Delivery is coming soon and is not available yet. The storefront remains open 24 hours.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Where is the store?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Spirit Corner Cannabis is at 251 Dalhousie St in downtown Ottawa near ByWard Market.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Can I get a delivery launch update?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. The delivery page has an email form for a launch notification.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Does the store list nicotine pouches and vapes?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. Spirit Corner lists nicotine pouches, disposable vapes, vape products, and smoking accessories.",
+          text: "The menu lists categories for edibles, vapes, concentrates, pre-rolls, cigarettes, specialty items, and accessories.",
         },
       },
       {
@@ -299,10 +224,6 @@ export default function HomePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-      />
-      <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
@@ -311,19 +232,13 @@ export default function HomePage() {
         <Navbar />
       <HiringCallout />
 
-        {/* Hero slider */}
+        {/* Homepage hero */}
         <HeroSlider />
 
         {/* Shop by tier section */}
         <section className={styles.tierSection} id="menu">
           <div className={styles.container}>
-            <div className={styles.sectionBanner}>
-              <img
-                src="/banners/cheap-weed-ottawa-cannabis-tier-nnabis.png"
-                alt="Shop by Tier - From exotic craft flower to value budget OZs at Spirit Corner Cannabis"
-                className={styles.sectionBannerImg}
-              />
-            </div>
+            <h2 className={styles.sectionTitle}>Compare Flower Tiers and Edibles</h2>
 
             <div className={styles.tierGrid}>
               {TIERS.map((tier, i) => (
@@ -339,13 +254,6 @@ export default function HomePage() {
                     } as React.CSSProperties
                   }
                 >
-                  <div className={styles.tierCardBanner}>
-                    <img
-                      src={tier.banner}
-                      alt={`${tier.name} cannabis flower tier showcase`}
-                      className={styles.tierCardBannerImg}
-                    />
-                  </div>
                   <div className={styles.tierCardBody}>
                     <h3
                       className={styles.tierCardName}
@@ -354,26 +262,11 @@ export default function HomePage() {
                       {tier.name}
                     </h3>
                     <div className={styles.tierCardMeta}>
-                      <span className={styles.tierCardThc}>
-                        THC {tier.thc}
-                      </span>
+                      <span className={styles.tierCardThc}>{tier.tagline}</span>
                       <span className={styles.tierCardCount}>
-                        {tier.count} strains
+                        {tier.count} {tier.countLabel}
                       </span>
                     </div>
-                    <div className={styles.tierCardPrice}>
-                      {tier.unitPrice !== null && (
-                        <span className={styles.tierCardUnitPrice}>
-                          ${tier.unitPrice}/g
-                        </span>
-                      )}
-                    </div>
-                    {tier.deal3g && (
-                      <div className={styles.tierCardDeals}>
-                        <span className={styles.tierCardDeal}>{tier.deal3g}</span>
-                        {tier.deal6g && <span className={styles.tierCardDeal}>{tier.deal6g}</span>}
-                      </div>
-                    )}
                   </div>
                   <div className={styles.tierCardArrow}>View</div>
                 </Link>
@@ -416,27 +309,22 @@ export default function HomePage() {
 
         <section className={styles.featuredSection}>
           <div className={styles.container}>
-            <div className={styles.sectionBanner}>
-              <img
-                src="/banners/hot_right_now_in_neon_glow.webp"
-                alt="Hot Right Now - Staff picks and top sellers"
-                className={styles.sectionBannerImg}
-              />
-            </div>
+            <h2 className={styles.sectionTitle}>Featured Flower Listings</h2>
 
             <div className={styles.featuredGrid}>
               {FEATURED_STRAINS.map((strain, i) => (
                 <Link
-                  key={strain.sku}
-                  href={`/flower/${strain.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  key={strain.slug}
+                  href={`/flower/${strain.slug}`}
                   className={styles.productCard}
                   style={{ animationDelay: `${i * 0.08}s` }}
                 >
                   <div className={styles.productMedia}>
-                    <img
+                    <Image
                       src={strain.image}
-                      alt={`${strain.name} strain media`}
-                      loading="lazy"
+                      alt={`${strain.name} flower listing at Spirit Corner Cannabis`}
+                      fill
+                      sizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
                       className={styles.productImg}
                     />
                     <div className={styles.productBadges}>
@@ -461,12 +349,14 @@ export default function HomePage() {
                       {getTypeLabel(strain.type)}
                     </span>
                     <h3 className={styles.productName}>{strain.name}</h3>
+                    {strain.price3g && (
                     <div className={styles.productPricing}>
                       <span className={styles.productPrice}>
                         {strain.price3g}
                       </span>
                       <span className={styles.productPriceUnit}>/ 3g</span>
                     </div>
+                    )}
                     <div className={styles.productCta}>View Strain</div>
                   </div>
                 </Link>
@@ -479,17 +369,14 @@ export default function HomePage() {
         <section style={{ padding: "60px 0", background: "var(--bg-secondary)", borderTop: "1px solid var(--border-subtle)" }}>
           <div className={styles.container} style={{ maxWidth: "900px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", alignItems: "center", marginBottom: "20px", borderBottom: "1px solid var(--border-subtle)", paddingBottom: "10px" }}>
-              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "36px", fontWeight: 900, color: "var(--green-deep)" }}>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "36px", fontWeight: 900, color: "var(--green-deep)" }}>
                 Spirit Corner Cannabis
-              </h1>
-              <span style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                Last Updated: May 2026
-              </span>
+              </h2>
             </div>
             
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 800, color: "var(--green-dark)", marginBottom: "30px", marginTop: "-10px" }}>
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 800, color: "var(--green-dark)", marginBottom: "30px", marginTop: "-10px" }}>
               24 Hour Downtown Ottawa Cannabis Store Near ByWard Market
-            </h2>
+            </h3>
 
             {/* Section 1 */}
             <div style={{ marginBottom: "32px" }}>
@@ -538,7 +425,7 @@ export default function HomePage() {
                     Store information for visitors from Gatineau
                   </Link>
                 </li>
-                <li>3g, 5g or 6g, 14g, and 28g listings depending on tier</li>
+                <li>Listed flower sizes and prices vary by product</li>
               </ul>
             </div>
 
@@ -627,14 +514,14 @@ export default function HomePage() {
             {/* Section 6 */}
             <div style={{ marginBottom: "40px" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: 800, marginBottom: "12px", color: "var(--text-primary)" }}>
-                Delivery Updates
+                Ottawa Delivery Information
               </h3>
               <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
-                Delivery is coming soon and is not available yet. Adults who want a launch notification can use the{" "}
+                Delivery details can change. Adults can review the{" "}
                 <Link href="/cannabis-delivery-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                  delivery page
+                  Ottawa delivery information
                 </Link>
-                .
+                {" "}or call the store before planning an order.
               </p>
             </div>
 
@@ -662,27 +549,7 @@ export default function HomePage() {
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
                   <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>What other product categories are listed?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Listings include edibles, vapes, concentrates, pre-rolls, Native cigarettes, nicotine pouches, and accessories.</p>
-                </details>
-
-                <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Is delivery available?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>No. Delivery is coming soon and is not available yet. The storefront remains open 24 hours.</p>
-                </details>
-
-                <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Where is the store?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Spirit Corner Cannabis is at 251 Dalhousie St in downtown Ottawa near ByWard Market.</p>
-                </details>
-
-                <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Can I get a delivery launch update?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Yes. The delivery page has an email form for a launch notification.</p>
-                </details>
-
-                <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
-                  <summary style={{ fontWeight: "bold", cursor: "pointer", color: "var(--text-primary)" }}>Does the store list nicotine pouches and vapes?</summary>
-                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Yes. Spirit Corner lists nicotine pouches, disposable vapes, vape products, and smoking accessories.</p>
+                  <p style={{ marginTop: "10px", color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.6" }}>Menu listings include categories for edibles, vapes, concentrates, pre-rolls, cigarettes, specialty items, and accessories.</p>
                 </details>
 
                 <details style={{ background: "white", padding: "16px", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
@@ -692,17 +559,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Games arcade banner */}
-        <section className={styles.promoSection}>
-          <Link href="/games" className={styles.promoBannerLink}>
-            <img
-              src="/banners/neon_arcade_gaming_promotion_banner.webp"
-              alt="Games Arcade - Flappy Bud, Snake Munchies, Brick Breaker 420 Promotion Banner"
-              className={styles.promoBannerImg}
-            />
-          </Link>
         </section>
 
         {/* Store info */}

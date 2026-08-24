@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { FlowerProduct, PricePoint } from "../lib/products";
-import { TIER_CONFIG } from "../lib/products";
 import styles from "./FlowerCard.module.css";
 
 interface WeightOption {
@@ -11,7 +11,6 @@ interface WeightOption {
   label: string;
   grams: number;
   price: PricePoint | null;
-  promo?: string;
 }
 
 function getTypeLabel(t: string) {
@@ -28,14 +27,10 @@ function getTypeClass(t: string) {
 
 export default function FlowerCard({
   flower,
-  tierKey,
 }: {
   flower: FlowerProduct;
   tierKey: string;
 }) {
-  const tierCfg = TIER_CONFIG[tierKey];
-  const isPromoTier = !!tierCfg?.deal6g; // Exotic, Premium, AAA+
-
   const weights: WeightOption[] = [];
   if (flower.price3g) {
     weights.push({
@@ -43,17 +38,14 @@ export default function FlowerCard({
       label: "3g",
       grams: 3,
       price: flower.price3g,
-      promo: isPromoTier ? "3g bundle" : tierCfg?.deal3g?.label,
     });
   }
   if (flower.price5g) {
-    const grams = isPromoTier ? 6 : 5;
     weights.push({
       key: "5g",
-      label: `${grams}g`,
-      grams,
+      label: "5g",
+      grams: 5,
       price: flower.price5g,
-      promo: isPromoTier ? "6g bundle" : undefined,
     });
   }
   if (flower.price14g) {
@@ -64,6 +56,7 @@ export default function FlowerCard({
   }
 
   const [selected, setSelected] = useState(0);
+  const [imageSrc, setImageSrc] = useState(flower.image);
   const active = weights[selected] || weights[0];
 
   if (!active) return null;
@@ -79,17 +72,16 @@ export default function FlowerCard({
       {/* Image */}
       <Link href={`/flower/${flower.slug}`} className={styles.imageLink}>
         <div className={styles.imageWrap}>
-          <img
-            src={flower.image}
-            alt={flower.name}
-            loading="lazy"
+          <Image
+            src={imageSrc}
+            alt={`${flower.name} flower listing`}
+            fill
+            sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 25vw"
             className={styles.img}
-          
-            onError={(e) => {
-              const t = e.currentTarget;
-              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
-                const filename = t.src.split('/').pop();
-                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+            onError={() => {
+              if (imageSrc.includes("r2.dev")) {
+                const filename = imageSrc.split("/").pop();
+                setImageSrc(`https://athena-cannabis-images.vercel.app/products/${filename}`);
               }
             }}
           />
@@ -124,23 +116,9 @@ export default function FlowerCard({
             <span className={styles.priceMain}>${active.price?.regular}</span>
           )}
           <div className={styles.perGramWrap}>
-            {isPromoTier && tierCfg?.unitPrice ? (
-              <>
-                <span className={styles.perGramOld}>${tierCfg.unitPrice}/g</span>
-                <span className={styles.perGram}>${perGram}/g</span>
-              </>
-            ) : (
-              <span className={styles.perGram}>${perGram}/g</span>
-            )}
+            <span className={styles.perGram}>${perGram}/g</span>
           </div>
         </div>
-
-        {/* Promo line */}
-        {active.promo && (
-          <div className={styles.promoLine}>
-            🎁 {active.promo}
-          </div>
-        )}
 
         {/* Weight pills — CLICKABLE */}
         <div className={styles.weightPills}>

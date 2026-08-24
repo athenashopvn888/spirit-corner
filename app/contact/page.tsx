@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import styles from "./contact.module.css";
 
 export const metadata: Metadata = {
-  title: "Contact and Store Hours",
+  title: "Contact and Store Hours | Spirit Corner Cannabis",
   description:
     "Visit Spirit Corner Cannabis at 251 Dalhousie St, Ottawa, ON K1N 1E7. Open 24 Hours a day, 7 days a week. Walk-ins welcome.",
   alternates: {
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     title: "Contact Spirit Corner Cannabis",
     description:
       "Visit 251 Dalhousie St in Ottawa. Spirit Corner Cannabis is open 24 hours a day, seven days a week.",
+    url: "https://spiritcornercannabis.com/contact",
   },
 };
 

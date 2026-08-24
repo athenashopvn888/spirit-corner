@@ -168,6 +168,15 @@
   .buttons {
     flex-direction: column;
   }
+  .btnPrimary,
+  .btnSecondary,
+  .links a {
+    min-height: 44px;
+  }
+  .links a {
+    display: flex;
+    align-items: center;
+  }
   .trustStrip {
     grid-template-columns: 1fr;
     margin-top: 26px;

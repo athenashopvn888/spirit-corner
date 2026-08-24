@@ -7,11 +7,18 @@ import { allFlowers, allItems } from "../lib/products";
 import styles from "./menuPage.module.css";
 
 export const metadata: Metadata = {
-  title: "Spirit Corner Cannabis Menu Finder | Ottawa Cannabis Menu",
+  title: "Ottawa Flower & Accessories Menu | Spirit Corner Cannabis",
   description:
-    "Find Spirit Corner Cannabis flower, pre-rolls, edibles, vapes, concentrates, cigarettes, and accessories with fast category and shopper filters.",
+    "Compare listed flower, pre-rolls, edibles, vapes, concentrates, cigarettes, and accessories at Spirit Corner Cannabis in downtown Ottawa.",
   alternates: {
     canonical: "https://spiritcornercannabis.com/menu",
+  },
+  openGraph: {
+    title: "Spirit Corner Cannabis Menu | Flower & Accessories Ottawa",
+    description:
+      "Compare listed cannabis flower and accessory categories before visiting Spirit Corner Cannabis at 251 Dalhousie Street.",
+    url: "https://spiritcornercannabis.com/menu",
+    images: ["/banners/spirit_corner_cannabis_showcase.webp"],
   },
 };
 
@@ -21,11 +28,12 @@ export default function MenuPage() {
       <Navbar />
       <section className={styles.hero}>
         <p className={styles.kicker}>Spirit Corner Cannabis Menu</p>
-        <h1>Find the right menu section faster</h1>
+        <h1>Compare flower and accessories in Ottawa</h1>
         <p className={styles.copy}>
-          Browse Spirit Corner Cannabis by category, price range, weight, THC
-          range, desired effect, product type, and search terms so adult
-          shoppers can get to the right section with less scrolling.
+          Compare listed flower by tier, type, weight, THC label, and price,
+          or browse pre-rolls, edibles, vapes, concentrates, cigarettes, and
+          accessories. Call ahead when you want to confirm a specific item
+          before visiting our 24-hour Dalhousie Street store.
         </p>
         <div className={styles.heroActions}>
           <Link href="/#menu" className={styles.secondaryLink}>

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://spiritcornercannabis.com"),
   title: {
     default: "Spirit Corner Cannabis - Premium Cannabis Dispensary, Ottawa",
-    template: "%s | Spirit Corner Cannabis",
+    template: "%s",
   },
   description:
     "Spirit Corner Cannabis offers Budget, AA, AAA+, Premium, and Exotic flower tiers plus edibles, vapes, pre-rolls, and accessories at 251 Dalhousie St. Open 24 hours.",
@@ -28,7 +29,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_CA",
-    url: "https://spiritcornercannabis.com",
     siteName: "Spirit Corner Cannabis",
     title: "Spirit Corner Cannabis - Premium Ottawa Cannabis Dispensary",
     description:
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/banners/spirit_corner_cannabis_showcase.webp",
-        width: 1200,
-        height: 630,
-        alt: "Spirit Corner Cannabis - Premium Cannabis Dispensary Ottawa",
+        width: 1168,
+        height: 784,
+        alt: "Spirit Corner Cannabis branded welcome graphic",
       },
     ],
   },
@@ -60,9 +60,6 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  alternates: {
-    canonical: "https://spiritcornercannabis.com",
-  },
   verification: {
     // google: "your-google-verification-code",
   },
@@ -78,14 +75,7 @@ const jsonLd = {
     "Cannabis dispensary at 251 Dalhousie St in Ottawa, ON. Shop exotic, premium, AAA+, AA, and budget flower tiers plus edibles, prerolls, and vapes. Open 24 Hours.",
   url: "https://spiritcornercannabis.com",
   telephone: "+13433088998",
-  image: "https://spiritcornercannabis.com/wp-content/uploads/2026/04/7Clmh.jpg",
-  priceRange: "$3 - $12/g",
-  paymentAccepted: "Cash, Credit Card, Interac, Contactless Tap",
-  amenityFeature: {
-    "@type": "LocationFeatureSpecification",
-    name: "24/7 ATM on site",
-    value: true,
-  },
+  image: "https://spiritcornercannabis.com/banners/spirit_corner_cannabis_showcase.webp",
   address: {
     "@type": "PostalAddress",
     streetAddress: "251 Dalhousie St",
@@ -115,22 +105,6 @@ const jsonLd = {
       closes: "23:59",
     },
   ],
-  areaServed: [
-    { "@type": "AdministrativeArea", name: "Ottawa" },
-    { "@type": "AdministrativeArea", name: "ByWard Market" },
-    { "@type": "AdministrativeArea", name: "Lowertown" },
-    { "@type": "AdministrativeArea", name: "Centretown" },
-    { "@type": "AdministrativeArea", name: "Vanier" },
-    { "@type": "AdministrativeArea", name: "Sandy Hill" },
-    { "@type": "AdministrativeArea", name: "Rideau" },
-    { "@type": "AdministrativeArea", name: "Orleans" },
-    { "@type": "AdministrativeArea", name: "Kanata" },
-    { "@type": "AdministrativeArea", name: "Barrhaven" },
-    { "@type": "AdministrativeArea", name: "Nepean" },
-    { "@type": "AdministrativeArea", name: "Gatineau" },
-    { "@type": "AdministrativeArea", name: "Hull" },
-    { "@type": "AdministrativeArea", name: "Aylmer" },
-  ],
 };
 
 export default function RootLayout({
@@ -151,11 +125,13 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <script
-          async
+        <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-S9S5B80HR2"
+          strategy="afterInteractive"
         />
-        <script
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];

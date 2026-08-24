@@ -5,7 +5,7 @@ export default function HiringCallout() {
     <section
       aria-label="Spirit Corner Cannabis hiring"
       style={{
-        padding: "110px 20px 24px",
+        padding: "24px 20px",
         background: "#020617",
       }}
     >

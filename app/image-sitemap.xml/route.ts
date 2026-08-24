@@ -1,9 +1,9 @@
-import { allFlowers, allItems } from "../lib/products";
+import { allFlowers, allItems, isGrabbaItem } from "../lib/products";
 
 const BASE = "https://spiritcornercannabis.com";
-const hasShaker = allItems.some(
-  (item) => item.slug === "grabba-shaker-redrose-red-herring"
-);
+const grabbaImages = allItems
+  .filter(isGrabbaItem)
+  .map((item) => absoluteImageUrl(item.image));
 
 function escapeXml(value: string) {
   return value
@@ -22,7 +22,7 @@ function absoluteImageUrl(value: string) {
 const staticEntries = [
   {
     page: BASE,
-    images: [`${BASE}/storeFavicon.webp`],
+    images: [`${BASE}/banners/spirit_corner_cannabis_showcase.webp`],
   },
   {
     page: `${BASE}/info/weed-store-near-gatineau`,
@@ -32,10 +32,7 @@ const staticEntries = [
   },
   {
     page: `${BASE}/grabba-leaf-shakers`,
-    images: [
-      `${BASE}/products/GRABBA-2G.webp`,
-      ...(hasShaker ? [`${BASE}/products/GrabbaShaker.webp`] : []),
-    ],
+    images: grabbaImages,
   },
 ];
 

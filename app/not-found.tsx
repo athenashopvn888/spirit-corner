@@ -38,8 +38,9 @@ export default function NotFound() {
             lineHeight: 1.6,
           }}
         >
-          This page doesn&apos;t exist — but our shelves are fully stocked.
-          Browse 200+ strains at Ottawa&apos;s most fire dispensary.
+          This address does not match an active page. Browse the listed flower
+          tiers and product categories, or call the store when a particular item
+          matters to your visit.
         </p>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
           <Link

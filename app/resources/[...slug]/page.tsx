@@ -23,6 +23,11 @@ export async function generateMetadata({ params }: ResourceRouteProps): Promise<
     title: page.seoTitle,
     description: page.description,
     alternates: { canonical: "https://spiritcornercannabis.com/resources/" + page.slug },
+    openGraph: {
+      title: page.seoTitle,
+      description: page.description,
+      url: "https://spiritcornercannabis.com/resources/" + page.slug,
+    },
   };
 }
 

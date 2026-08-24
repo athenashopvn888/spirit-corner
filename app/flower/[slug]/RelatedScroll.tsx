@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./flower.module.css";
 
 interface RelatedFlower {
@@ -76,15 +77,12 @@ export default function RelatedScroll({
             >
               <div className={styles.relatedImg}>
                 {r.image ? (
-                  <img src={r.image} alt={r.name} loading="lazy" 
-            onError={(e) => {
-              const t = e.currentTarget;
-              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
-                const filename = t.src.split('/').pop();
-                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
-              }
-            }}
-          />
+                  <Image
+                    src={r.image}
+                    alt={`${r.name} related flower listing`}
+                    fill
+                    sizes="180px"
+                  />
                 ) : (
                   <span>{r.name[0]}</span>
                 )}

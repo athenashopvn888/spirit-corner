@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { allItems, CATEGORY_CONFIG, type ItemProduct } from "../../lib/products";
+import { allItems, getCategoryForItem, type ItemProduct } from "../../lib/products";
 import { getItemData } from "../../lib/itemData";
 import Magnifier from "../../components/Magnifier";
 import styles from "../../flower/[slug]/flower.module.css";
@@ -24,16 +24,18 @@ export async function generateMetadata({
   if (!item) return {};
 
   const itemData = getItemData(item.category, item.name);
+  const pageUrl = `https://spiritcornercannabis.com/item/${item.slug}`;
 
   return {
     title: `${item.name} | ${item.category} | Spirit Corner Cannabis Ottawa`,
     description: itemData.metaDescription,
     alternates: {
-      canonical: `https://spiritcornercannabis.com/item/${slug}`,
+      canonical: pageUrl,
     },
     openGraph: {
       title: `${item.name} | Spirit Corner Cannabis`,
       description: itemData.metaDescription,
+      url: pageUrl,
       images: item.image ? [{ url: item.image, width: 800, height: 800, alt: item.name }] : [],
     },
   };
@@ -52,23 +54,13 @@ function getJsonLd(item: ItemProduct) {
   const itemData = getItemData(item.category, item.name);
   const priceNum = item.price ? parseFloat(item.price.replace('$', '')) : 0;
 
-  const offers: any = {
+  const offers: Record<string, unknown> | undefined = priceNum ? {
     "@type": "Offer",
     url: `https://spiritcornercannabis.com/item/${item.slug}`,
     priceCurrency: "CAD",
-    availability: "https://schema.org/InStock",
-    itemCondition: "https://schema.org/NewCondition",
-    seller: { "@type": "Organization", name: "Spirit Corner Cannabis" },
-    hasMerchantReturnPolicy: {
-      "@type": "MerchantReturnPolicy",
-      applicableCountry: "CA",
-      returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted"
-    }
-  };
-
-  if (priceNum) {
-    offers.price = priceNum;
-  }
+    seller: { "@id": "https://spiritcornercannabis.com" },
+    price: priceNum,
+  } : undefined;
 
   return {
     "@context": "https://schema.org",
@@ -76,7 +68,6 @@ function getJsonLd(item: ItemProduct) {
     name: item.name,
     image: item.image ? [item.image.startsWith('http') ? item.image : `https://spiritcornercannabis.com${item.image.startsWith('/') ? '' : '/'}${item.image}`] : undefined,
     description: itemData.description,
-    brand: { "@type": "Brand", name: "Spirit Corner Cannabis" },
     sku: cleanSku(item.sku || item.slug),
     offers,
   };
@@ -84,7 +75,11 @@ function getJsonLd(item: ItemProduct) {
 
 /* -- Breadcrumb JSON-LD -- */
 function getBreadcrumbJsonLd(item: ItemProduct) {
-  const catSlug = item.category.toLowerCase().replace(' ', '-');
+  const category = getCategoryForItem(item);
+  const catUrl = category
+    ? `https://spiritcornercannabis.com/items/${category.config.slug}`
+    : "https://spiritcornercannabis.com/menu";
+  const catName = category?.config.name || item.category;
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -98,8 +93,8 @@ function getBreadcrumbJsonLd(item: ItemProduct) {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": item.category,
-        "item": `https://spiritcornercannabis.com/items/${catSlug}`
+        "name": catName,
+        "item": catUrl
       },
       {
         "@type": "ListItem",
@@ -121,7 +116,8 @@ export default async function ItemPage({
   const item = allItems.find((i) => i.slug === slug);
   if (!item) notFound();
 
-  const catInfo = Object.values(CATEGORY_CONFIG).find(c => c.name.toUpperCase() === item.category.toUpperCase() || c.name === item.category);
+  const category = getCategoryForItem(item);
+  const catInfo = category?.config;
   const catColor = catInfo?.color || "#94a3b8";
   const catIcon = catInfo?.icon || "🏷️";
   
@@ -146,7 +142,9 @@ export default async function ItemPage({
           <nav className={styles.breadcrumb}>
             <Link href="/">Home</Link>
             <span>/</span>
-            <Link href={`/items/${catInfo?.slug || item.category.toLowerCase().replace(' ', '-')}`}>{item.category}</Link>
+            <Link href={catInfo ? `/items/${catInfo.slug}` : "/menu"}>
+              {catInfo?.name || item.category}
+            </Link>
             <span>/</span>
             <span className={styles.breadcrumbCurrent}>{item.name}</span>
           </nav>
@@ -214,9 +212,9 @@ export default async function ItemPage({
                 </div>
               </div>
 
-              {/* Effects */}
+              {/* Verified menu attributes */}
               <div className={styles.effectsRow}>
-                {itemData.effects.map((e) => (
+                {itemData.attributes.map((e) => (
                   <span key={e.label} className={styles.effectPill}>
                     {e.emoji} {e.label}
                   </span>
@@ -224,6 +222,7 @@ export default async function ItemPage({
               </div>
 
               {/* -- Pricing table (Single unit for items) -- */}
+              {item.price && (
               <div className={styles.pricingSection}>
                 <h2 className={styles.pricingTitle}>Pricing</h2>
                 <div className={styles.priceTable}>
@@ -235,11 +234,12 @@ export default async function ItemPage({
                   <div className={styles.priceTableRow}>
                     <span className={styles.priceWeight}>1 Item</span>
                     <span className={styles.priceRegular}>
-                      {item.price?.startsWith('$') ? item.price : `$${item.price}`}
+                      {item.price.startsWith('$') ? item.price : `$${item.price}`}
                     </span>
                   </div>
                 </div>
               </div>
+              )}
 
               {/* -- Description (SEO) -- */}
               <div className={styles.descSection}>
@@ -247,14 +247,14 @@ export default async function ItemPage({
                 <p className={styles.descText}>{itemData.description}</p>
               </div>
 
-              {/* -- How to consume -- */}
+              {/* -- Product note -- */}
               <div className={styles.descSection} style={{ marginTop: '24px' }}>
-                <h2 className={styles.descTitle}>How to Consume</h2>
-                <p className={styles.descText}>{itemData.consume}</p>
+                <h2 className={styles.descTitle}>Before You Visit</h2>
+                <p className={styles.descText}>{itemData.productNote}</p>
               </div>
 
               <div className={styles.visitCta}>
-                <p>Available in-store &middot; Walk-in welcome &middot; No appointment needed</p>
+                <p>Open 24 hours for adult in-store shopping &middot; Call ahead for a particular listing</p>
               </div>
             </div>
           </div>

@@ -1,20 +1,28 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
 import { type ItemProduct } from "../../lib/products";
 import styles from "./items.module.css";
 
 export default function ItemCard({ item, catColor }: { item: ItemProduct; catColor: string }) {
+  const [imageSrc, setImageSrc] = useState(item.image);
+
   return (
     <Link href={`/item/${item.slug}`} className={styles.card} style={{ "--cat-color": catColor } as React.CSSProperties}>
       <div className={styles.cardMedia}>
         {item.image ? (
-          <img src={item.image} alt={item.name} loading="lazy" className={styles.cardImg} 
-            onError={(e) => {
-              const t = e.currentTarget;
-              if (t.src.indexOf('r2.dev') !== -1 || t.src.indexOf('images.torontodispensaryhub.com') !== -1) {
-                const filename = t.src.split('/').pop();
-                t.src = 'https://athena-cannabis-images.vercel.app/products/' + filename;
+          <Image
+            src={imageSrc}
+            alt={`${item.name} product listing`}
+            fill
+            sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 25vw"
+            className={styles.cardImg}
+            onError={() => {
+              if (imageSrc.includes("r2.dev")) {
+                const filename = imageSrc.split("/").pop();
+                setImageSrc(`https://athena-cannabis-images.vercel.app/products/${filename}`);
               }
             }}
           />

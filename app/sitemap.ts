@@ -10,11 +10,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: now, changeFrequency: "daily", priority: 1 },
-    { url: `${BASE}/weed-dispensary-ottawa/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/weed-dispensary-ottawa`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/24-hour-ottawa-dispensary`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/5-percent-vapes-ottawa`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/cheap-weed-ottawa`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/native-cigarettes-ottawa`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/nicotine-pouches-ottawa`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/dispensaire-cannabis-pres-de-gatineau`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/menu`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/careers/budtender`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/delivery`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE}/cannabis-delivery-ottawa`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/games`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE}/grabba-leaf-shakers`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
   ];

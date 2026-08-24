@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://spiritcornercannabis.com/careers/budtender",
   },
+  openGraph: {
+    title: "Budtender Or Manager Application | Spirit Corner Cannabis",
+    description:
+      "Apply online for budtender or manager opportunities at Spirit Corner Cannabis in Ottawa.",
+    url: "https://spiritcornercannabis.com/careers/budtender",
+  },
 };
 
 const applicantFaqs = [

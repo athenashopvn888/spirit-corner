@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "./resources.module.css";
@@ -18,7 +19,14 @@ export default function ResourceView({ page }: ResourceViewProps) {
           <h1>{page.title}</h1>
           <p className={styles.intro}>{page.intro}</p>
           <div className={styles.bannerFrame}>
-            <img src={page.banner} alt={`${page.title} resource banner`} className={styles.bannerImg} />
+            <Image
+              src={page.banner}
+              alt="Spirit Corner Cannabis branded welcome graphic"
+              width={1168}
+              height={784}
+              sizes="(max-width: 900px) 100vw, 900px"
+              className={styles.bannerImg}
+            />
           </div>
         </div>
       </section>

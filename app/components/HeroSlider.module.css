@@ -38,6 +38,11 @@
   z-index: 2;
 }
 
+.heroImage {
+  object-fit: contain;
+  object-position: center;
+}
+
 .overlay {
   position: absolute;
   inset: 0;

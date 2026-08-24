@@ -64,25 +64,18 @@ function TypeTag({ type }: { type: string }) {
   return <span className={`${styles.tag} ${cls}`}>{label}</span>;
 }
 
-/* -- Vibe card -- */
-const VIBE_MAP: Record<string, [string,string][]> = {
-  indica: [["🛋️","Couch Lock"],["😌","Relax"],["🌙","Sleepy"]],
-  sativa: [["⚡","Energy"],["🧠","Cerebral"],["🚀","Uplift"]],
-  hybrid: [["🧘","Balance"],["🌿","Calm"],["✨","Creative"]],
-};
+/* -- Supplied flower type -- */
 function VibeCard({ type }: { type: string }) {
   const t = type?.toLowerCase();
-  const vibes = VIBE_MAP[t] || VIBE_MAP.hybrid;
+  const label = t === "indica" ? "Indica" : t === "sativa" ? "Sativa" : t === "hybrid" ? "Hybrid" : type;
   return (
     <div className={styles.vibeSection}>
-      <div className={styles.vibeHead}>EFFECTS</div>
+      <div className={styles.vibeHead}>LISTED TYPE</div>
       <div className={styles.vibePills}>
-        {vibes.map(([emoji, label]) => (
-          <span key={label} className={styles.vibePill}>
-            <span className={styles.vibeEmoji}>{emoji}</span>
-            <span className={styles.vibeLabel}>{label}</span>
-          </span>
-        ))}
+        <span className={styles.vibePill}>
+          <span className={styles.vibeEmoji}>🌿</span>
+          <span className={styles.vibeLabel}>{label}</span>
+        </span>
       </div>
     </div>
   );
@@ -672,7 +665,7 @@ function AddOnsCard({ items, hiIdx }: { items: Item[]; hiIdx: number }) {
    ============================================================ */
 const TICKER_SLIDES = [
   "🔥 Spirit Corner Cannabis — 251 Dalhousie St, Ottawa",
-  "200+ Strains In Stock",
+  "Listed Flower Options Across Five Tiers",
   "Open 24 Hours",
   "ALL SALES ARE FINAL",
   "🎮 Play Games at spiritcornercannabis.com/games",
@@ -793,22 +786,29 @@ export default function TVMenuPage() {
 
   useEffect(() => {
     const colors = ['rgba(220,38,38,.12)','rgba(245,158,11,.10)','rgba(59,130,246,.10)','rgba(16,185,129,.08)','rgba(168,85,247,.08)'];
-    setParticles(Array.from({length: 25}, (_, i) => {
-      const size = 4 + Math.random() * 8;
-      const color = colors[i % colors.length];
-      return {
-        size,
-        left: `${5 + Math.random() * 90}%`,
-        color,
-        shadow: `0 0 ${size*3}px ${color}`,
-        dur: `${18 + Math.random() * 22}s`,
-        delay: `${-Math.random() * 25}s`,
-      };
-    }));
-    loadData(); fitToScreen();
+    const frame = window.requestAnimationFrame(() => {
+      setParticles(Array.from({length: 25}, (_, i) => {
+        const size = 4 + Math.random() * 8;
+        const color = colors[i % colors.length];
+        return {
+          size,
+          left: `${5 + Math.random() * 90}%`,
+          color,
+          shadow: `0 0 ${size*3}px ${color}`,
+          dur: `${18 + Math.random() * 22}s`,
+          delay: `${-Math.random() * 25}s`,
+        };
+      }));
+      loadData();
+      fitToScreen();
+    });
     window.addEventListener("resize", fitToScreen);
     const refresh = setInterval(loadData, 5*60*1000);
-    return () => { window.removeEventListener("resize", fitToScreen); clearInterval(refresh); };
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", fitToScreen);
+      clearInterval(refresh);
+    };
   }, [loadData, fitToScreen]);
 
   useEffect(() => {

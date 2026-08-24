@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: RESOURCE_HOME.seoTitle,
   description: RESOURCE_HOME.description,
   alternates: { canonical: "https://spiritcornercannabis.com/resources" },
+  openGraph: {
+    title: RESOURCE_HOME.seoTitle,
+    description: RESOURCE_HOME.description,
+    url: "https://spiritcornercannabis.com/resources",
+  },
 };
 
 export default function ResourcesPage() {

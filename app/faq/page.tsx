@@ -4,9 +4,14 @@ import Footer from "../components/Footer";
 import styles from "./faq.module.css";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions",
+  title: "Frequently Asked Questions | Spirit Corner Cannabis",
   description: "Spirit Corner Cannabis location, hours, product categories, in-store shopping, and delivery status.",
   alternates: { canonical: "https://spiritcornercannabis.com/faq" },
+  openGraph: {
+    title: "Frequently Asked Questions | Spirit Corner Cannabis",
+    description: "Spirit Corner Cannabis location, hours, product categories, in-store shopping, and delivery information.",
+    url: "https://spiritcornercannabis.com/faq",
+  },
 };
 
 const FAQ_CATEGORIES = [
@@ -21,7 +26,7 @@ const FAQ_CATEGORIES = [
   {
     title: "Products & Shopping",
     faqs: [
-      { q: "What product categories are listed?", a: "Spirit Corner lists flower in Budget, AA, AAA+, Premium, and Exotic tiers, along with edibles, vapes, concentrates, pre-rolls, Native cigarettes, nicotine pouches, and accessories." },
+      { q: "What product categories are listed?", a: "Spirit Corner lists flower in Budget, AA, AAA+, Premium, and Exotic tiers, along with edibles, vapes, concentrates, pre-rolls, cigarettes, specialty items, and accessories." },
       { q: "Can I shop online?", a: "Shopping is in store. Website listings can help you compare categories before visiting, but selection can change." },
       { q: "Can I call before visiting?", a: "Yes. Call (343) 308-8998 for store directions or product questions." },
     ],
@@ -29,8 +34,8 @@ const FAQ_CATEGORIES = [
   {
     title: "Delivery",
     faqs: [
-      { q: "Is delivery available?", a: "No. Delivery is coming soon and is not available yet. The storefront remains open 24 hours." },
-      { q: "Can I get a delivery launch update?", a: "Yes. The delivery page has an email form for a launch notification." },
+      { q: "Where can I check delivery information?", a: "Review the Ottawa delivery information or call (343) 308-8998 before planning an order because service details can change." },
+      { q: "Does the website guarantee delivery service?", a: "No. Call the store to confirm current service details before planning an order." },
     ],
   },
 ];

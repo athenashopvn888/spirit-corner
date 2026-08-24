@@ -27,13 +27,16 @@ export async function generateMetadata({
   if (!tierInfo) return {};
   const flowers = getFlowersByTier(tierInfo.key);
   const seo = TIER_SEO[tierInfo.key];
+  const pageUrl = `https://spiritcornercannabis.com/${tierInfo.config.slug}`;
 
   return {
     title: seo?.seoTitle || `${tierInfo.config.name} Cannabis Flower — ${flowers.length} Strains`,
     description: seo?.seoIntro || `Shop ${flowers.length} ${tierInfo.config.name.toLowerCase()} cannabis strains at Spirit Corner Cannabis.`,
+    alternates: { canonical: pageUrl },
     openGraph: {
       title: `${tierInfo.config.name} Flower | Spirit Corner Cannabis`,
-      description: `${flowers.length} curated ${tierInfo.config.name.toLowerCase()} strains in stock now. From $${tierInfo.config.unitPrice}/g.`,
+      description: seo?.seoIntro || `Compare ${flowers.length} listed ${tierInfo.config.name.toLowerCase()} flower options at Spirit Corner Cannabis.`,
+      url: pageUrl,
     },
   };
 }
@@ -60,16 +63,7 @@ export default async function TierPage({
     <main className={styles.main}>
       <Navbar />
 
-      {/* ── Banner Image (standalone, no overlay text) ── */}
-      <section className={styles.bannerSection}>
-        <img
-          src={config.banner}
-          alt={`${config.name} Cannabis Flower — ${config.tagline}`}
-          className={styles.bannerImg}
-        />
-      </section>
-
-      {/* ── Hero Content BELOW banner ── */}
+      {/* ── Tier summary ── */}
       <section
         className={styles.heroInfo}
         style={{ "--tier-color": config.color } as React.CSSProperties}
@@ -101,31 +95,10 @@ export default async function TierPage({
           </div>
 
           <div className={styles.heroRight}>
-            <div className={styles.unitPriceBox}>
-              <span className={styles.unitPriceLabel}>Starting at</span>
-              <span className={styles.unitPriceValue}>${config.unitPrice}/g</span>
-            </div>
-
-            {(config.deal3g || config.deal6g) && (
-            <div className={styles.dealRow}>
-              {config.deal3g && (
-              <div className={styles.dealBox}>
-                <div className={styles.dealLabel}>🎁 {config.deal3g.label}</div>
-                <div className={styles.dealPrice}>
-                  = <strong>${config.deal3g.price}</strong> / {config.deal3g.total}
-                </div>
-              </div>
-              )}
-              {config.deal6g && (
-                <div className={styles.dealBox}>
-                  <div className={styles.dealLabel}>🎁 {config.deal6g.label}</div>
-                  <div className={styles.dealPrice}>
-                    = <strong>${config.deal6g.price}</strong> / {config.deal6g.total}
-                  </div>
-                </div>
-              )}
-            </div>
-            )}
+            <p className={styles.heroTagline}>
+              Listed sizes and prices appear with each flower below. Call ahead when a
+              particular listing matters to your visit.
+            </p>
           </div>
         </div>
       </section>

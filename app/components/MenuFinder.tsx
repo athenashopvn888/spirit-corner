@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { FlowerProduct, ItemProduct } from "@/app/lib/products";
 import styles from "./MenuFinder.module.css";
 
@@ -17,7 +18,7 @@ type MenuResult = {
   productType: string;
   category: string;
   tier: string;
-  effect: string;
+  typeLabel: string;
   thcNumber: number | null;
   thcLabel: string;
   priceMin: number | null;
@@ -29,13 +30,13 @@ type MenuResult = {
 
 const QUICK_CATEGORIES = [
   { code: "FL", label: "Flower", value: "Flower", helper: "Browse by tier, type, THC, and weight." },
-  { code: "EX", label: "Exotic", value: "Exotic", helper: "High-THC top shelf flower." },
-  { code: "PR", label: "Premium", value: "Premium", helper: "Connoisseur flower picks." },
-  { code: "AA+", label: "AAA+", value: "AAA+", helper: "Strong flower options." },
-  { code: "AA", label: "AA", value: "AA", helper: "Daily flower choices." },
+  { code: "EX", label: "Exotic", value: "Exotic", helper: "Compare listed Exotic flower details." },
+  { code: "PR", label: "Premium", value: "Premium", helper: "Compare listed Premium flower details." },
+  { code: "AA+", label: "AAA+", value: "AAA+", helper: "Compare listed AAA+ flower details." },
+  { code: "AA", label: "AA", value: "AA", helper: "Compare listed AA flower details." },
   { code: "BG", label: "Budget", value: "Budget", helper: "Value flower options." },
-  { code: "ED", label: "Edibles", value: "EDIBLES", helper: "Gummies, drinks, and more." },
-  { code: "PRR", label: "Pre-Rolls", value: "PREROLLS", helper: "Ready-to-smoke picks." },
+  { code: "ED", label: "Edibles", value: "EDIBLES", helper: "Compare listed edible details." },
+  { code: "PRR", label: "Pre-Rolls", value: "PREROLLS", helper: "Compare listed pre-roll details." },
   { code: "VP", label: "Vapes", value: "VAPE", helper: "Vape carts and disposables." },
   { code: "CN", label: "Concentrates", value: "CONCENTRATES", helper: "Extracts, hash, and concentrates." },
   { code: "CG", label: "Cigarettes", value: "CIGARETTES", helper: "Native cigarette catalog." },
@@ -73,18 +74,6 @@ const THC_RANGES = [
 ];
 
 const WEIGHTS = ["Any weight", "3g", "5g", "14g", "28g", "Non-flower items"];
-
-const EFFECTS = [
-  "Any effect",
-  "Indica",
-  "Sativa",
-  "Hybrid",
-  "Fast-acting",
-  "Long-lasting",
-  "Convenient",
-  "Smoke products",
-  "Accessories",
-];
 
 function parseMoney(value: string) {
   const match = value.match(/\d+(?:\.\d+)?/);
@@ -134,27 +123,18 @@ function normalizeItemType(category: string) {
     .join(" ");
 }
 
-function itemEffect(category: string) {
-  const c = category.toUpperCase();
-  if (c.includes("EDIBLE")) return "Long-lasting";
-  if (c.includes("VAPE") || c.includes("CONCENTRATE")) return "Fast-acting";
-  if (c.includes("CIGARETTE")) return "Smoke products";
-  if (c.includes("ADD")) return "Accessories";
-  return "Convenient";
-}
-
 function buildResults(flowers: FlowerProduct[], items: ItemProduct[]) {
   const flowerResults: MenuResult[] = flowers.map((product) => {
     const price = flowerPrice(product);
-    const effect = product.type.charAt(0).toUpperCase() + product.type.slice(1);
+    const typeLabel = product.type.charAt(0).toUpperCase() + product.type.slice(1);
     return {
-      key: `flower-${product.sku}`,
+      key: `flower-${product.slug}`,
       name: product.name,
       href: `/flower/${product.slug}`,
       productType: "Flower",
       category: product.tier,
       tier: product.tier,
-      effect,
+      typeLabel,
       thcNumber: parseThc(product.thc),
       thcLabel: product.thc || "THC varies",
       priceMin: price.min,
@@ -167,17 +147,16 @@ function buildResults(flowers: FlowerProduct[], items: ItemProduct[]) {
 
   const itemResults: MenuResult[] = items.map((product) => {
     const productType = normalizeItemType(product.category);
-    const effect = itemEffect(product.category);
     return {
-      key: `item-${product.sku}`,
+      key: `item-${product.slug}`,
       name: product.name,
       href: `/item/${product.slug}`,
       productType,
       category: product.category,
       tier: product.category,
-      effect,
+      typeLabel: product.type || "",
       thcNumber: parseThc(product.thc),
-      thcLabel: product.thc || product.mg || "Details on menu",
+      thcLabel: product.thc || product.mg || "",
       priceMin: parseMoney(product.price),
       priceLabel: product.price || "Ask staff",
       weights: ["Non-flower items"],
@@ -196,8 +175,7 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
   const [priceRange, setPriceRange] = useState("Any price");
   const [weight, setWeight] = useState("Any weight");
   const [thcRange, setThcRange] = useState("Any THC");
-  const [effect, setEffect] = useState("Any effect");
-  const [sort, setSort] = useState("Recommended");
+  const [sort, setSort] = useState("Menu order");
 
   const allResults = useMemo(() => buildResults(flowers, items), [flowers, items]);
 
@@ -217,7 +195,6 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
       }
       if (productType !== "All products" && product.productType !== productType) return false;
       if (weight !== "Any weight" && !product.weights.includes(weight)) return false;
-      if (effect !== "Any effect" && product.effect !== effect) return false;
       if (selectedPrice.min !== null || selectedPrice.max !== null) {
         if (product.priceMin === null) return false;
         if (selectedPrice.min !== null && product.priceMin < selectedPrice.min) return false;
@@ -239,7 +216,7 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
       if (sort === "A-Z") return a.name.localeCompare(b.name);
       return 0;
     });
-  }, [allResults, category, effect, priceRange, productType, query, sort, thcRange, weight]);
+  }, [allResults, category, priceRange, productType, query, sort, thcRange, weight]);
 
   function resetFilters() {
     setQuery("");
@@ -248,8 +225,7 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
     setPriceRange("Any price");
     setWeight("Any weight");
     setThcRange("Any THC");
-    setEffect("Any effect");
-    setSort("Recommended");
+    setSort("Menu order");
   }
 
   const visible = filtered.slice(0, 18);
@@ -257,12 +233,12 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
   return (
     <div className={styles.finder} id="menu-finder">
       <div className={styles.header}>
-        <span className={styles.kicker}>Shop by category</span>
-        <h2>Pick your menu section first</h2>
+        <span className={styles.kicker}>Flower and product listings</span>
+        <h2>Compare Listed Product Details</h2>
         <p>
-          Start with Spirit Corner&apos;s simple category shortcuts. If you want to
-          narrow things down, open the filter helper below for price, weight, THC,
-          effect, product type, and sorting.
+          Compare names, categories, supplied THC details, sizes, and listed
+          prices. Listings can change, so call ahead when a particular product
+          matters to your visit.
         </p>
       </div>
 
@@ -285,7 +261,7 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
 
       <details className={styles.filterDisclosure}>
         <summary className={styles.filterToggle}>
-          Filter by price, weight, THC, effect, product type, and sort
+          Refine listings by price, weight, THC, product type, and sort
         </summary>
 
       <div className={styles.filterPanel}>
@@ -332,17 +308,9 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
             </select>
           </label>
           <label>
-            <span>Desired effect</span>
-            <select value={effect} onChange={(event) => setEffect(event.target.value)}>
-              {EFFECTS.map((option) => (
-                <option key={option}>{option}</option>
-              ))}
-            </select>
-          </label>
-          <label>
             <span>Sort</span>
             <select value={sort} onChange={(event) => setSort(event.target.value)}>
-              <option>Recommended</option>
+              <option>Menu order</option>
               <option>Price low to high</option>
               <option>THC high to low</option>
               <option>A-Z</option>
@@ -365,15 +333,20 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
         {visible.map((product) => (
           <Link href={product.href} className={styles.resultCard} key={product.key}>
             <div className={styles.resultImageWrap}>
-              <img src={product.image} alt={`${product.name} menu preview`} loading="lazy" />
+              <Image
+                src={product.image}
+                alt={`${product.name} product listing`}
+                fill
+                sizes="(max-width: 700px) 42vw, 180px"
+              />
             </div>
             <div className={styles.resultBody}>
               <span className={styles.resultType}>{product.productType}</span>
               <h3>{product.name}</h3>
               <div className={styles.resultMeta}>
                 <span>{product.category}</span>
-                <span>{product.effect}</span>
-                <span>{product.thcLabel}</span>
+                {product.typeLabel && <span>{product.typeLabel}</span>}
+                {product.thcLabel && <span>{product.thcLabel}</span>}
                 <span>{product.priceLabel}</span>
               </div>
             </div>

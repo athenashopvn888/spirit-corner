@@ -62,7 +62,7 @@ export default function Footer() {
               <Link href="/info/native-cigarettes-ottawa">Native Cigarettes</Link>
               <Link href="/grabba-leaf-shakers">Grabba Leaf &amp; Shakers</Link>
               <Link href="/info/weed-store-near-gatineau">Cannabis Dispensary Near Gatineau</Link>
-              <Link href="/weed-dispensary-ottawa/">Spirit Corner Cannabis Weed Dispensary in Ottawa</Link>
+              <Link href="/weed-dispensary-ottawa">Spirit Corner Cannabis Weed Dispensary in Ottawa</Link>
               <Link href="/contact">Contact Us</Link>
             </nav>
           </div>

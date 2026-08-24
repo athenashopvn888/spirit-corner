@@ -249,6 +249,11 @@
     position: relative;
   }
 
+  .gamesBtn,
+  .pill {
+    min-height: 44px;
+  }
+
   .quickCtaBar {
     gap: 8px;
     padding: 7px 10px;
