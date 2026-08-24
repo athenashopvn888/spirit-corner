@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { SEO_PAGES, getSeoPageBySlug } from "../../lib/seoPages";
@@ -28,6 +29,23 @@ export async function generateMetadata({
     alternates: {
       canonical: `https://spiritcornercannabis.com/info/${slug}`,
     },
+    ...(slug === "weed-store-near-gatineau"
+      ? {
+          openGraph: {
+            title: page.title,
+            description: page.metaDescription,
+            url: `https://spiritcornercannabis.com/info/${slug}`,
+            images: [
+              {
+                url: `https://spiritcornercannabis.com${page.banner}`,
+                width: 1168,
+                height: 784,
+                alt: "Spirit Corner Cannabis branded welcome graphic",
+              },
+            ],
+          },
+        }
+      : {}),
   };
 }
 
@@ -42,20 +60,84 @@ export default async function SeoLandingPage({
   if (!page) notFound();
 
   const tiers = Object.values(TIER_CONFIG);
+  const pageUrl = `https://spiritcornercannabis.com/info/${slug}`;
+  const isGatineauPage = slug === "weed-store-near-gatineau";
+  const pageJsonLd = isGatineauPage
+    ? {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: page.title,
+        description: page.metaDescription,
+        about: { "@id": "https://spiritcornercannabis.com" },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `https://spiritcornercannabis.com${page.banner}`,
+          width: 1168,
+          height: 784,
+        },
+      }
+    : null;
+  const breadcrumbJsonLd = isGatineauPage
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Spirit Corner Cannabis",
+            item: "https://spiritcornercannabis.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Cannabis Dispensary Near Gatineau",
+            item: pageUrl,
+          },
+        ],
+      }
+    : null;
 
   return (
-    <main className={styles.main}>
+    <>
+      {pageJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
+        />
+      )}
+      {breadcrumbJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+      )}
+      <main className={styles.main}>
       <Navbar />
 
       {/* Banner Section */}
       {page.banner && (
         <section style={{ marginTop: 0, position: "relative" }}>
           <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 24px" }}>
-            <img
-              src={page.banner}
-              alt={`${page.h1} at Spirit Corner Cannabis Ottawa`}
-              style={{ width: "100%", height: "auto", borderRadius: "24px", border: "1px solid var(--border-subtle)", display: "block" }}
-            />
+            {isGatineauPage ? (
+              <Image
+                src={page.banner}
+                alt="Spirit Corner Cannabis branded welcome graphic"
+                width={1168}
+                height={784}
+                sizes="(max-width: 1440px) calc(100vw - 48px), 1392px"
+                preload
+                style={{ width: "100%", height: "auto", borderRadius: "24px", border: "1px solid var(--border-subtle)", display: "block" }}
+              />
+            ) : (
+              <img
+                src={page.banner}
+                alt={`${page.h1} at Spirit Corner Cannabis Ottawa`}
+                style={{ width: "100%", height: "auto", borderRadius: "24px", border: "1px solid var(--border-subtle)", display: "block" }}
+              />
+            )}
             <p style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "8px", textAlign: "center", fontStyle: "italic" }}>
               Explore premium cannabis and value deals at Spirit Corner Cannabis in downtown Ottawa.
             </p>
@@ -129,6 +211,7 @@ export default async function SeoLandingPage({
       </section>
 
       <Footer />
-    </main>
+      </main>
+    </>
   );
 }

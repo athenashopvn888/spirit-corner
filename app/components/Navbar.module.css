@@ -237,7 +237,7 @@
   box-shadow: 0 8px 22px rgba(52, 211, 153, 0.22);
 }
 
-.quickCtaOrder {
+.quickCtaCall {
   color: #fff;
   background: linear-gradient(135deg, #2D6A4F, #40916C);
   border: 1px solid rgba(149, 213, 178, 0.42);
@@ -258,7 +258,7 @@
   .quickCtaButton {
     flex: 1;
     min-width: 0;
-    min-height: 36px;
+    min-height: 44px;
     padding: 8px 10px;
     font-size: 11px;
   }

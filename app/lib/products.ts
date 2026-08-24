@@ -37,7 +37,18 @@ export interface ItemProduct {
 import flowersJson from "./flowers.json";
 import itemsJson from "./items.json";
 
-export const allFlowers: FlowerProduct[] = flowersJson as FlowerProduct[];
+const FLOWER_DISPLAY_NAME_OVERRIDES: Record<string, string> = {
+  "mike-tyson-ko-super-exotics": "MIKE TYSON KO SUPER EXOTICS",
+};
+
+function normalizeFlowerDisplayName(flower: FlowerProduct): FlowerProduct {
+  const name = FLOWER_DISPLAY_NAME_OVERRIDES[flower.slug];
+  return name ? { ...flower, name } : flower;
+}
+
+export const allFlowers: FlowerProduct[] = (flowersJson as FlowerProduct[]).map(
+  normalizeFlowerDisplayName
+);
 export const allItems: ItemProduct[] = itemsJson as ItemProduct[];
 
 /* ── Live stock fetch from Apps Script ── */
@@ -72,7 +83,7 @@ export async function fetchLiveProducts(): Promise<{
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data: LiveStockResponse = await res.json();
     return {
-      flowers: data.flowers || allFlowers,
+      flowers: (data.flowers || allFlowers).map(normalizeFlowerDisplayName),
       items: data.items || allItems,
       isLive: true,
       stockDate: data.stockDate || null,
