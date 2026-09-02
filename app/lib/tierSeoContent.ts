@@ -1,144 +1,126 @@
 export interface TierSeoData {
   seoTitle: string;
+  metaDescription: string;
+  socialTitle: string;
+  socialDescription: string;
+  h1: string;
+  imageAlt: string;
+  strainHeading: string;
   seoIntro: string;
   sections: { heading: string; body: string }[];
   faqs: { q: string; a: string }[];
 }
 
+export const TIER_LINKS = [
+  { href: "/exotic", label: "Exotic Weed & Flower" },
+  { href: "/premium", label: "Premium Weed & Flower" },
+  { href: "/aaa", label: "AAA+ Weed & Flower" },
+  { href: "/aa", label: "AA Weed & Flower" },
+  { href: "/budget", label: "Budget Weed & Flower" },
+] as const;
+
+export const TIER_COMPARE = {
+  heading: "Explore Spirit Corner's Five Flower Tiers",
+  body: "Spirit Corner Cannabis separates flower into Exotic, Premium, AAA+, AA and Budget tier pages so each category has its own focused route.",
+  ownerSentence: "For a wider view beyond one flower tier, visit the main Spirit Corner Cannabis Weed page:",
+  ownerHref: "/weed-dispensary-ottawa/",
+  ownerLabel: "Spirit Corner Cannabis Weed Dispensary in Ottawa",
+} as const;
+
 export const TIER_SEO: Record<string, TierSeoData> = {
   EXOTIC: {
-    seoTitle: "Exotic Cannabis Flower Ottawa | Spirit Corner Cannabis",
-    seoIntro:
-      "Compare Exotic flower listings by name, type, THC label, weight, and listed price at Spirit Corner Cannabis in downtown Ottawa.",
+    seoTitle: "Exotic Weed & Cannabis Flower in Ottawa | Spirit Corner Cannabis",
+    metaDescription: "Explore the Exotic weed and cannabis flower tier at Spirit Corner Cannabis in Ottawa as a dedicated part of its existing flower structure.",
+    socialTitle: "Exotic Weed & Cannabis Flower | Spirit Corner Cannabis",
+    socialDescription: "Explore the dedicated Exotic cannabis flower tier at Spirit Corner Cannabis in Ottawa.",
+    h1: "Exotic Weed & Cannabis Flower in Ottawa",
+    imageAlt: "Exotic weed and cannabis flower tier at Spirit Corner Cannabis",
+    strainHeading: "Explore the Exotic Flower Tier",
+    seoIntro: "Spirit Corner Cannabis gives Exotic its own dedicated flower page within the site's existing tier structure. This route stays focused on Exotic weed and cannabis flower while the broader Weed Dispensary in Ottawa page remains the main destination for general Weed intent.",
     sections: [
-      {
-        heading: "Compare Exotic Flower Listings",
-        body:
-          "Each listing shows the flower name, Indica, Sativa, or Hybrid type, its listed THC value, and the weights and prices supplied with the menu snapshot.",
-      },
-      {
-        heading: "Visit Spirit Corner in Downtown Ottawa",
-        body:
-          "Spirit Corner Cannabis is at 251 Dalhousie St near ByWard Market and is open 24 hours for adults 19+. Call ahead when a particular flower matters to your visit because listings and prices can change.",
-      },
+      { heading: "Exotic as a Separate Spirit Corner Tier", body: "Exotic sits alongside Premium, AAA+, AA and Budget as its own flower category. Keeping the tier separate gives this page a narrow purpose without duplicating the broader Weed page." },
+      { heading: "Browse Exotic Within the Five-Tier Structure", body: "The Spirit Corner flower architecture uses dedicated routes for each established tier. Exotic is one of those focused paths and remains subordinate to the broad Ottawa Weed owner." },
     ],
     faqs: [
-      {
-        q: "What information is shown for Exotic flower?",
-        a: "Listings show the flower name, type, THC label, listed menu sizes, and listed prices.",
-      },
-      {
-        q: "Can I call before visiting?",
-        a: "Yes. Call (343) 308-8998 to ask about a particular listing before travelling.",
-      },
+      { q: "What is the Exotic tier at Spirit Corner Cannabis?", a: "Exotic is one of Spirit Corner Cannabis's five dedicated cannabis flower tiers." },
+      { q: "Is the Exotic page Spirit Corner's main Weed page?", a: "No. This page is specific to the Exotic tier, while the Weed Dispensary in Ottawa page remains the broad Weed owner." },
+      { q: "What other flower tiers have dedicated pages?", a: "Spirit Corner Cannabis also has separate Premium, AAA+, AA and Budget tier pages." },
     ],
   },
   PREMIUM: {
-    seoTitle: "Premium Cannabis Flower Ottawa | Spirit Corner Cannabis",
-    seoIntro:
-      "Compare Premium flower listings by name, type, THC label, weight, and listed price at Spirit Corner Cannabis in downtown Ottawa.",
+    seoTitle: "Premium Weed & Cannabis Flower in Ottawa | Spirit Corner Cannabis",
+    metaDescription: "Explore the Premium weed and cannabis flower tier at Spirit Corner Cannabis in Ottawa through its dedicated flower category page.",
+    socialTitle: "Premium Weed & Cannabis Flower | Spirit Corner Cannabis",
+    socialDescription: "Explore the dedicated Premium cannabis flower tier at Spirit Corner Cannabis in Ottawa.",
+    h1: "Premium Weed & Cannabis Flower in Ottawa",
+    imageAlt: "Premium weed and cannabis flower tier at Spirit Corner Cannabis",
+    strainHeading: "Browse the Premium Flower Tier",
+    seoIntro: "The Premium page gives Spirit Corner Cannabis a dedicated route for this individual flower tier. It remains narrower than the site's broad Weed owner and does not take over general Weed intent.",
     sections: [
-      {
-        heading: "Premium Flower Details at a Glance",
-        body:
-          "Use the listed type, THC value, weights, and prices to compare Premium flower choices before an adult in-store visit.",
-      },
-      {
-        heading: "Open 24 Hours on Dalhousie Street",
-        body:
-          "The store is at 251 Dalhousie St near ByWard Market. Listings and prices can change, so call ahead if you are travelling for a particular flower.",
-      },
+      { heading: "Premium Has Its Own Category Role", body: "Premium is organized separately from Exotic, AAA+, AA and Budget so this flower tier has a clear place within the Spirit Corner site." },
+      { heading: "Premium Within Spirit Corner's Flower Structure", body: "Separate tier routes keep each flower category distinct. Premium serves a tier-specific browsing role while broader Weed discovery remains on the main Ottawa Weed page." },
     ],
     faqs: [
-      {
-        q: "Which Premium flower details can I compare?",
-        a: "You can compare listed flower names, types, THC values, sizes, and prices.",
-      },
-      {
-        q: "When is Spirit Corner Cannabis open?",
-        a: "The Ottawa storefront is open 24 hours for adults 19+.",
-      },
+      { q: "What is the Premium tier at Spirit Corner Cannabis?", a: "Premium is one of Spirit Corner Cannabis's dedicated cannabis flower tiers." },
+      { q: "Does the Premium page replace the broad Weed page?", a: "No. Premium serves a narrow flower-tier role only." },
+      { q: "Which other Spirit Corner tiers have their own pages?", a: "Exotic, AAA+, AA and Budget each have separate tier pages." },
     ],
   },
   "AAA+": {
-    seoTitle: "AAA+ Cannabis Flower Ottawa | Spirit Corner Cannabis",
-    seoIntro:
-      "Browse AAA+ flower listings with their supplied type, THC label, weights, and prices at Spirit Corner Cannabis in Ottawa.",
+    seoTitle: "AAA+ Weed & Cannabis Flower in Ottawa | Spirit Corner Cannabis",
+    metaDescription: "Explore the AAA+ weed and cannabis flower tier at Spirit Corner Cannabis in Ottawa as a focused part of its flower architecture.",
+    socialTitle: "AAA+ Weed & Cannabis Flower | Spirit Corner Cannabis",
+    socialDescription: "Explore the dedicated AAA+ cannabis flower tier at Spirit Corner Cannabis in Ottawa.",
+    h1: "AAA+ Weed & Cannabis Flower in Ottawa",
+    imageAlt: "AAA+ weed and cannabis flower tier at Spirit Corner Cannabis",
+    strainHeading: "Explore the AAA+ Flower Category",
+    seoIntro: "Spirit Corner Cannabis separates AAA+ into its own flower route so the tier has a defined place within the site's wider category structure. The page stays focused on AAA+ while broad Weed intent remains elsewhere.",
     sections: [
-      {
-        heading: "Compare AAA+ Flower",
-        body:
-          "Flower listings include the name, Indica, Sativa, or Hybrid type, THC label, and the sizes and prices shown in the menu snapshot.",
-      },
-      {
-        heading: "Plan an Adult In-Store Visit",
-        body:
-          "Spirit Corner Cannabis is open 24 hours at 251 Dalhousie St. Call (343) 308-8998 when you want to ask about a specific AAA+ listing before visiting.",
-      },
+      { heading: "AAA+ as Its Own Flower Category", body: "AAA+ is kept distinct from Exotic, Premium, AA and Budget instead of being folded into a general flower page." },
+      { heading: "AAA+ in the Spirit Corner Tier System", body: "This route serves AAA+-specific browsing within the established five-tier structure and remains subordinate to the broader Weed Dispensary in Ottawa page." },
     ],
     faqs: [
-      {
-        q: "What does each AAA+ listing show?",
-        a: "Each listing shows the flower name, type, THC label, menu sizes, and listed prices.",
-      },
-      {
-        q: "Can AAA+ listings change?",
-        a: "Yes. Listings and prices can change, so call ahead when a particular flower matters to your visit.",
-      },
+      { q: "What is AAA+ at Spirit Corner Cannabis?", a: "AAA+ is one of Spirit Corner Cannabis's dedicated cannabis flower tiers." },
+      { q: "Why does AAA+ have a separate page?", a: "The separate route keeps AAA+-specific browsing distinct from the site's other flower tiers." },
+      { q: "What other flower tiers can be explored separately?", a: "Spirit Corner also has dedicated Exotic, Premium, AA and Budget pages." },
     ],
   },
   AA: {
-    seoTitle: "AA Cannabis Flower Ottawa | Spirit Corner Cannabis",
-    seoIntro:
-      "Compare AA flower listings, supplied THC labels, menu sizes, and listed prices at Spirit Corner Cannabis in downtown Ottawa.",
+    seoTitle: "AA Weed & Cannabis Flower in Ottawa | Spirit Corner Cannabis",
+    metaDescription: "Explore the AA weed and cannabis flower tier at Spirit Corner Cannabis in Ottawa through its dedicated flower category route.",
+    socialTitle: "AA Weed & Cannabis Flower | Spirit Corner Cannabis",
+    socialDescription: "Explore the dedicated AA cannabis flower tier at Spirit Corner Cannabis in Ottawa.",
+    h1: "AA Weed & Cannabis Flower in Ottawa",
+    imageAlt: "AA weed and cannabis flower tier at Spirit Corner Cannabis",
+    strainHeading: "Browse the AA Flower Tier",
+    seoIntro: "The AA page gives Spirit Corner Cannabis a focused route for this flower tier without expanding into the broader Weed topic. It remains one part of the site's existing five-tier flower structure.",
     sections: [
-      {
-        heading: "AA Flower Names, Types, and Sizes",
-        body:
-          "Compare each listed flower by name, Indica, Sativa, or Hybrid type, THC label, listed menu sizes, and listed prices.",
-      },
-      {
-        heading: "Downtown Ottawa Store Information",
-        body:
-          "Visit 251 Dalhousie St near ByWard Market. The storefront is open 24 hours for adults 19+, and shoppers can call ahead about a particular listing.",
-      },
+      { heading: "AA as a Focused Spirit Corner Category", body: "AA is separated from Exotic, Premium, AAA+ and Budget so this tier has its own defined browsing path." },
+      { heading: "Where AA Fits in the Tier Structure", body: "The AA route serves category-specific intent while the broader Weed Dispensary in Ottawa page continues to own general Weed searches." },
     ],
     faqs: [
-      {
-        q: "What can I compare in the AA selection?",
-        a: "You can compare listed flower names, types, THC labels, sizes, and prices.",
-      },
-      {
-        q: "Where is Spirit Corner Cannabis?",
-        a: "The store is at 251 Dalhousie St in downtown Ottawa near ByWard Market.",
-      },
+      { q: "What is the AA tier at Spirit Corner Cannabis?", a: "AA is one of Spirit Corner Cannabis's dedicated cannabis flower tiers." },
+      { q: "Is the AA page the main Spirit Corner Weed page?", a: "No. It is a narrow tier page and remains subordinate to the broad Weed owner." },
+      { q: "What other Spirit Corner flower tiers have separate pages?", a: "Exotic, Premium, AAA+ and Budget also have dedicated tier routes." },
     ],
   },
   BUDGET: {
-    seoTitle: "Budget Cannabis Ottawa | Listed Flower Prices | Spirit Corner Cannabis",
-    seoIntro:
-      "Compare Budget flower names, types, sizes, and listed prices at Spirit Corner Cannabis, 251 Dalhousie St in downtown Ottawa.",
+    seoTitle: "Budget Weed & Cannabis Flower in Ottawa | Spirit Corner Cannabis",
+    metaDescription: "Explore the Budget cannabis flower tier at Spirit Corner Cannabis in Ottawa without implying current price, promotion, stock or availability.",
+    socialTitle: "Budget Weed & Cannabis Flower | Spirit Corner Cannabis",
+    socialDescription: "Explore the dedicated Budget cannabis flower tier at Spirit Corner Cannabis in Ottawa.",
+    h1: "Budget Weed & Cannabis Flower in Ottawa",
+    imageAlt: "Budget weed and cannabis flower tier at Spirit Corner Cannabis",
+    strainHeading: "Explore the Budget Flower Tier",
+    seoIntro: "Spirit Corner Cannabis uses Budget as a dedicated flower tier within its existing category structure. The page identifies the category only and does not establish any current price, promotion, product or availability claim.",
     sections: [
-      {
-        heading: "Compare Budget Flower Prices and Sizes",
-        body:
-          "Each Budget listing shows the supplied flower name, type, THC label, menu sizes, and listed prices so adults can compare choices before visiting.",
-      },
-      {
-        heading: "Call Ahead for a Particular Budget Listing",
-        body:
-          "Menu listings and prices can change. Call (343) 308-8998 if a particular Budget flower or size matters to your visit. The downtown Ottawa storefront is open 24 hours.",
-      },
+      { heading: "Budget as a Defined Flower Category", body: "Budget is kept separate from Exotic, Premium, AAA+ and AA so it has a distinct role within the Spirit Corner flower structure." },
+      { heading: "Budget Within Spirit Corner's Five Tiers", body: "The Budget route serves a narrow category purpose while broader Weed intent remains with the established Weed Dispensary in Ottawa page." },
     ],
     faqs: [
-      {
-        q: "What details are shown for Budget flower?",
-        a: "Listings show the flower name, type, THC label, menu sizes, and listed prices.",
-      },
-      {
-        q: "Are the listed Budget prices guaranteed?",
-        a: "Listings and prices can change. Call the store before travelling when a particular flower or price matters.",
-      },
+      { q: "What is the Budget tier at Spirit Corner Cannabis?", a: "Budget is the name of one of Spirit Corner Cannabis's dedicated cannabis flower tiers." },
+      { q: "Does the Budget label confirm a current deal or price?", a: "No. The tier name identifies the category and does not establish a current price, promotion, stock or availability." },
+      { q: "Which other Spirit Corner flower tiers have separate pages?", a: "Spirit Corner Cannabis also has dedicated Exotic, Premium, AAA+ and AA pages." },
     ],
   },
 };

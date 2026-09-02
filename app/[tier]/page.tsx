@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FlowerCard from "../components/FlowerCard";
@@ -8,7 +9,7 @@ import {
   getTierFromSlug,
   TIER_CONFIG,
 } from "../lib/products";
-import { TIER_SEO } from "../lib/tierSeoContent";
+import { TIER_COMPARE, TIER_LINKS, TIER_SEO } from "../lib/tierSeoContent";
 import styles from "./tier.module.css";
 
 /* -- Generate all tier pages at build -- */
@@ -31,11 +32,11 @@ export async function generateMetadata({
 
   return {
     title: seo?.seoTitle || `${tierInfo.config.name} Cannabis Flower — ${flowers.length} Strains`,
-    description: seo?.seoIntro || `Shop ${flowers.length} ${tierInfo.config.name.toLowerCase()} cannabis strains at Spirit Corner Cannabis.`,
+    description: seo?.metaDescription || `Browse the ${tierInfo.config.name.toLowerCase()} cannabis flower category at Spirit Corner Cannabis.`,
     alternates: { canonical: pageUrl },
     openGraph: {
-      title: `${tierInfo.config.name} Flower | Spirit Corner Cannabis`,
-      description: seo?.seoIntro || `Compare ${flowers.length} listed ${tierInfo.config.name.toLowerCase()} flower options at Spirit Corner Cannabis.`,
+      title: seo?.socialTitle || `${tierInfo.config.name} Flower | Spirit Corner Cannabis`,
+      description: seo?.socialDescription || `Browse the ${tierInfo.config.name.toLowerCase()} flower category at Spirit Corner Cannabis.`,
       url: pageUrl,
     },
   };
@@ -73,7 +74,7 @@ export default async function TierPage({
             <div className={styles.heroTitleRow}>
               <span className={styles.heroIcon}>{config.icon}</span>
               <h1 className={styles.heroTitle}>
-                <span style={{ color: config.color }}>{config.name}</span>
+                <span style={{ color: config.color }}>{seo?.h1 || config.name}</span>
               </h1>
             </div>
             <p className={styles.heroTagline}>{config.tagline}</p>
@@ -123,11 +124,7 @@ export default async function TierPage({
             </>
           )}
 
-          <h2 className={styles.sectionTitle}>
-            All{" "}
-            <span style={{ color: config.color }}>{config.name}</span>{" "}
-            Strains
-          </h2>
+          <h2 className={styles.sectionTitle}>{seo?.strainHeading || `All ${config.name} Strains`}</h2>
           <div className={styles.grid}>
             {regularFlowers.map((f) => (
               <FlowerCard
@@ -153,6 +150,20 @@ export default async function TierPage({
                 <p className={styles.seoBody}>{s.body}</p>
               </div>
             ))}
+
+            <div className={styles.compareBlock}>
+              <h3 className={styles.seoHeading}>{TIER_COMPARE.heading}</h3>
+              <p className={styles.seoBody}>{TIER_COMPARE.body}</p>
+              <nav className={styles.tierLinks} aria-label="Spirit Corner Cannabis flower tiers">
+                {TIER_LINKS.map((link) => (
+                  <Link key={link.href} href={link.href}>{link.label}</Link>
+                ))}
+              </nav>
+              <p className={styles.ownerLink}>
+                {TIER_COMPARE.ownerSentence}{" "}
+                <Link href={TIER_COMPARE.ownerHref}>{TIER_COMPARE.ownerLabel}</Link>.
+              </p>
+            </div>
 
             {/* FAQ Accordion */}
             {seo.faqs.length > 0 && (
