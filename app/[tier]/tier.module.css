@@ -227,6 +227,35 @@
   margin: 0;
 }
 
+.compareBlock {
+  margin-top: 28px;
+  padding: 22px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+}
+
+.tierLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 16px;
+}
+
+.tierLinks a,
+.ownerLink a {
+  color: var(--green-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ownerLink {
+  margin: 18px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
 /* ── FAQ Accordion ── */
 .faqSection {
   margin-top: 32px;
