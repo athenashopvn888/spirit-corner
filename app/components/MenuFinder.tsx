@@ -73,7 +73,7 @@ const THC_RANGES = [
   { label: "35%+", min: 35, max: null },
 ];
 
-const WEIGHTS = ["Any weight", "3g", "5g", "14g", "28g", "Non-flower items"];
+const WEIGHTS = ["Any weight", "3g", "5g", "6g", "14g", "28g", "Non-flower items"];
 
 function parseMoney(value: string) {
   const match = value.match(/\d+(?:\.\d+)?/);
@@ -99,9 +99,10 @@ function flowerPrice(product: FlowerProduct) {
 }
 
 function flowerWeights(product: FlowerProduct) {
+  const isSixGramTier = ["EXOTIC", "PREMIUM", "AAA+"].includes(product.tier.toUpperCase());
   return [
     product.price3g ? "3g" : null,
-    product.price5g ? "5g" : null,
+    product.price5g ? (isSixGramTier ? "6g" : "5g") : null,
     product.price14g ? "14g" : null,
     product.price28g ? "28g" : null,
   ].filter(Boolean) as string[];
