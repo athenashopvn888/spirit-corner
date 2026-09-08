@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { FlowerProduct, PricePoint } from "../lib/products";
+import { formatPerGram, getPrice5gDisplay } from "../lib/flowerDisplayWeight";
 import styles from "./FlowerCard.module.css";
 
 interface WeightOption {
@@ -27,6 +28,7 @@ function getTypeClass(t: string) {
 
 export default function FlowerCard({
   flower,
+  tierKey,
 }: {
   flower: FlowerProduct;
   tierKey: string;
@@ -41,10 +43,11 @@ export default function FlowerCard({
     });
   }
   if (flower.price5g) {
+    const display = getPrice5gDisplay(tierKey);
     weights.push({
       key: "5g",
-      label: "5g",
-      grams: 5,
+      label: display.label,
+      grams: display.grams,
       price: flower.price5g,
     });
   }
@@ -64,8 +67,7 @@ export default function FlowerCard({
   const effectivePrice = active.price
     ? (active.price.sale ?? active.price.regular)
     : 0;
-  const perGram =
-    effectivePrice > 0 ? (effectivePrice / active.grams).toFixed(2) : "—";
+  const perGram = formatPerGram(effectivePrice, active.grams);
 
   return (
     <div className={styles.card}>
