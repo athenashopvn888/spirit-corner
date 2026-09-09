@@ -236,7 +236,7 @@ export default async function ItemPage({
                   <div className={styles.priceTableRow}>
                     <span className={styles.priceWeight}>{itemPrice.isMultiple ? "Available options" : "1 Item"}</span>
                     <span className={styles.priceRegular}>
-                      {item.price.startsWith('$') ? item.price : `$${item.price}`}
+                      {itemPrice.display}
                     </span>
                   </div>
                 </div>
