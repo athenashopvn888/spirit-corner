@@ -4,10 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { type ItemProduct } from "../../lib/products";
+import { getItemPriceDisplay } from "../../lib/itemPricing";
 import styles from "./items.module.css";
 
 export default function ItemCard({ item, catColor }: { item: ItemProduct; catColor: string }) {
   const [imageSrc, setImageSrc] = useState(item.image);
+  const itemPrice = getItemPriceDisplay(item.price, item.sku);
 
   return (
     <Link href={`/item/${item.slug}`} className={styles.card} style={{ "--cat-color": catColor } as React.CSSProperties}>
@@ -41,8 +43,8 @@ export default function ItemCard({ item, catColor }: { item: ItemProduct; catCol
         <h3 className={styles.cardName}>{item.name}</h3>
         {item.price && (
           <div className={styles.cardPrice}>
-            <span className={styles.priceVal}>{item.price.startsWith('$') ? item.price : `$${item.price}`}</span>
-            <span className={styles.priceUnit}>each</span>
+            <span className={styles.priceVal}>{itemPrice.display}</span>
+            <span className={styles.priceUnit}>{itemPrice.isMultiple ? "price options" : "each"}</span>
           </div>
         )}
         <span className={styles.skuTag}>SKU {item.sku}</span>
