@@ -9,7 +9,7 @@ import styles from "./items.module.css";
 
 export default function ItemCard({ item, catColor }: { item: ItemProduct; catColor: string }) {
   const [imageSrc, setImageSrc] = useState(item.image);
-  const itemPrice = getItemPriceDisplay(item.price);
+  const itemPrice = getItemPriceDisplay(item.price, item.sku);
 
   return (
     <Link href={`/item/${item.slug}`} className={styles.card} style={{ "--cat-color": catColor } as React.CSSProperties}>
