@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import styles from "./page.module.css";
+import FleetAnnouncementBanner from "./components/FleetAnnouncementBanner";
 import Navbar from "./components/Navbar";
 import HiringCallout from "./components/HiringCallout";
 import Footer from "./components/Footer";
@@ -227,7 +228,8 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <main className={styles.main}>
+    <main className={styles.main}>
+      <FleetAnnouncementBanner />
         {/* Navbar */}
         <Navbar />
       <HiringCallout />
