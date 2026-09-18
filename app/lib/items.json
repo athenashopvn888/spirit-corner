@@ -108,6 +108,18 @@
     "promoImage": "CIG_2_FOR_5"
   },
   {
+    "sku": "1014",
+    "name": "CANADIAN CLASSICS ORIGINAL",
+    "slug": "canadian-classics-original",
+    "category": "CIGARETTES",
+    "type": "",
+    "thc": "",
+    "mg": "",
+    "price": "$25",
+    "image": "https://pub-eb3e1fe18a43477eabc885cfb791d97c.r2.dev/products/1014-CANADIAN-CLASSSICS-ORIGINAL.webp",
+    "promoImage": "CIG_2_FOR_5"
+  },
+  {
     "sku": "1015",
     "name": "CANADIAN CLASSICS SILVER",
     "slug": "canadian-classics-silver",
@@ -117,6 +129,18 @@
     "mg": "",
     "price": "$25",
     "image": "https://pub-eb3e1fe18a43477eabc885cfb791d97c.r2.dev/products/1015-CANADIAN-CLASSICS-SILVER.webp",
+    "promoImage": "CIG_2_FOR_5"
+  },
+  {
+    "sku": "1006",
+    "name": "CANADIAN FULL",
+    "slug": "canadian-full",
+    "category": "CIGARETTES",
+    "type": "",
+    "thc": "",
+    "mg": "",
+    "price": "$25",
+    "image": "https://pub-eb3e1fe18a43477eabc885cfb791d97c.r2.dev/products/1006-CANADIAN-FULL.webp",
     "promoImage": "CIG_2_FOR_5"
   },
   {
@@ -141,6 +165,18 @@
     "mg": "",
     "price": "$25",
     "image": "https://pub-eb3e1fe18a43477eabc885cfb791d97c.r2.dev/products/1012-CANADIAN-GOOSE-LIGHTS.webp",
+    "promoImage": "CIG_2_FOR_5"
+  },
+  {
+    "sku": "1005",
+    "name": "CANADIAN LIGHTS",
+    "slug": "canadian-lights",
+    "category": "CIGARETTES",
+    "type": "",
+    "thc": "",
+    "mg": "",
+    "price": "$25",
+    "image": "https://pub-eb3e1fe18a43477eabc885cfb791d97c.r2.dev/products/1005-CANADIAN-LIGHTS.webp",
     "promoImage": "CIG_2_FOR_5"
   },
   {
@@ -492,6 +528,18 @@
     "promoImage": null
   },
   {
+    "sku": "388",
+    "name": "PINK KUSH 1G IND PR-ROLL",
+    "slug": "pink-kush-1g-ind-pr-roll",
+    "category": "ADD ONS",
+    "type": "IH",
+    "thc": "0.31",
+    "mg": "",
+    "price": "$8",
+    "image": "https://pub-eb3e1fe18a43477eabc885cfb791d97c.r2.dev/products/laughingbuddha.webp",
+    "promoImage": null
+  },
+  {
     "sku": "488",
     "name": "PINK PREDATOR 1G IND PRE-ROLL",
     "slug": "pink-predator-1g-ind-pre-roll",
@@ -681,6 +729,18 @@
     "mg": "",
     "price": "$20",
     "image": "https://pub-eb3e1fe18a43477eabc885cfb791d97c.r2.dev/products/ZpodsMANGO-PINEAPPLE-E-CigzVapeShopGuelph.webp",
+    "promoImage": null
+  },
+  {
+    "sku": "1054",
+    "name": "ZYN NICOTINE POUCHES",
+    "slug": "zyn-nicotine-pouches",
+    "category": "CIGARETTES",
+    "type": "",
+    "thc": "",
+    "mg": "",
+    "price": "$10",
+    "image": "https://pub-eb3e1fe18a43477eabc885cfb791d97c.r2.dev/products/Zyn-Nicotine-pouches.webp",
     "promoImage": null
   }
 ]
