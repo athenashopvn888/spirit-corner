@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "afterdarkcannabis.com" },
       { protocol: "https", hostname: "kennedyloudcannabis.com" },
       { protocol: "https", hostname: "stclaircannabis.com" },
+      { protocol: "https", hostname: "farmerslink.ca" },
     ],
   },
   async redirects() {
