@@ -12,6 +12,8 @@ const path = require('path');
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_URL || '';
 const FLOWERS_PATH = path.join(__dirname, '..', 'app', 'lib', 'flowers.json');
 const ITEMS_PATH = path.join(__dirname, '..', 'app', 'lib', 'items.json');
+const SNAPSHOT_PATH = path.join(__dirname, '..', 'app', 'lib', 'stock-snapshot.json');
+const FETCH_TIMEOUT_MS = 120000;
 
 async function main() {
   if (!APPS_SCRIPT_URL) {
@@ -23,7 +25,7 @@ async function main() {
 
   try {
     const url = `${APPS_SCRIPT_URL}?store=SCC01`;
-    const res = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    const res = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
 
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}: ${res.statusText}`);
@@ -97,6 +99,16 @@ async function main() {
     const cats = {};
     data.items.forEach(i => { cats[i.category] = (cats[i.category] || 0) + 1; });
     Object.entries(cats).sort().forEach(([c, n]) => console.log(`  ${c}: ${n}`));
+
+    const snapshot = {
+      storeCode: data.storeCode || 'SCC01',
+      stockDate: data.stockDate || null,
+      flowerCount: data.flowers.length,
+      itemCount: data.items.length,
+      source: 'Apps Script ONHAND',
+    };
+    fs.writeFileSync(SNAPSHOT_PATH, JSON.stringify(snapshot, null, 2) + '\n', 'utf-8');
+    console.log(`[prebuild] stock-snapshot.json updated: ${snapshot.storeCode} ${snapshot.stockDate || 'unknown'}`);
 
     console.log(`[prebuild] Stock date: ${data.stockDate || 'unknown'}`);
     console.log('[prebuild] Done!');
