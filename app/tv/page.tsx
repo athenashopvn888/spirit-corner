@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import styles from "./tv.module.css";
+import { tierPerGramLabel } from "../lib/tierBadgePrice";
 
 /* -- Types -- */
 interface PricePoint { regular: number; sale: number | null; }
@@ -24,9 +25,6 @@ const TIER_ACCENT: Record<string,string> = {
 };
 const TIER_CROWN: Record<string,string> = {
   EXOTIC:"👑", PREMIUM:"👑", "AAA+":"👑", AA:"🏅", BUDGET:"💰", OZ:"🎯"
-};
-const TIER_UNIT: Record<string,string> = {
-  EXOTIC:"-/g", PREMIUM:"-/g", "AAA+":"-/g", AA:"/g", BUDGET:"/g"
 };
 const TIER_DEAL: Record<string,string> = {
   EXOTIC:"Buy 3g Get 3 FREE", PREMIUM:"Buy 3g Get 3 FREE",
@@ -224,6 +222,7 @@ function FlowerCard({
   const isTop3 = ["EXOTIC","PREMIUM","AAA+"].includes(tier);
   const isAA = tier === "AA";
   const isBudget = tier === "BUDGET";
+  const unitLabel = tierPerGramLabel(tier, flowers);
 
   return (
     <div className={`${styles.card} ${cardCls} ${tierCls}`}>
@@ -244,7 +243,8 @@ function FlowerCard({
             : TIER_DEAL[tier] ? <span className={styles.headerDeal}>{TIER_DEAL[tier]}</span> : null}
         </span>
         <div className={`${styles.tierBadge} ${badgeCls}`}>
-          <span>{tier} {TIER_UNIT[tier]}</span>
+          <span>{tier}</span>
+          {unitLabel ? <span>{unitLabel}</span> : null}
         </div>
       </div>
 
