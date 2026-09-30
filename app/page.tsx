@@ -229,9 +229,9 @@ export default function HomePage() {
       />
 
     <main className={styles.main}>
-      <FleetAnnouncementBanner />
         {/* Navbar */}
         <Navbar />
+      <FleetAnnouncementBanner />
       <HiringCallout />
 
         {/* Homepage hero */}
