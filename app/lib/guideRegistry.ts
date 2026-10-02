@@ -2,6 +2,13 @@ import { allFlowers, allItems, type FlowerProduct, type ItemProduct } from "./pr
 
 export type GuideLane = "strain" | "native_cig" | "nic_vape" | "thc_vape";
 
+export const GUIDE_LANES: ReadonlyArray<{ lane: GuideLane; label: string }> = [
+  { lane: "strain", label: "Strains" },
+  { lane: "native_cig", label: "Native Cigarettes" },
+  { lane: "nic_vape", label: "Nicotine Vape" },
+  { lane: "thc_vape", label: "THC Vape" },
+];
+
 export type GuideEntry = {
   slug: string;
   lane: GuideLane;
@@ -61,6 +68,14 @@ export function getGuide(slug: string) {
   return GUIDE_REGISTRY.find((guide) => guide.slug === slug);
 }
 
+export function getGuidesByLane() {
+  return GUIDE_LANES.map(({ lane, label }) => ({
+    lane,
+    label,
+    guides: GUIDE_REGISTRY.filter((guide) => guide.lane === lane),
+  }));
+}
+
 export function resolveGuideProduct(guide: GuideEntry): FlowerProduct | ItemProduct | undefined {
   if (!guide.preferredProductSlug) return undefined;
   const products = guide.lane === "strain" ? allFlowers : allItems;
@@ -88,6 +103,5 @@ export function getCategoryGuideGroups(categoryPath: string) {
   }
   return [];
 }
-
 
 

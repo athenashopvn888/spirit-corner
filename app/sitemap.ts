@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/cannabis-delivery-ottawa`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/games`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE}/grabba-leaf-shakers`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/guides`, lastModified: now, changeFrequency: "weekly", priority: 0.75 },
   ];
 
   /* Tier pages */

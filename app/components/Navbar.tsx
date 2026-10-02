@@ -22,6 +22,7 @@ const ALL_LINKS = [
   { href: "/items/cigarettes", label: "Cigarettes" },
   { href: "/items/add-ons", label: "Accessories" },
   { href: "/resources", label: "Resources" },
+  { href: "/guides", label: "Guides" },
   { href: "/cannabis-delivery-ottawa", label: "Delivery" },
   { href: "/faq", label: "FAQ" },
   { href: "/games", label: "Games" },
