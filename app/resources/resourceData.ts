@@ -17,6 +17,7 @@ export const RESOURCE_PAGES: ResourcePage[] = [
     intro: "Plan an adult visit to 251 Dalhousie St with current directions, the store phone number, and useful ways to compare flower, smoke products, and accessories. Spirit Corner is open 24 hours near ByWard Market.",
     banner: SAFE_BANNER,
     cards: [
+      { title: "Name Guides", href: "/guides", text: "Browse every live Spirit Corner guide by Strains, Native Cigarettes, Nicotine Vape, and THC Vape." },
       { title: "ByWard Market And Lowertown Visit Guide", href: "/resources/byward-lowertown-visit-guide", text: "Check directions and store details for a visit from ByWard Market, Lowertown, Rideau, Sandy Hill, or Vanier." },
       { title: "Downtown Ottawa Menu Guide", href: "/resources/downtown-ottawa-menu-guide", text: "Compare flower, pre-roll, edible, vape, concentrate, cigarette, specialty, and accessory categories." },
       { title: "Flower Tier Guide", href: "/resources/flower-shelf-guide", text: "Compare Exotic, Premium, AAA+, AA, and Budget flower listings." },
