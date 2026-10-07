@@ -39,9 +39,6 @@ export default function MenuPage() {
           <Link href="/#menu" className={styles.secondaryLink}>
             View homepage menu
           </Link>
-          <Link href="/cannabis-delivery-ottawa" className={styles.secondaryLink}>
-            Delivery updates
-          </Link>
         </div>
       </section>
       <section className={styles.finderSection} aria-label="Spirit Corner menu finder">

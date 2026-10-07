@@ -22,8 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/careers/budtender`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/delivery`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/cannabis-delivery-ottawa`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/games`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE}/grabba-leaf-shakers`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/guides`, lastModified: now, changeFrequency: "weekly", priority: 0.75 },

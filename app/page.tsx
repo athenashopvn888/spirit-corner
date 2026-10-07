@@ -513,20 +513,6 @@ export default function HomePage() {
               </ul>
             </div>
 
-            {/* Section 6 */}
-            <div style={{ marginBottom: "40px" }}>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: 800, marginBottom: "12px", color: "var(--text-primary)" }}>
-                Ottawa Delivery Information
-              </h3>
-              <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: "1.7" }}>
-                Delivery details can change. Adults can review the{" "}
-                <Link href="/cannabis-delivery-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                  Ottawa delivery information
-                </Link>
-                {" "}or call the store before planning an order.
-              </p>
-            </div>
-
             {/* FAQ Accordion UI */}
             <div style={{ borderTop: "1px solid var(--border-subtle)", paddingTop: "40px" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "26px", fontWeight: 900, textAlign: "center", marginBottom: "24px", color: "var(--green-deep)" }}>

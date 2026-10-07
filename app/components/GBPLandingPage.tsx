@@ -37,11 +37,6 @@ const helpfulLinks = [
     label: "Grabba Leaf & Shakers",
     description: "Compare listed Grabba leaf and shaker choices or call ahead.",
   },
-  {
-    href: "/cannabis-delivery-ottawa",
-    label: "Ottawa Delivery Information",
-    description: "Review the store’s published delivery status and update information.",
-  },
 ];
 
 const PAGE_URL = "https://spiritcornercannabis.com/weed-dispensary-ottawa";
