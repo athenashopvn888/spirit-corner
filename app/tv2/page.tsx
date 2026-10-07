@@ -8,7 +8,12 @@ import { tvHiring } from "../lib/tvHiring";
 import { formatBoardTime, readStockUpdatedAt } from "../lib/tvStockTime";
 import TvThemeArtwork from "../tv-theme/TvThemeArtwork";
 import { getTvTheme, getTvThemeVariables } from "../tv-theme/theme";
-import { getCigaretteOfferPromo, type Tv2DaytimePromo } from "./tv2Promos";
+import {
+  getCigaretteOfferPromo,
+  getTv2DaytimePromo,
+  isTv2Daytime,
+  type Tv2DaytimePromo,
+} from "./tv2Promos";
 
 /* -- TYPES -- */
 interface Item {
@@ -225,14 +230,22 @@ export default function TV2Page() {
   const [highlights, setHighlights] = useState<Record<string,number>>({});
   const [lastUpdate, setLastUpdate] = useState("");
   const [stockUpdated, setStockUpdated] = useState<string | null>(null);
-  const [cigaretteOfferPromo, setCigaretteOfferPromo] = useState<Tv2DaytimePromo | undefined>();
+  const [daytime, setDaytime] = useState(() => isTv2Daytime());
+  const [promoElapsedMs, setPromoElapsedMs] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const syncDaytime = () => setDaytime(isTv2Daytime());
+    syncDaytime();
+    const iv = setInterval(syncDaytime, 60_000);
+    return () => clearInterval(iv);
+  }, []);
+
+  useEffect(() => {
     const startedAt = performance.now();
-    const updateOffer = () => setCigaretteOfferPromo(getCigaretteOfferPromo(performance.now() - startedAt));
-    updateOffer();
-    const iv = setInterval(updateOffer, 250);
+    const updatePromos = () => setPromoElapsedMs(performance.now() - startedAt);
+    updatePromos();
+    const iv = setInterval(updatePromos, 250);
     return () => clearInterval(iv);
   }, []);
 
@@ -303,11 +316,45 @@ export default function TV2Page() {
           <div className={styles.grid}>
             {CARD_CONFIG.map(card => {
               const filtered = items.filter(card.filter);
+              const promo = getTv2DaytimePromo(card.id, daytime, promoElapsedMs);
+
+              if (promo) {
+                return (
+                  <div
+                    key={card.id}
+                    className={styles.card}
+                    data-promo-card={card.id}
+                    style={{"--accent":card.accent} as React.CSSProperties}
+                  >
+                    <div className={styles.cardHeader}>PROMO</div>
+                    <div className={styles.promoMain}>
+                      <div className={styles.promoViewport}>
+                        <img
+                          className={`${styles.promoImg} ${styles.promoActive}`}
+                          src={promo.src}
+                          alt={promo.alt}
+                          referrerPolicy="no-referrer"
+                          onError={(event) => {
+                            const target = event.currentTarget;
+                            if (
+                              promo.fallbackSrc &&
+                              target.dataset.fallbackApplied !== "true"
+                            ) {
+                              target.dataset.fallbackApplied = "true";
+                              target.src = promo.fallbackSrc;
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
 
               return (
                 <ItemCard key={card.id} title={card.title} accent={card.accent}
                   items={filtered} hiIdx={highlights[card.id]||0} preset={card.preset}
-                  offerPromo={card.id === "CIGARETTES" ? cigaretteOfferPromo : undefined} />
+                  offerPromo={card.id === "CIGARETTES" ? getCigaretteOfferPromo(daytime, promoElapsedMs) : undefined} />
               );
             })}
           </div>
