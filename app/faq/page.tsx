@@ -5,11 +5,11 @@ import styles from "./faq.module.css";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Spirit Corner Cannabis",
-  description: "Spirit Corner Cannabis location, hours, product categories, in-store shopping, and delivery status.",
+  description: "Spirit Corner Cannabis location, hours, product categories, and in-store shopping information.",
   alternates: { canonical: "https://spiritcornercannabis.com/faq" },
   openGraph: {
     title: "Frequently Asked Questions | Spirit Corner Cannabis",
-    description: "Spirit Corner Cannabis location, hours, product categories, in-store shopping, and delivery information.",
+    description: "Spirit Corner Cannabis location, hours, product categories, and in-store shopping information.",
     url: "https://spiritcornercannabis.com/faq",
   },
 };
@@ -29,13 +29,6 @@ const FAQ_CATEGORIES = [
       { q: "What product categories are listed?", a: "Spirit Corner lists flower in Budget, AA, AAA+, Premium, and Exotic tiers, along with edibles, vapes, concentrates, pre-rolls, cigarettes, specialty items, and accessories." },
       { q: "Can I shop online?", a: "Shopping is in store. Website listings can help you compare categories before visiting, but selection can change." },
       { q: "Can I call before visiting?", a: "Yes. Call (343) 308-8998 for store directions or product questions." },
-    ],
-  },
-  {
-    title: "Delivery",
-    faqs: [
-      { q: "Where can I check delivery information?", a: "Review the Ottawa delivery information or call (343) 308-8998 before planning an order because service details can change." },
-      { q: "Does the website guarantee delivery service?", a: "No. Call the store to confirm current service details before planning an order." },
     ],
   },
 ];
