@@ -77,12 +77,23 @@ function dedupeBySlug<T extends { slug: string }>(products: T[]): T[] {
   });
 }
 
-export const allFlowers: FlowerProduct[] = dedupeBySlug(
-  (flowersJson as FlowerProduct[]).map(normalizeFlowerDisplayName)
+export function normalizeProductLists(
+  flowers: FlowerProduct[],
+  items: ItemProduct[]
+): { flowers: FlowerProduct[]; items: ItemProduct[] } {
+  return {
+    flowers: dedupeBySlug(flowers.map(normalizeFlowerDisplayName)),
+    items: dedupeBySlug(items.map(normalizeItemDisplayName)),
+  };
+}
+
+const staticProducts = normalizeProductLists(
+  flowersJson as FlowerProduct[],
+  itemsJson as ItemProduct[]
 );
-export const allItems: ItemProduct[] = dedupeBySlug(
-  (itemsJson as ItemProduct[]).map(normalizeItemDisplayName)
-);
+
+export const allFlowers = staticProducts.flowers;
+export const allItems = staticProducts.items;
 
 /* ── Live stock fetch from Apps Script ── */
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_URL || "";
@@ -288,8 +299,11 @@ export const CATEGORY_CONFIG: Record<string, CategoryInfo> = {
 };
 
 /* ── Helper functions ── */
-export function getFlowersByTier(tier: string): FlowerProduct[] {
-  return allFlowers.filter(
+export function getFlowersByTier(
+  tier: string,
+  flowers: FlowerProduct[] = allFlowers
+): FlowerProduct[] {
+  return flowers.filter(
     (f) => f.tier.toUpperCase() === tier.toUpperCase()
   );
 }
@@ -298,8 +312,11 @@ export function getFlowerBySlug(slug: string): FlowerProduct | undefined {
   return allFlowers.find((f) => f.slug === slug);
 }
 
-export function getItemsByCategory(category: string): ItemProduct[] {
-  return allItems.filter(
+export function getItemsByCategory(
+  category: string,
+  items: ItemProduct[] = allItems
+): ItemProduct[] {
+  return items.filter(
     (i) => i.category.toUpperCase() === category.toUpperCase()
   );
 }

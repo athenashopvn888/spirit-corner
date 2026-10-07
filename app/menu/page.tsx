@@ -3,8 +3,10 @@ import Link from "next/link";
 import Footer from "../components/Footer";
 import MenuFinder from "../components/MenuFinder";
 import Navbar from "../components/Navbar";
-import { allFlowers, allItems } from "../lib/products";
+import { getResolvedProducts } from "../lib/resolvedProducts";
 import styles from "./menuPage.module.css";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Ottawa Flower & Accessories Menu | Spirit Corner Cannabis",
@@ -22,7 +24,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function MenuPage() {
+export default async function MenuPage() {
+  const { flowers, items } = await getResolvedProducts();
+
   return (
     <main className={styles.page}>
       <Navbar />
@@ -42,7 +46,7 @@ export default function MenuPage() {
         </div>
       </section>
       <section className={styles.finderSection} aria-label="Spirit Corner menu finder">
-        <MenuFinder flowers={allFlowers} items={allItems} />
+        <MenuFinder flowers={flowers} items={items} />
       </section>
       <Footer />
     </main>

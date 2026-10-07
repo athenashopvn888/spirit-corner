@@ -13,6 +13,9 @@ import { TIER_COMPARE, TIER_LINKS, TIER_SEO } from "../lib/tierSeoContent";
 import styles from "./tier.module.css";
 import { getTierGuideLinks } from "../lib/guideRegistry";
 import guideStyles from "../guides/[slug]/guide.module.css";
+import { getResolvedProducts } from "../lib/resolvedProducts";
+
+export const revalidate = 300;
 
 /* -- Generate all tier pages at build -- */
 export function generateStaticParams() {
@@ -28,7 +31,8 @@ export async function generateMetadata({
   const { tier: tierSlug } = await params;
   const tierInfo = getTierFromSlug(tierSlug);
   if (!tierInfo) return {};
-  const flowers = getFlowersByTier(tierInfo.key);
+  const { flowers: resolvedFlowers } = await getResolvedProducts();
+  const flowers = getFlowersByTier(tierInfo.key, resolvedFlowers);
   const seo = TIER_SEO[tierInfo.key];
   const pageUrl = `https://spiritcornercannabis.com/${tierInfo.config.slug}`;
 
@@ -54,7 +58,8 @@ export default async function TierPage({
   const tierInfo = getTierFromSlug(tierSlug);
   if (!tierInfo) notFound();
 
-  const flowers = getFlowersByTier(tierInfo.key);
+  const { flowers: resolvedFlowers } = await getResolvedProducts();
+  const flowers = getFlowersByTier(tierInfo.key, resolvedFlowers);
   const { config } = tierInfo;
   const seo = TIER_SEO[tierInfo.key];
 
