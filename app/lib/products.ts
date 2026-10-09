@@ -67,12 +67,18 @@ function normalizeItemDisplayName(item: ItemProduct): ItemProduct {
     : { ...item, name: cleanedName, slug: cleanedSlug };
 }
 
+// Grok 2026-10-09 (Tri rule: web, /tv and /tv2 show the SAME products): only drop exact repeats of the
+// same product (sku + tier/category + slug). Distinct products that share a slug (e.g. PINK LIZARD in
+// EXOTIC and AAA+, or an aliased GRABBA item) stay visible exactly as /api/tv-data serves them.
 function dedupeBySlug<T extends { slug: string }>(products: T[]): T[] {
   const seen = new Set<string>();
   return products.filter((product) => {
+    const p = product as T & { sku?: unknown; tier?: unknown; category?: unknown };
     const slug = product.slug.trim().toLowerCase();
-    if (!slug || seen.has(slug)) return false;
-    seen.add(slug);
+    if (!slug) return false;
+    const id = [String(p.sku ?? ""), String(p.tier ?? p.category ?? ""), slug].join("|").toLowerCase();
+    if (seen.has(id)) return false;
+    seen.add(id);
     return true;
   });
 }
