@@ -22,14 +22,14 @@ async function __loadMenuData(): Promise<void> {
 
 /* Homepage metadata */
 export const metadata: Metadata = {
-  title: "24 Hour Downtown Ottawa Cannabis Store | Spirit Corner Cannabis",
+  title: "Spirit Corner Cannabis | 24 Hour Downtown Ottawa Cannabis Store",
   description:
     "Spirit Corner Cannabis is a downtown Ottawa cannabis store near ByWard Market with flower, pre-rolls, vapes, edibles, concentrates, accessories, and adult 19+ store info.",
   alternates: {
     canonical: "https://spiritcornercannabis.com",
   },
   openGraph: {
-    title: "24 Hour Downtown Ottawa Cannabis Store | Spirit Corner Cannabis",
+    title: "Spirit Corner Cannabis | 24 Hour Downtown Ottawa Cannabis Store",
     description:
       "Spirit Corner Cannabis is a downtown Ottawa cannabis store near ByWard Market with five flower tiers and listed smoke-product categories.",
     url: "https://spiritcornercannabis.com",
