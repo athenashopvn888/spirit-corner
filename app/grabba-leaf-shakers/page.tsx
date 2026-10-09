@@ -1,23 +1,56 @@
+import { getLiveMenu } from "../lib/liveMenu";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { allItems, isGrabbaItem, isGrabbaShakerItem } from "../lib/products";
+import { isGrabbaItem, isGrabbaShakerItem } from "../lib/products";
 import styles from "./grabba.module.css";
+
+// Products come from the same loader as /api/tv-data on every request.
+export const dynamic = "force-dynamic";
+
+// ONE product loader (same as /api/tv-data), filled per request by __loadMenuData(). Grok 2026-10-09.
+let __menu!: Awaited<ReturnType<typeof getLiveMenu>>;
+async function __loadMenuData(): Promise<void> {
+  __menu = await getLiveMenu();
+  grabbaItems = __compute_grabbaItems();
+  shakerItem = __compute_shakerItem();
+  socialItem = __compute_socialItem();
+  hasShaker = __compute_hasShaker();
+  pageJsonLd = __compute_pageJsonLd();
+  menuDescription = __compute_menuDescription();
+}
 
 const PAGE_URL = "https://spiritcornercannabis.com/grabba-leaf-shakers";
 const DIRECTIONS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=251%20Dalhousie%20St%2C%20Ottawa%2C%20ON%20K1N%201E7";
-const grabbaItems = allItems.filter(isGrabbaItem);
-const shakerItem = grabbaItems.find(isGrabbaShakerItem);
-const hasShaker = Boolean(shakerItem);
-const socialItem = shakerItem ?? grabbaItems[0];
-const menuDescription = hasShaker
+function __compute_grabbaItems() {
+  return __menu.items.filter(isGrabbaItem);
+}
+let grabbaItems!: ReturnType<typeof __compute_grabbaItems>;
+function __compute_shakerItem() {
+  return grabbaItems.find(isGrabbaShakerItem);
+}
+let shakerItem!: ReturnType<typeof __compute_shakerItem>;
+function __compute_hasShaker() {
+  return Boolean(shakerItem);
+}
+let hasShaker!: ReturnType<typeof __compute_hasShaker>;
+function __compute_socialItem() {
+  return shakerItem ?? grabbaItems[0];
+}
+let socialItem!: ReturnType<typeof __compute_socialItem>;
+function __compute_menuDescription() {
+  return hasShaker
   ? "Browse listed Grabba leaf and Grabba Shaker choices at Spirit Corner Cannabis in downtown Ottawa."
   : "Browse listed Grabba leaf choices and call Spirit Corner Cannabis to ask about Grabba Shakers in downtown Ottawa.";
+}
+let menuDescription!: ReturnType<typeof __compute_menuDescription>;
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+    await __loadMenuData();
+  return {
   title: "Grabba Leaf & Grabba Shakers Ottawa | Spirit Corner Cannabis",
   description: `${menuDescription} Visit 251 Dalhousie St, open 24 hours for adults 19+.`,
   alternates: { canonical: PAGE_URL },
@@ -37,8 +70,10 @@ export const metadata: Metadata = {
     ],
   },
 };
+}
 
-const pageJsonLd = {
+function __compute_pageJsonLd() {
+  return {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "@id": `${PAGE_URL}#webpage`,
@@ -48,6 +83,8 @@ const pageJsonLd = {
   about: { "@id": "https://spiritcornercannabis.com" },
   primaryImageOfPage: socialItem ? { "@type": "ImageObject", url: socialItem.image } : undefined,
 };
+}
+let pageJsonLd!: ReturnType<typeof __compute_pageJsonLd>;
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
@@ -68,7 +105,8 @@ const breadcrumbJsonLd = {
   ],
 };
 
-export default function GrabbaLeafShakersPage() {
+export default async function GrabbaLeafShakersPage() {
+    await __loadMenuData();
   return (
     <>
       <script

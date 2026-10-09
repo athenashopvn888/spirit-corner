@@ -1,17 +1,29 @@
+import { getLiveMenu } from "../../lib/liveMenu";
 import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { allFlowers, TIER_CONFIG, type FlowerProduct, type PricePoint } from "../../lib/products";
+import { TIER_CONFIG, type FlowerProduct, type PricePoint } from "../../lib/products";
 import { getStrainData } from "../../lib/strainData";
 import RelatedScroll from "./RelatedScroll";
 import Magnifier from "../../components/Magnifier";
 import styles from "./flower.module.css";
 
+// Products come from the same loader as /api/tv-data on every request.
+export const dynamic = "force-dynamic";
+
+// ONE product loader (same as /api/tv-data), filled per request by __loadMenuData(). Grok 2026-10-09.
+let __menu!: Awaited<ReturnType<typeof getLiveMenu>>;
+async function __loadMenuData(): Promise<void> {
+  __menu = await getLiveMenu();
+
+}
+
 /* -- Pre-generate all flower pages -- */
-export function generateStaticParams() {
-  return allFlowers.map((f) => ({ slug: f.slug }));
+export async function generateStaticParams() {
+    await __loadMenuData();
+  return __menu.flowers.map((f) => ({ slug: f.slug }));
 }
 
 /* -- SEO metadata per strain -- */
@@ -20,8 +32,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+    await __loadMenuData();
   const { slug } = await params;
-  const flower = allFlowers.find((f) => f.slug === slug);
+  const flower = __menu.flowers.find((f) => f.slug === slug);
   if (!flower) return {};
 
   const tierName = TIER_CONFIG[flower.tier]?.name || flower.tier;
@@ -117,11 +130,12 @@ export default async function FlowerPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+    await __loadMenuData();
   const { slug } = await params;
   if (slug.toLowerCase().includes("mike-tyson-ko") && slug !== "mike-tyson-ko-super-exotics") {
     permanentRedirect("/flower/mike-tyson-ko-super-exotics");
   }
-  const flower = allFlowers.find((f) => f.slug === slug);
+  const flower = __menu.flowers.find((f) => f.slug === slug);
   if (!flower) notFound();
 
   const tierConfig = TIER_CONFIG[flower.tier];
@@ -146,7 +160,7 @@ export default async function FlowerPage({
   const bestValue = perGram[0];
 
   // Related strains from same tier
-  const related = allFlowers
+  const related = __menu.flowers
     .filter((f) => f.tier === flower.tier && f.slug !== flower.slug);
 
   return (

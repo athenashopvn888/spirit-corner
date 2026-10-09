@@ -1,14 +1,26 @@
+import { getLiveMenu } from "../lib/liveMenu";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../page.module.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { allItems } from "../lib/products";
+// Products come from the same loader as /api/tv-data on every request.
+export const dynamic = "force-dynamic";
 
-const cigaretteItems = allItems.filter((item) =>
+// ONE product loader (same as /api/tv-data), filled per request by __loadMenuData(). Grok 2026-10-09.
+let __menu!: Awaited<ReturnType<typeof getLiveMenu>>;
+async function __loadMenuData(): Promise<void> {
+  __menu = await getLiveMenu();
+  cigaretteItems = __compute_cigaretteItems();
+}
+
+function __compute_cigaretteItems() {
+  return __menu.items.filter((item) =>
   item.category.toUpperCase().includes("CIGARETTE")
 );
+}
+let cigaretteItems!: ReturnType<typeof __compute_cigaretteItems>;
 const PAGE_URL = "https://spiritcornercannabis.com/native-cigarettes-ottawa";
 
 export const metadata: Metadata = {
@@ -25,7 +37,8 @@ export const metadata: Metadata = {
 
 const linkStyle = { color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" };
 
-export default function NativeCigarettesPage() {
+export default async function NativeCigarettesPage() {
+    await __loadMenuData();
   return (
     <main className={styles.main}>
       <Navbar />

@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import { getResolvedProducts } from "../lib/resolvedProducts";
 import styles from "./menuPage.module.css";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Ottawa Flower & Accessories Menu | Spirit Corner Cannabis",
