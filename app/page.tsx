@@ -1,3 +1,4 @@
+import { getLiveMenu } from "./lib/liveMenu";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
 import FleetAnnouncementBanner from "./components/FleetAnnouncementBanner";
@@ -6,8 +7,18 @@ import HiringCallout from "./components/HiringCallout";
 import Footer from "./components/Footer";
 import HeroSlider from "./components/HeroSlider";
 import Image from "next/image";
-import { allFlowers, allItems } from "./lib/products";
 import Link from "next/link";
+
+// Products come from the same loader as /api/tv-data on every request.
+export const dynamic = "force-dynamic";
+
+// ONE product loader (same as /api/tv-data), filled per request by __loadMenuData(). Grok 2026-10-09.
+let __menu!: Awaited<ReturnType<typeof getLiveMenu>>;
+async function __loadMenuData(): Promise<void> {
+  __menu = await getLiveMenu();
+  TIERS = __compute_TIERS();
+  FEATURED_STRAINS = __compute_FEATURED_STRAINS();
+}
 
 /* Homepage metadata */
 export const metadata: Metadata = {
@@ -27,7 +38,8 @@ export const metadata: Metadata = {
 };
 
 /* Tier data */
-const TIERS = [
+function __compute_TIERS() {
+  return [
   {
     name: "EXOTIC",
     slug: "exotic",
@@ -35,7 +47,7 @@ const TIERS = [
     color: "#f59e0b",
     glow: "rgba(245, 158, 11, 0.2)",
     icon: "EX",
-    count: allFlowers.filter((flower) => flower.tier === "EXOTIC").length,
+    count: __menu.flowers.filter((flower) => flower.tier === "EXOTIC").length,
     countLabel: "flower listings",
   },
   {
@@ -45,7 +57,7 @@ const TIERS = [
     color: "#a78bfa",
     glow: "rgba(167, 139, 250, 0.2)",
     icon: "PR",
-    count: allFlowers.filter((flower) => flower.tier === "PREMIUM").length,
+    count: __menu.flowers.filter((flower) => flower.tier === "PREMIUM").length,
     countLabel: "flower listings",
   },
   {
@@ -55,7 +67,7 @@ const TIERS = [
     color: "#22d3ee",
     glow: "rgba(34, 211, 238, 0.2)",
     icon: "AA+",
-    count: allFlowers.filter((flower) => flower.tier === "AAA+").length,
+    count: __menu.flowers.filter((flower) => flower.tier === "AAA+").length,
     countLabel: "flower listings",
   },
   {
@@ -65,7 +77,7 @@ const TIERS = [
     color: "#34d399",
     glow: "rgba(52, 211, 153, 0.2)",
     icon: "AA",
-    count: allFlowers.filter((flower) => flower.tier === "AA").length,
+    count: __menu.flowers.filter((flower) => flower.tier === "AA").length,
     countLabel: "flower listings",
   },
   {
@@ -75,7 +87,7 @@ const TIERS = [
     color: "#94a3b8",
     glow: "rgba(148, 163, 184, 0.15)",
     icon: "BG",
-    count: allFlowers.filter((flower) => flower.tier === "BUDGET").length,
+    count: __menu.flowers.filter((flower) => flower.tier === "BUDGET").length,
     countLabel: "flower listings",
   },
   {
@@ -85,16 +97,18 @@ const TIERS = [
     color: "#fb923c",
     glow: "rgba(251, 146, 60, 0.2)",
     icon: "ED",
-    count: allItems.filter((item) => item.category === "EDIBLES").length,
+    count: __menu.items.filter((item) => item.category === "EDIBLES").length,
     countLabel: "item listings",
   },
 ];
+}
+let TIERS!: ReturnType<typeof __compute_TIERS>;
 
 /* Build featured strains dynamically from real inventory */
 function buildFeatured() {
-  const hot = allFlowers.filter((f) => f.isHot);
-  const sale = allFlowers.filter((f) => f.isSale && !f.isHot);
-  const rest = allFlowers
+  const hot = __menu.flowers.filter((f) => f.isHot);
+  const sale = __menu.flowers.filter((f) => f.isSale && !f.isHot);
+  const rest = __menu.flowers
     .filter((f) => !f.isHot && !f.isSale && f.image)
     .sort((a, b) => parseFloat(b.thc) - parseFloat(a.thc));
   const pool = [...hot, ...sale, ...rest];
@@ -119,7 +133,10 @@ function buildFeatured() {
     image: f.image,
   }));
 }
-const FEATURED_STRAINS = buildFeatured();
+function __compute_FEATURED_STRAINS() {
+  return buildFeatured();
+}
+let FEATURED_STRAINS!: ReturnType<typeof __compute_FEATURED_STRAINS>;
 
 const HOMEPAGE_HIGHLIGHTS = [
   {
@@ -173,7 +190,8 @@ function getTierColor(tier: string) {
   return t?.color || "#94a3b8";
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+    await __loadMenuData();
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

@@ -1,9 +1,22 @@
-import { allFlowers, allItems, isGrabbaItem } from "../lib/products";
+import { getLiveMenu } from "../lib/liveMenu";
+import { isGrabbaItem } from "../lib/products";
+
+// ONE product loader (same as /api/tv-data), filled per request by __loadMenuData(). Grok 2026-10-09.
+let __menu!: Awaited<ReturnType<typeof getLiveMenu>>;
+async function __loadMenuData(): Promise<void> {
+  __menu = await getLiveMenu();
+  grabbaImages = __compute_grabbaImages();
+  productEntries = __compute_productEntries();
+  staticEntries = __compute_staticEntries();
+}
 
 const BASE = "https://spiritcornercannabis.com";
-const grabbaImages = allItems
+function __compute_grabbaImages() {
+  return __menu.items
   .filter(isGrabbaItem)
   .map((item) => absoluteImageUrl(item.image));
+}
+let grabbaImages!: ReturnType<typeof __compute_grabbaImages>;
 
 function escapeXml(value: string) {
   return value
@@ -19,7 +32,8 @@ function absoluteImageUrl(value: string) {
   return `${BASE}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
-const staticEntries = [
+function __compute_staticEntries() {
+  return [
   {
     page: BASE,
     images: [`${BASE}/banners/spirit_corner_cannabis_showcase.webp`],
@@ -35,25 +49,31 @@ const staticEntries = [
     images: grabbaImages,
   },
 ];
+}
+let staticEntries!: ReturnType<typeof __compute_staticEntries>;
 
-const productEntries = [
-  ...allFlowers
+function __compute_productEntries() {
+  return [
+  ...__menu.flowers
     .filter((flower) => flower.image)
     .map((flower) => ({
       page: `${BASE}/flower/${flower.slug}`,
       images: [absoluteImageUrl(flower.image)],
     })),
-  ...allItems
+  ...__menu.items
     .filter((item) => item.image)
     .map((item) => ({
       page: `${BASE}/item/${item.slug}`,
       images: [absoluteImageUrl(item.image)],
     })),
 ];
+}
+let productEntries!: ReturnType<typeof __compute_productEntries>;
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
-export function GET() {
+export async function GET() {
+    await __loadMenuData();
   const urls = [...staticEntries, ...productEntries]
     .map(
       ({ page, images }) =>

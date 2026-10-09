@@ -15,7 +15,7 @@ import { getTierGuideLinks } from "../lib/guideRegistry";
 import guideStyles from "../guides/[slug]/guide.module.css";
 import { getResolvedProducts } from "../lib/resolvedProducts";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 /* -- Generate all tier pages at build -- */
 export function generateStaticParams() {

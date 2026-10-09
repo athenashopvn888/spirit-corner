@@ -14,7 +14,7 @@ import guideStyles from "../../guides/[slug]/guide.module.css";
 import ItemCard from "./ItemCard";
 import { getResolvedProducts } from "../../lib/resolvedProducts";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 /* ── Generate all category pages ── */
 export function generateStaticParams() {
