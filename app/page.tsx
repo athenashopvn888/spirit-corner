@@ -261,7 +261,7 @@ export default async function HomePage() {
           <div className={styles.container}>
             <h2 className={styles.sectionTitle}>Compare Flower Tiers and Edibles</h2>
 
-            <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong> These prices do not apply to delivery orders. Delivery has its own prices. Why? <Link href="/faq#delivery-price-rule">See the FAQ</Link></p>
+            <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong></p>
             <div className={styles.tierGrid}>
               {TIERS.map((tier, i) => (
                 <Link

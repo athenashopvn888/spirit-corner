@@ -46,7 +46,7 @@ export default async function MenuPage() {
         </div>
       </section>
       <section className={styles.finderSection} aria-label="Spirit Corner menu finder">
-        <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong> These prices do not apply to delivery orders. Delivery has its own prices. Why? <Link href="/faq#delivery-price-rule">See the FAQ</Link></p>
+        <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong></p>
         <MenuFinder flowers={flowers} items={items} />
       </section>
       <Footer />
