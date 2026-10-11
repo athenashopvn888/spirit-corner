@@ -46,6 +46,7 @@ export default async function MenuPage() {
         </div>
       </section>
       <section className={styles.finderSection} aria-label="Spirit Corner menu finder">
+        <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong><br />Delivery coming soon.</p>
         <MenuFinder flowers={flowers} items={items} />
       </section>
       <Footer />

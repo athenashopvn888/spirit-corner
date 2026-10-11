@@ -16,6 +16,12 @@ export const metadata: Metadata = {
 
 const FAQ_CATEGORIES = [
   {
+    title: "Prices",
+    faqs: [
+      { q: "Can I get the store price on a delivery order?", a: "Delivery is coming soon. In-store prices are for purchases made in the store, and delivery orders will have their own prices." },
+    ],
+  },
+  {
     title: "Location & Hours",
     faqs: [
       { q: "Where is Spirit Corner Cannabis located?", a: "Spirit Corner Cannabis is at 251 Dalhousie St, Ottawa, ON K1N 1E7, near ByWard Market." },
@@ -49,7 +55,7 @@ export default function FAQPage() {
           {FAQ_CATEGORIES.map((category) => (
             <div key={category.title} className={styles.category}>
               <h2 className={styles.categoryTitle}>{category.title}</h2>
-              {category.faqs.map((faq) => <details key={faq.q} className={styles.faqItem}><summary className={styles.faqQuestion}>{faq.q}</summary><p className={styles.faqAnswer}>{faq.a}</p></details>)}
+              {category.faqs.map((faq) => <details key={faq.q} id={faq.q === "Can I get the store price on a delivery order?" ? "delivery-price-rule" : undefined} open={faq.q === "Can I get the store price on a delivery order?"} className={styles.faqItem}><summary className={styles.faqQuestion}>{faq.q}</summary><p className={styles.faqAnswer}>{faq.a}</p></details>)}
             </div>
           ))}
           <div className={styles.ctaSection}>

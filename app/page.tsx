@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import HeroSlider from "./components/HeroSlider";
 import Image from "next/image";
 import Link from "next/link";
+import { storeTierRange, tierRangeText } from "./lib/tierPriceRanges";
 
 // Products come from the same loader as /api/tv-data on every request.
 export const dynamic = "force-dynamic";
@@ -260,6 +261,7 @@ export default async function HomePage() {
           <div className={styles.container}>
             <h2 className={styles.sectionTitle}>Compare Flower Tiers and Edibles</h2>
 
+            <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong><br />Delivery coming soon.</p>
             <div className={styles.tierGrid}>
               {TIERS.map((tier, i) => (
                 <Link
@@ -282,6 +284,7 @@ export default async function HomePage() {
                       {tier.name}
                     </h3>
                     <div className={styles.tierCardMeta}>
+                      {(() => { const line = tierRangeText(storeTierRange(__menu.flowers, tier.name)); return line ? <span className="tier-live-range"><small className="price-scope-label">In-store price</small>{line}</span> : null; })()}
                       <span className={styles.tierCardThc}>{tier.tagline}</span>
                       <span className={styles.tierCardCount}>
                         {tier.count} {tier.countLabel}

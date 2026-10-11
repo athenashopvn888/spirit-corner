@@ -1,0 +1,35 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import test from "node:test";
+import ts from "typescript";
+
+const read = (file) => fs.readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+
+test("tier ranges use sale price per gram and source THC only", () => {
+  const source = read("app/lib/tierPriceRanges.ts");
+  const output = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
+  const compiled = { exports: {} };
+  new Function("module", "exports", output)(compiled, compiled.exports);
+  const ranges = compiled.exports;
+  const value = ranges.storeTierRange([{ tier: "EXOTIC", thc: "35-39%", price3g: { regular: 42, sale: 36 }, price28g: { regular: 196, sale: null } }], "EXOTIC");
+  assert.equal(ranges.tierRangeText(value), "From $7 to $12 a gram · THC about 35 to 39%");
+  assert.equal(ranges.tierRangeText(ranges.storeTierRange([], "EXOTIC")), null);
+});
+
+test("in-store price rules and FAQ schema source are wired for the store-only menu", () => {
+  const home = read("app/page.tsx");
+  const tier = read("app/[tier]/page.tsx");
+  const menu = read("app/menu/page.tsx");
+  const faq = read("app/faq/page.tsx");
+  assert.match(home, /storeTierRange\(__menu\.flowers/);
+  assert.match(home, /IN-STORE PRICES ONLY\./);
+  assert.match(tier, /storeTierRange\(flowers/);
+  assert.match(menu, /IN-STORE PRICES ONLY\./);
+  assert.match(home, /Delivery coming soon\./);
+  assert.match(tier, /Delivery coming soon\./);
+  assert.match(menu, /Delivery coming soon\./);
+  assert.match(faq, /Can I get the store price on a delivery order\?/);
+  assert.match(faq, /Delivery is coming soon\. In-store prices are for purchases made in the store, and delivery orders will have their own prices\./);
+  assert.match(faq, /FAQPage/);
+  assert.equal(fs.existsSync(new URL("../app/delivery", import.meta.url)), false);
+});
