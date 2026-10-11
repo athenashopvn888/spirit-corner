@@ -348,7 +348,7 @@ export default function MenuFinder({ flowers, items }: MenuFinderProps) {
                 <span>{product.category}</span>
                 {product.typeLabel && <span>{product.typeLabel}</span>}
                 {product.thcLabel && <span>{product.thcLabel}</span>}
-                <span>{product.priceLabel}</span>
+                <span><small className="price-scope-label">In-store price</small>{product.priceLabel}</span>
               </div>
             </div>
           </Link>
