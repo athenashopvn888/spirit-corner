@@ -18,7 +18,7 @@ const FAQ_CATEGORIES = [
   {
     title: "Prices",
     faqs: [
-      { q: "Can I get the store price on a delivery order?", a: "In-store prices are for purchases made in the store. Delivery orders always use delivery prices." },
+      { q: "Can I get the store price on a delivery order?", a: "Delivery is coming soon. In-store prices are for purchases made in the store, and delivery orders will have their own prices." },
     ],
   },
   {

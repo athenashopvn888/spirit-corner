@@ -25,7 +25,11 @@ test("in-store price rules and FAQ schema source are wired for the store-only me
   assert.match(home, /IN-STORE PRICES ONLY\./);
   assert.match(tier, /storeTierRange\(flowers/);
   assert.match(menu, /IN-STORE PRICES ONLY\./);
+  assert.match(home, /Delivery coming soon\./);
+  assert.match(tier, /Delivery coming soon\./);
+  assert.match(menu, /Delivery coming soon\./);
   assert.match(faq, /Can I get the store price on a delivery order\?/);
+  assert.match(faq, /Delivery is coming soon\. In-store prices are for purchases made in the store, and delivery orders will have their own prices\./);
   assert.match(faq, /FAQPage/);
   assert.equal(fs.existsSync(new URL("../app/delivery", import.meta.url)), false);
 });

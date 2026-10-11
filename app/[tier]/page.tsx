@@ -106,7 +106,7 @@ export default async function TierPage({
             </div>
             <p className={styles.heroTagline}>{config.tagline}</p>
             {tierRangeText(tierRange) && <p className="tier-live-range"><small className="price-scope-label">In-store price</small>{tierRangeText(tierRange)}</p>}
-            <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong></p>
+            <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong><br />Delivery coming soon.</p>
             <div className={styles.heroStats}>
               <span className={styles.stat}>
                 <strong>{flowers.length}</strong> strains

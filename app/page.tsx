@@ -261,7 +261,7 @@ export default async function HomePage() {
           <div className={styles.container}>
             <h2 className={styles.sectionTitle}>Compare Flower Tiers and Edibles</h2>
 
-            <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong></p>
+            <p className="price-rule-notice"><strong>IN-STORE PRICES ONLY.</strong><br />Delivery coming soon.</p>
             <div className={styles.tierGrid}>
               {TIERS.map((tier, i) => (
                 <Link
