@@ -5,6 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import type { FlowerProduct, PricePoint } from "../lib/products";
 import { formatPerGram, getPrice5gDisplay } from "../lib/flowerDisplayWeight";
+import { TIER_CONFIG } from "../lib/products";
+import {
+  formatDollars,
+  formatPayEquals,
+  formatPerGram as formatDealPerGram,
+  isBogoDeal,
+  paidAmount,
+  type BoardDeal,
+} from "../lib/flowerDeals";
 import styles from "./FlowerCard.module.css";
 
 interface WeightOption {
@@ -12,6 +21,7 @@ interface WeightOption {
   label: string;
   grams: number;
   price: PricePoint | null;
+  deal?: BoardDeal;
 }
 
 function getTypeLabel(t: string) {
@@ -33,8 +43,28 @@ export default function FlowerCard({
   flower: FlowerProduct;
   tierKey: string;
 }) {
+  const tierCfg = TIER_CONFIG[tierKey];
+  const deal3 = tierCfg?.deal3g ?? null;
+  const deal6 = tierCfg?.deal6g ?? null;
+  const isBogoTier = isBogoDeal(deal6);
+  const listPrice3g = flower.price3g ? flower.price3g.regular : null;
+  const listPerGram = listPrice3g !== null ? listPrice3g / 2 : null;
+
   const weights: WeightOption[] = [];
-  if (flower.price3g) {
+  if (flower.price3g && deal3) {
+    const paid = paidAmount(flower.price3g);
+    const applies = isBogoDeal(deal3) || paid === deal3.price;
+    if (applies) {
+      weights.push({
+        key: "3g",
+        label: "3g",
+        grams: deal3.grams,
+        price: flower.price3g,
+        deal: deal3,
+      });
+    }
+  }
+  if (flower.price3g && !weights.some((weight) => weight.key === "3g")) {
     weights.push({
       key: "3g",
       label: "3g",
@@ -43,12 +73,13 @@ export default function FlowerCard({
     });
   }
   if (flower.price5g) {
-    const display = getPrice5gDisplay(tierKey);
+    const grams = isBogoTier && deal6 ? deal6.grams : getPrice5gDisplay(tierKey).grams;
     weights.push({
       key: "5g",
-      label: display.label,
-      grams: display.grams,
+      label: `${grams}g`,
+      grams,
       price: flower.price5g,
+      deal: isBogoTier && deal6 ? deal6 : undefined,
     });
   }
   if (flower.price14g) {
@@ -70,7 +101,7 @@ export default function FlowerCard({
   const perGram = formatPerGram(effectivePrice, active.grams);
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} data-product-name={flower.name} data-product-tier={tierKey}>
       {/* Image */}
       <Link href={`/flower/${flower.slug}`} className={styles.imageLink}>
         <div className={styles.imageWrap}>
@@ -119,9 +150,33 @@ export default function FlowerCard({
             <span className={styles.priceMain}>${active.price?.regular}</span>
           )}
           <div className={styles.perGramWrap}>
-            <span className={styles.perGram}>${perGram}/g</span>
+            {isBogoTier && listPerGram !== null ? (
+              <>
+                <span className={styles.perGramOld}>{formatDollars(listPerGram)}/g</span>
+                <span className={styles.perGram}>${perGram}/g</span>
+              </>
+            ) : (
+              <span className={styles.perGram}>${perGram}/g</span>
+            )}
           </div>
         </div>
+
+        {active.deal && isBogoDeal(active.deal) && paidAmount(active.price) !== null && (
+          <div className={styles.promoLine}>
+            <span>{active.deal.label}</span>
+            <span className={styles.promoPay}>
+              {formatPayEquals(paidAmount(active.price) as number, active.grams)}
+            </span>
+          </div>
+        )}
+        {active.deal && !isBogoDeal(active.deal) && (
+          <div className={styles.promoLine}>🎁 {active.deal.label}</div>
+        )}
+        {isBogoTier && deal6 && flower.price5g && active.grams !== deal6.grams && paidAmount(flower.price5g) !== null && (
+          <div className={styles.promoHint}>
+            6g → {formatDealPerGram(paidAmount(flower.price5g) as number, deal6.grams)}
+          </div>
+        )}
 
         {/* Weight pills — CLICKABLE */}
         <div className={styles.weightPills}>
