@@ -16,7 +16,7 @@ const lineStyle = {
   textTransform: "uppercase" as const,
 };
 
-function isThanksgivingNoticeActive(date: Date) {
+function isHalloweenNoticeActive(date: Date) {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Toronto",
     year: "numeric",
@@ -26,17 +26,17 @@ function isThanksgivingNoticeActive(date: Date) {
   const value = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
   const dateKey = Number(`${value.year}${value.month}${value.day}`);
 
-  return dateKey >= 20260930 && dateKey <= 20261012;
+  return dateKey >= 20261014 && dateKey <= 20261031;
 }
 
 export default function FleetAnnouncementBanner() {
   const announcementRef = useRef<HTMLElement>(null);
   const [navClearance, setNavClearance] = useState<number | null>(null);
-  const [showThanksgivingNotice, setShowThanksgivingNotice] = useState(false);
+  const [showHalloweenNotice, setShowHalloweenNotice] = useState(false);
 
   useEffect(() => {
     const updateVisibility = () =>
-      setShowThanksgivingNotice(isThanksgivingNoticeActive(new Date()));
+      setShowHalloweenNotice(isHalloweenNoticeActive(new Date()));
 
     updateVisibility();
     const timer = window.setInterval(updateVisibility, 60_000);
@@ -95,12 +95,12 @@ export default function FleetAnnouncementBanner() {
         zIndex: 50,
       }}
     >
-      {showThanksgivingNotice ? (
+      {showHalloweenNotice ? (
         <p
-          data-thanksgiving-hours-notice=""
+          data-halloween-hours-notice=""
           style={{ ...lineStyle, background: "#166534" }}
         >
-          Thanksgiving Monday (Oct 12): We are open regular hours.
+          Happy Halloween! Spirit Corner Cannabis is open regular hours on Saturday, October 31.
         </p>
       ) : null}
       <p style={{ ...lineStyle, background: "#b91c1c" }}>
