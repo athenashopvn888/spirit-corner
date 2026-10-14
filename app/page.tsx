@@ -9,6 +9,8 @@ import HeroSlider from "./components/HeroSlider";
 import Image from "next/image";
 import Link from "next/link";
 import { storeTierRange, tierRangeText } from "./lib/tierPriceRanges";
+import NearMeFaq from "./components/NearMeFaq";
+import nearMeFaq from "./lib/nearMeFaq.json";
 
 // Products come from the same loader as /api/tv-data on every request.
 export const dynamic = "force-dynamic";
@@ -618,6 +620,7 @@ export default async function HomePage() {
         </section>
 
         {/* Footer */}
+        <NearMeFaq id="local-near-me" q={nearMeFaq.home.q} a={nearMeFaq.home.a} />
         <Footer />
       </main>
     </>
