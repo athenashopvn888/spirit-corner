@@ -1,3 +1,4 @@
+import PinnedNavClearance from "./components/PinnedNavClearance";
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
@@ -142,7 +143,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>{children}<PinnedNavClearance /></body>
     </html>
   );
 }

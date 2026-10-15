@@ -1,4 +1,5 @@
 "use client";
+import CigaretteSeasonalNotice from "./CigaretteSeasonalNotice";
 
 import Link from "next/link";
 
@@ -52,15 +53,10 @@ export default function FleetAnnouncementBanner() {
     const updateClearance = () => {
       window.cancelAnimationFrame(frame);
       frame = window.requestAnimationFrame(() => {
-        const currentMargin = Number.parseFloat(
-          window.getComputedStyle(announcement).marginTop,
-        );
-        const flowTop =
-          announcement.getBoundingClientRect().top - (currentMargin || 0);
-        const nextClearance = Math.max(
-          0,
-          Math.ceil(nav.getBoundingClientRect().bottom - flowTop),
-        );
+        // Document coordinates (scroll-safe); only a fixed nav overlaps page flow.
+        const currentMargin = Number.parseFloat(window.getComputedStyle(announcement).marginTop) || 0;
+        const flowTopDoc = announcement.getBoundingClientRect().top + window.scrollY - currentMargin;
+        const nextClearance = window.getComputedStyle(nav).position === "fixed" ? Math.min(400, Math.max(0, Math.ceil(nav.getBoundingClientRect().bottom - flowTopDoc))) : 0;
         setNavClearance((current) =>
           current === nextClearance ? current : nextClearance,
         );
@@ -103,6 +99,7 @@ export default function FleetAnnouncementBanner() {
           Happy Halloween! Spirit Corner Cannabis is open regular hours on Saturday, October 31.
         </p>
       ) : null}
+      <CigaretteSeasonalNotice />
       <p style={{ ...lineStyle, background: "#b91c1c" }}>
         CIGARETTE DEAL ! 2 PACK $5 MIX AND MATCH
       </p>

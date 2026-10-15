@@ -462,3 +462,15 @@ button { cursor: pointer; font-family: inherit; }
 .price-rule-notice a{text-decoration:underline;font-weight:700}
 .price-scope-label{display:block;font-size:.72rem;font-weight:800;letter-spacing:.08em;line-height:1.3;text-transform:uppercase}
 .tier-live-range{margin:12px 0;font-size:1rem;line-height:1.45}
+
+/* Pinned nav: opaque (no content showing through) and above page content, in the store's own nav colour so nav text stays readable. */
+#main-nav {
+  z-index: 1000 !important;
+  background: rgb(0, 0, 0) !important;
+  background-color: rgb(0, 0, 0) !important;
+  backdrop-filter: none !important;
+}
+@media (max-width: 520px) {
+  /* Keep the nav pinned on phones too (it was position: relative here). */
+  #main-nav { position: sticky !important; top: 0; }
+}
