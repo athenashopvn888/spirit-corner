@@ -1,3 +1,4 @@
+import CigaretteSeasonalNotice from "../components/CigaretteSeasonalNotice";
 import { getLiveMenu } from "../lib/liveMenu";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -42,6 +43,7 @@ export default async function NativeCigarettesPage() {
   return (
     <main className={styles.main}>
       <Navbar />
+      <CigaretteSeasonalNotice sticky />
 
       <section style={{ marginTop: 0, position: "relative" }}>
         <div style={{ maxWidth: "1180px", margin: "0 auto", padding: "0 24px" }}>
