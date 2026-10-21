@@ -1,9 +1,10 @@
+import { cigaretteSafeContent } from "./lib/siteConfig";
 import PinnedNavClearance from "./components/PinnedNavClearance";
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = cigaretteSafeContent({
   metadataBase: new URL("https://spiritcornercannabis.com"),
   title: {
     default: "Spirit Corner Cannabis - Premium Cannabis Dispensary, Ottawa",
@@ -64,7 +65,7 @@ export const metadata: Metadata = {
   verification: {
     // google: "your-google-verification-code",
   },
-};
+});
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -124,7 +125,7 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(cigaretteSafeContent(jsonLd)) }}
         />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-S9S5B80HR2"

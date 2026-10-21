@@ -1,3 +1,4 @@
+import { SHOW_CIGARETTES, filterCigaretteItems, isCigaretteCategory } from "./siteConfig";
 /* -- Product & Item Types -- */
 export interface FlowerProduct {
   sku: string;
@@ -100,7 +101,9 @@ const staticProducts = normalizeProductLists(
 );
 
 export const allFlowers = staticProducts.flowers;
-export const allItems = staticProducts.items;
+export const allItems = SHOW_CIGARETTES
+  ? staticProducts.items
+  : staticProducts.items.filter((item) => !isCigaretteCategory(item.category));
 
 /* ── Live stock fetch from Apps Script ── */
 // Shared fleet menu feed (no Gmail on requests). Read ONLY from MENU_FEED_URL; the legacy
@@ -142,7 +145,7 @@ export async function fetchLiveProducts(): Promise<{
         (data.flowers || allFlowers).map(normalizeFlowerDisplayName)
       ),
       items: dedupeBySlug(
-        (data.items || allItems).map(normalizeItemDisplayName)
+        filterCigaretteItems((data.items || allItems).map(normalizeItemDisplayName))
       ),
       isLive: true,
       stockDate: data.stockDate || null,
@@ -375,6 +378,7 @@ export function getTierFromSlug(
 export function getCategoryFromSlug(
   slug: string
 ): { key: string; config: (typeof CATEGORY_CONFIG)[string] } | undefined {
+  if (!SHOW_CIGARETTES && isCigaretteCategory(slug)) return undefined;
   const entry = Object.entries(CATEGORY_CONFIG).find(
     ([, v]) => v.slug === slug
   );

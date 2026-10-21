@@ -1,3 +1,4 @@
+import { cigaretteSafeContent } from "./lib/siteConfig";
 import { getLiveMenu } from "./lib/liveMenu";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
@@ -141,7 +142,7 @@ function __compute_FEATURED_STRAINS() {
 }
 let FEATURED_STRAINS!: ReturnType<typeof __compute_FEATURED_STRAINS>;
 
-const HOMEPAGE_HIGHLIGHTS = [
+const HOMEPAGE_HIGHLIGHTS = cigaretteSafeContent([
   {
     eyebrow: "Late-night store information",
     title: "24 Hour Ottawa Dispensary",
@@ -174,7 +175,7 @@ const HOMEPAGE_HIGHLIGHTS = [
     href: "/native-cigarettes-ottawa",
     cta: "Browse Native smokes",
   },
-];
+]);
 
 function getTypeLabel(type: string) {
   if (type.startsWith("IH")) return "Indica";

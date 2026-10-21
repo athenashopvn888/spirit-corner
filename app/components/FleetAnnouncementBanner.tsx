@@ -1,4 +1,7 @@
 "use client";
+
+import { SHOW_CIGARETTES } from "../lib/siteConfig";
+
 import CigaretteSeasonalNotice from "./CigaretteSeasonalNotice";
 
 import Link from "next/link";
@@ -100,23 +103,23 @@ export default function FleetAnnouncementBanner() {
         </p>
       ) : null}
       <CigaretteSeasonalNotice />
-      <p style={{ ...lineStyle, background: "#b91c1c" }}>
+      {SHOW_CIGARETTES ? (<p style={{ ...lineStyle, background: "#b91c1c" }}>
         CIGARETTE DEAL ! 2 PACK $5 MIX AND MATCH
-      </p>
-      <p style={{ ...lineStyle, background: "#c2410c" }}>
+      </p>) : null}
+      {SHOW_CIGARETTES ? (<p style={{ ...lineStyle, background: "#c2410c" }}>
         EXCLUSIVE SPECIAL PREMIUM GRADE BB FULL, BB LIGHT &amp; BELMONT KING SIZE!
-      </p>
-      <Link href="/items/cigarettes" data-bb-premium-banner="" aria-label="Shop BB and Belmont Premium Grade cigarettes">
+      </p>) : null}
+      {SHOW_CIGARETTES ? (<Link href="/items/cigarettes" data-bb-premium-banner="" aria-label="Shop BB and Belmont Premium Grade cigarettes">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/banners/BB_Belmont_Premium_Grade.webp"
           alt="Exclusive Premium Grade BB Full Flavor, BB Lights, and Belmont King Size cigarettes at Spirit Corner Cannabis."
         />
-      </Link>
-      <Link href="/items/cigarettes" data-belmont-mix-match-banner="" aria-label="BELMONT KING SIZE $10 - 2PACK BB $5 MIX & MATCH">
+      </Link>) : null}
+      {SHOW_CIGARETTES ? (<Link href="/items/cigarettes" data-belmont-mix-match-banner="" aria-label="BELMONT KING SIZE $10 - 2PACK BB $5 MIX & MATCH">
         <span data-belmont-offer-lead="">BELMONT KING SIZE $10 -</span>
         <span data-belmont-offer-tail=""> 2PACK BB $5 MIX &amp; MATCH</span>
-      </Link>
+      </Link>) : null}
     </aside>
   );
 }
