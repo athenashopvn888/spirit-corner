@@ -101,9 +101,7 @@ const staticProducts = normalizeProductLists(
 );
 
 export const allFlowers = staticProducts.flowers;
-export const allItems = SHOW_CIGARETTES
-  ? staticProducts.items
-  : staticProducts.items.filter((item) => !isCigaretteCategory(item.category));
+export const allItems = filterCigaretteItems(staticProducts.items);
 
 /* ── Live stock fetch from Apps Script ── */
 // Shared fleet menu feed (no Gmail on requests). Read ONLY from MENU_FEED_URL; the legacy

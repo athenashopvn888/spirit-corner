@@ -1,3 +1,4 @@
+import { SHOW_CIGARETTES } from "../lib/siteConfig";
 import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "../page.module.css";
@@ -37,7 +38,7 @@ export default function VapesPage() {
             <p style={{ marginBottom: "24px" }}>Spirit Corner Cannabis is open 24 hours at 251 Dalhousie St near ByWard Market. Call <a href="tel:+13433088998" style={linkStyle}>(343) 308-8998</a> if you want help before visiting.</p>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: 900, color: "var(--text-primary)", marginBottom: "12px" }}>Listed 5% Vape Options</h2>
             <p style={{ marginBottom: "16px" }}>Store listings include OVNS 2500, OVNS 10000, and Geek Max 5% disposable vape options. Selection can change, so call the store if you are looking for a particular item.</p>
-            <p style={{ marginBottom: "28px" }}>Adults can also review <Link href="/nicotine-pouches-ottawa" style={linkStyle}>nicotine pouch information</Link>, compare <Link href="/native-cigarettes-ottawa" style={linkStyle}>Native cigarettes and Native smokes</Link>, and browse listed smoking accessories.</p>
+            <p style={{ marginBottom: "28px" }}>Adults can also review <Link href="/nicotine-pouches-ottawa" style={linkStyle}>nicotine pouch information</Link>{SHOW_CIGARETTES ? (<>, compare <Link href="/native-cigarettes-ottawa" style={linkStyle}>Native cigarettes and Native smokes</Link></>) : null}, and browse listed smoking accessories.</p>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: 900, color: "var(--text-primary)", marginBottom: "12px" }}>Visit Spirit Corner Cannabis</h2>
             <p>The store is at 251 Dalhousie St in downtown Ottawa and is open 24 hours a day, seven days a week.</p>
           </div>

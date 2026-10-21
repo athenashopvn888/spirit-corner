@@ -23,6 +23,13 @@ const cigaretteRedirects = SHOW_CIGARETTES ? [] : [
   { source: "/guides/rolled-gold", destination: "/items/vapes", statusCode: 302 as const },
   { source: "/guides/time-cigarettes", destination: "/items/vapes", statusCode: 302 as const },
   { source: "/guides/grabba", destination: "/items/vapes", statusCode: 302 as const },
+  { source: "/guides/grabba/:path*", destination: "/items/vapes", statusCode: 302 as const },
+  { source: "/native-cigarettes-ottawa", destination: "/items/vapes", statusCode: 302 as const },
+  { source: "/info/native-cigarettes-ottawa", destination: "/items/vapes", statusCode: 302 as const },
+  { source: "/grabba-leaf-shakers", destination: "/items/vapes", statusCode: 302 as const },
+  { source: "/grabba-leaf-shakers/:path*", destination: "/items/vapes", statusCode: 302 as const },
+  { source: "/item/grabba", destination: "/items/vapes", statusCode: 302 as const },
+  { source: "/item/grabba-:slug", destination: "/items/vapes", statusCode: 302 as const },
 ];
 
 import type { NextConfig } from "next";

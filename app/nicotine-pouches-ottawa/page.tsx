@@ -1,3 +1,4 @@
+import { SHOW_CIGARETTES } from "../lib/siteConfig";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -69,9 +70,15 @@ export default function NicotinePouchesPage() {
             </h2>
             <p style={{ marginBottom: "18px" }}>
               Adults can also compare listed{" "}
-              <Link href="/5-percent-vapes-ottawa" style={linkStyle}>5% vape products</Link>,{" "}
-              <Link href="/native-cigarettes-ottawa" style={linkStyle}>Native cigarettes and Native smokes</Link>,{" "}
-              <Link href="/grabba-leaf-shakers" style={linkStyle}>Grabba leaf and shakers</Link>, and{" "}
+              <Link href="/5-percent-vapes-ottawa" style={linkStyle}>5% vape products</Link>
+              {SHOW_CIGARETTES ? (
+                <>
+                  ,{" "}
+                  <Link href="/native-cigarettes-ottawa" style={linkStyle}>Native cigarettes and Native smokes</Link>,{" "}
+                  <Link href="/grabba-leaf-shakers" style={linkStyle}>Grabba leaf and shakers</Link>
+                </>
+              ) : null}
+              , and{" "}
               <Link href="/items/add-ons" style={linkStyle}>smoke accessories</Link>.
             </p>
 
