@@ -1,12 +1,15 @@
 "use client";
 
+import { filterCigaretteEntries } from "../lib/siteConfig";
+
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Navbar.module.css";
 
-const ALL_LINKS = [
+const ALL_LINKS_RAW = [
   { href: "/careers/budtender", label: "Join Team" },
   { href: "/exotic", label: "Exotic" },
   { href: "/premium", label: "Premium" },
@@ -31,6 +34,8 @@ const DIRECTIONS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=251%20Dalhousie%20St%2C%20Ottawa%2C%20ON%20K1N%201E7";
 const CALL_URL = "tel:+13433088998";
 const CTA_HIDDEN_ROUTES = ["/manager-blog", "/tv", "/tv2"];
+
+const ALL_LINKS = filterCigaretteEntries(ALL_LINKS_RAW);
 
 export default function Navbar() {
   const pathname = usePathname();

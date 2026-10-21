@@ -1,3 +1,4 @@
+import { SHOW_CIGARETTES, cigaretteSafeContent, isCigarettePath } from "../lib/siteConfig";
 export interface ResourceCard { title: string; href: string; text: string; }
 export interface ResourceSection { heading: string; body: string; bullets?: string[]; }
 export interface ResourcePage {
@@ -7,7 +8,7 @@ export interface ResourcePage {
 
 const SAFE_BANNER = "/banners/spirit_corner_cannabis_showcase.webp";
 
-export const RESOURCE_PAGES: ResourcePage[] = [
+const RESOURCE_PAGES_RAW: ResourcePage[] = [
   {
     slug: "",
     title: "Spirit Corner Cannabis Resources",
@@ -127,6 +128,12 @@ export const RESOURCE_PAGES: ResourcePage[] = [
     ],
   },
 ];
+
+export const RESOURCE_PAGES = SHOW_CIGARETTES
+  ? RESOURCE_PAGES_RAW
+  : RESOURCE_PAGES_RAW
+      .filter((page) => !isCigarettePath((page as { slug?: string; path?: string }).slug ?? (page as { path?: string }).path))
+      .map((page) => cigaretteSafeContent(page));
 
 export const RESOURCE_HOME = RESOURCE_PAGES[0];
 export function getResourcePage(slug: string) {

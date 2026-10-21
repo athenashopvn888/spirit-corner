@@ -1,3 +1,4 @@
+import { SHOW_CIGARETTES } from "../lib/siteConfig";
 import Link from "next/link";
 import styles from "./Footer.module.css";
 
@@ -52,7 +53,7 @@ export default function Footer() {
               <Link href="/aa">AA Flower</Link>
               <Link href="/budget">Budget Flower</Link>
               <Link href="/items/edibles">Edibles</Link>
-              <Link href="/items/cigarettes">Cigarettes</Link>
+              {SHOW_CIGARETTES ? (<Link href="/items/cigarettes">Cigarettes</Link>) : null}
               <Link href="/items/vapes">Vape Pens</Link>
               <Link href="/faq">FAQ</Link>
               <Link href="/hours">Store Hours</Link>
@@ -62,7 +63,7 @@ export default function Footer() {
               <Link href="/games">Games Arcade</Link>
               <Link href="/info/ottawa-weed-dispensary">Ottawa Dispensary</Link>
               <Link href="/info/cheap-weed-ottawa">Cheap Weed Ottawa</Link>
-              <Link href="/info/native-cigarettes-ottawa">Native Cigarettes</Link>
+              {SHOW_CIGARETTES ? (<Link href="/info/native-cigarettes-ottawa">Native Cigarettes</Link>) : null}
               <Link href="/grabba-leaf-shakers">Grabba Leaf &amp; Shakers</Link>
               <Link href="/info/weed-store-near-gatineau">Cannabis Dispensary Near Gatineau</Link>
               <Link href="/weed-dispensary-ottawa">Spirit Corner Cannabis Weed Dispensary in Ottawa</Link>

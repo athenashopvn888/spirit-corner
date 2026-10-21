@@ -9,6 +9,7 @@ import {
   type ItemProduct,
 } from "./products";
 import { getTvData } from "./tvStock";
+import { filterCigaretteItems } from "./siteConfig";
 
 /** Resolve Web Menu data through the same guarded source used by /tv and /tv2. */
 export const getResolvedProducts = cache(async () => {
@@ -19,6 +20,6 @@ export const getResolvedProducts = cache(async () => {
 
   return normalizeProductLists(
     flowerResult.body as FlowerProduct[],
-    itemResult.body as ItemProduct[]
+    filterCigaretteItems(itemResult.body as ItemProduct[])
   );
 });
