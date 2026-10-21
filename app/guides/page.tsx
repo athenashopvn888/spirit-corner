@@ -1,4 +1,4 @@
-import { cigaretteSafeContent } from "../lib/siteConfig";
+import { SHOW_CIGARETTES, cigaretteSafeContent } from "../lib/siteConfig";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "../components/Footer";
@@ -49,10 +49,16 @@ export default function GuidesPage() {
         <div className={styles.actions}><Link className={styles.primary} href="/menu">Open today&apos;s menu</Link><Link className={styles.secondary} href="/resources">Browse resources</Link></div>
       </div></header>
       <section className={`${styles.shell} ${styles.intro}`}><h2>Find the right Spirit Corner shelf</h2><p>{cigaretteSafeContent("Strain names, Native Cigarettes, Nicotine Vape, and THC Vape stay in separate lanes. Open a name guide for context, then use its current menu path before heading to Dalhousie Street.")}</p></section>
-      <div className={`${styles.shell} ${styles.groups}`}>{groups.map((group) => <section key={group.lane} className={styles.group} aria-labelledby={`${group.lane}-guides`}>
-        <div className={styles.groupHeader}><div><span>{group.guides.length} name guides</span><h2 id={`${group.lane}-guides`}>{group.label}</h2></div><Link href={laneCtas[group.lane].href}>{laneCtas[group.lane].label}</Link></div>
-        <div className={styles.grid}>{group.guides.map((guide) => <Link key={guide.slug} href={`/guides/${guide.slug}`} className={styles.card}><strong>{guide.name}</strong><span>Read {group.label} guide</span></Link>)}</div>
-      </section>)}</div>
+      <div className={`${styles.shell} ${styles.groups}`}>{groups.map((group) => {
+        const label = !SHOW_CIGARETTES && group.lane === "native_cig" ? "Backwoods" : group.label;
+        const cta = !SHOW_CIGARETTES && group.lane === "native_cig"
+          ? { href: "/items/add-ons", label: "View today's accessory board" }
+          : laneCtas[group.lane];
+        return <section key={group.lane} className={styles.group} aria-labelledby={`${group.lane}-guides`}>
+        <div className={styles.groupHeader}><div><span>{group.guides.length} name guides</span><h2 id={`${group.lane}-guides`}>{label}</h2></div><Link href={cta.href}>{cta.label}</Link></div>
+        <div className={styles.grid}>{group.guides.map((guide) => <Link key={guide.slug} href={`/guides/${guide.slug}`} className={styles.card}><strong>{guide.name}</strong><span>Read {label} guide</span></Link>)}</div>
+      </section>;
+      })}</div>
       <aside className={`${styles.shell} ${styles.finalCta}`}><h2>Check today&apos;s board</h2><p>Use the menu for current published listings, or plan your downtown Ottawa stop with the store page.</p><div className={styles.actions}><Link className={styles.primary} href="/menu">View the menu</Link><Link className={styles.secondary} href="/weed-dispensary-ottawa">Plan your visit</Link></div></aside>
     </article>
     <Footer />

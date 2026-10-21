@@ -8,7 +8,9 @@ import {
   getItemsByCategory,
   getCategoryFromSlug,
   CATEGORY_CONFIG,
+  type ItemProduct,
 } from "../../lib/products";
+import { SHOW_CIGARETTES, isPreservedSmokeItem } from "../../lib/siteConfig";
 import styles from "./items.module.css";
 import { getCategoryGuideGroups } from "../../lib/guideRegistry";
 import guideStyles from "../../guides/[slug]/guide.module.css";
@@ -16,6 +18,21 @@ import ItemCard from "./ItemCard";
 import { getResolvedProducts } from "../../lib/resolvedProducts";
 
 export const dynamic = "force-dynamic";
+
+function visibleCategoryItems(categoryKey: string, resolvedItems: ItemProduct[]) {
+  let items = getItemsByCategory(categoryKey, resolvedItems);
+  if (categoryKey === "PREROLLS") {
+    const accessories = getItemsByCategory("ADD ONS", resolvedItems);
+    const existingIds = new Set(items.map((item) => item.sku));
+    items = [...items, ...accessories.filter((item) => !existingIds.has(item.sku))];
+  }
+  if (!SHOW_CIGARETTES && categoryKey === "ADD ONS") {
+    const existingIds = new Set(items.map((item) => item.sku));
+    const preserved = resolvedItems.filter((item) => isPreservedSmokeItem(item) && !existingIds.has(item.sku));
+    items = [...items, ...preserved];
+  }
+  return items;
+}
 
 /* ── Generate all category pages ── */
 export function generateStaticParams() {
@@ -32,7 +49,7 @@ export async function generateMetadata({
   const catInfo = getCategoryFromSlug(catSlug);
   if (!catInfo) return {};
   const { items: resolvedItems } = await getResolvedProducts();
-  const items = getItemsByCategory(catInfo.key, resolvedItems);
+  const items = visibleCategoryItems(catInfo.key, resolvedItems);
   const pageUrl = `https://spiritcornercannabis.com/items/${catInfo.config.slug}`;
 
   return {
@@ -58,15 +75,9 @@ export default async function ItemsCategoryPage({
   const catInfo = getCategoryFromSlug(catSlug);
   if (!catInfo) notFound();
 
-  /* Pre-Rolls also shows accessories (ADD ONS) */
+  /* Pre-Rolls also shows accessories (ADD ONS). Backwoods, cigarillos, and rolling papers stay on Accessories when cigarettes are hidden. */
   const { items: resolvedItems } = await getResolvedProducts();
-  let items = getItemsByCategory(catInfo.key, resolvedItems);
-  if (catInfo.key === "PREROLLS") {
-    const accessories = getItemsByCategory("ADD ONS", resolvedItems);
-    const existingIds = new Set(items.map(i => i.sku));
-    const uniqueAccessories = accessories.filter(a => !existingIds.has(a.sku));
-    items = [...items, ...uniqueAccessories];
-  }
+  const items = visibleCategoryItems(catInfo.key, resolvedItems);
   const { config } = catInfo;
   const guideGroups = getCategoryGuideGroups(`/items/${config.slug}`);
 

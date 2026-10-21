@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./GBPLandingPage.module.css";
 import { gbpLocation } from "../lib/gbp-location";
+import { cigaretteSafeContent } from "../lib/siteConfig";
 
 const categoryLinks: Record<string, string> = {
   Flower: "/menu",
@@ -11,7 +12,7 @@ const categoryLinks: Record<string, string> = {
   Accessories: "/items/add-ons",
 };
 
-const helpfulLinks = [
+const helpfulLinks = cigaretteSafeContent([
   {
     href: "/24-hour-ottawa-dispensary",
     label: "24 Hour Dispensary Ottawa",
@@ -37,7 +38,7 @@ const helpfulLinks = [
     label: "Grabba Leaf & Shakers",
     description: "Compare listed Grabba leaf and shaker choices or call ahead.",
   },
-];
+]);
 
 const PAGE_URL = "https://spiritcornercannabis.com/weed-dispensary-ottawa";
 const DIRECTIONS_URL =

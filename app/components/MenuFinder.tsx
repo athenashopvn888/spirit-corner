@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { FlowerProduct, ItemProduct } from "@/app/lib/products";
+import { SHOW_CIGARETTES, filterCigaretteEntries, isPreservedSmokeItem } from "@/app/lib/siteConfig";
 import styles from "./MenuFinder.module.css";
 
 type MenuFinderProps = {
@@ -28,7 +29,7 @@ type MenuResult = {
   searchText: string;
 };
 
-const QUICK_CATEGORIES = [
+const QUICK_CATEGORIES = filterCigaretteEntries([
   { code: "FL", label: "Flower", value: "Flower", helper: "Browse by tier, type, THC, and weight." },
   { code: "EX", label: "Exotic", value: "Exotic", helper: "Compare listed Exotic flower details." },
   { code: "PR", label: "Premium", value: "Premium", helper: "Compare listed Premium flower details." },
@@ -41,7 +42,7 @@ const QUICK_CATEGORIES = [
   { code: "CN", label: "Concentrates", value: "CONCENTRATES", helper: "Extracts, hash, and concentrates." },
   { code: "CG", label: "Cigarettes", value: "CIGARETTES", helper: "Native cigarette catalog." },
   { code: "AC", label: "Accessories", value: "ADD ONS", helper: "Add-ons and smoke accessories." },
-];
+]);
 
 const PRODUCT_TYPES = [
   "All products",
@@ -53,7 +54,7 @@ const PRODUCT_TYPES = [
   "Cigarettes",
   "Accessories",
   "Magic",
-];
+].filter((type) => SHOW_CIGARETTES || type !== "Cigarettes");
 
 const PRICE_RANGES = [
   { label: "Any price", min: null, max: null },
@@ -147,14 +148,16 @@ function buildResults(flowers: FlowerProduct[], items: ItemProduct[]) {
   });
 
   const itemResults: MenuResult[] = items.map((product) => {
-    const productType = normalizeItemType(product.category);
+    const preserved = !SHOW_CIGARETTES && isPreservedSmokeItem(product);
+    const productType = preserved ? "Accessories" : normalizeItemType(product.category);
+    const category = preserved ? "ADD ONS" : product.category;
     return {
       key: `item-${product.slug}`,
       name: product.name,
       href: `/item/${product.slug}`,
       productType,
-      category: product.category,
-      tier: product.category,
+      category,
+      tier: category,
       typeLabel: product.type || "",
       thcNumber: parseThc(product.thc),
       thcLabel: product.thc || product.mg || "",
@@ -162,7 +165,7 @@ function buildResults(flowers: FlowerProduct[], items: ItemProduct[]) {
       priceLabel: product.price || "Ask staff",
       weights: ["Non-flower items"],
       image: product.image,
-      searchText: `${product.name} ${product.category} ${product.type} ${product.thc} ${product.mg}`.toLowerCase(),
+      searchText: `${product.name} ${category} ${product.type} ${product.thc} ${product.mg}`.toLowerCase(),
     };
   });
 

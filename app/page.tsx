@@ -1,4 +1,4 @@
-import { cigaretteSafeContent } from "./lib/siteConfig";
+import { SHOW_CIGARETTES, cigaretteSafeContent } from "./lib/siteConfig";
 import { getLiveMenu } from "./lib/liveMenu";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
@@ -528,11 +528,13 @@ export default async function HomePage() {
                   </Link>
                 </li>
                 <li>Smoking accessories</li>
-                <li>
-                  <Link href="/native-cigarettes-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
-                    Native cigarettes
-                  </Link>
-                </li>
+                {SHOW_CIGARETTES ? (
+                  <li>
+                    <Link href="/native-cigarettes-ottawa" style={{ color: "var(--green-mid)", textDecoration: "underline", fontWeight: "bold" }}>
+                      Native cigarettes
+                    </Link>
+                  </li>
+                ) : null}
                 <li>Rolling papers</li>
               </ul>
             </div>

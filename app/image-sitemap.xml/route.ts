@@ -1,5 +1,6 @@
 import { getLiveMenu } from "../lib/liveMenu";
 import { isGrabbaItem } from "../lib/products";
+import { SHOW_CIGARETTES } from "../lib/siteConfig";
 
 // ONE product loader (same as /api/tv-data), filled per request by __loadMenuData(). Grok 2026-10-09.
 let __menu!: Awaited<ReturnType<typeof getLiveMenu>>;
@@ -44,10 +45,12 @@ function __compute_staticEntries() {
       `${BASE}/banners/spirit_corner_cannabis_showcase.webp`,
     ],
   },
-  {
-    page: `${BASE}/grabba-leaf-shakers`,
-    images: grabbaImages,
-  },
+  ...(SHOW_CIGARETTES
+    ? [{
+        page: `${BASE}/grabba-leaf-shakers`,
+        images: grabbaImages,
+      }]
+    : []),
 ];
 }
 let staticEntries!: ReturnType<typeof __compute_staticEntries>;
