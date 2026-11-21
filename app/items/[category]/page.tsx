@@ -1,5 +1,5 @@
 import CigaretteSeasonalNotice from "../../components/CigaretteSeasonalNotice";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
@@ -16,6 +16,7 @@ import { getCategoryGuideGroups } from "../../lib/guideRegistry";
 import guideStyles from "../../guides/[slug]/guide.module.css";
 import ItemCard from "./ItemCard";
 import { getResolvedProducts } from "../../lib/resolvedProducts";
+import { isCigaretteScheduleActive } from "../../lib/cigaretteSchedule";
 
 export const dynamic = "force-dynamic";
 
@@ -74,6 +75,7 @@ export default async function ItemsCategoryPage({
   const { category: catSlug } = await params;
   const catInfo = getCategoryFromSlug(catSlug);
   if (!catInfo) notFound();
+  if (catInfo.key === "CIGARETTES" && !isCigaretteScheduleActive()) redirect("/items/vapes");
 
   /* Pre-Rolls also shows accessories (ADD ONS). Backwoods, cigarillos, and rolling papers stay on Accessories when cigarettes are hidden. */
   const { items: resolvedItems } = await getResolvedProducts();

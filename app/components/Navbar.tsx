@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Navbar.module.css";
+import { useCigaretteSchedule } from "./useCigaretteSchedule";
 
 const ALL_LINKS_RAW = [
   { href: "/careers/budtender", label: "Join Team" },
@@ -39,6 +40,7 @@ const ALL_LINKS = filterCigaretteEntries(ALL_LINKS_RAW);
 
 export default function Navbar() {
   const pathname = usePathname();
+  const cigaretteOn = useCigaretteSchedule();
   const scrollBarRef = useRef<HTMLDivElement>(null);
   const [canAdvance, setCanAdvance] = useState(false);
   const updateScrollState = useCallback(() => {
@@ -101,7 +103,7 @@ export default function Navbar() {
       <div className={styles.scrollShell}>
         <div ref={scrollBarRef} id="store-menu-scrollbar" className={styles.scrollBar}>
           <div className={styles.scrollInner}>
-          {ALL_LINKS.map((link) => {
+          {ALL_LINKS.filter((link) => cigaretteOn || link.href !== "/items/cigarettes").map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
