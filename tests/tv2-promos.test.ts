@@ -15,13 +15,9 @@ test("TV2 daytime uses America/Toronto regardless of process timezone", () => {
   assert.equal(isTv2Daytime(new Date("2026-10-07T21:30:00.000Z")), false);
 });
 
-test("daytime cigarette promo uses the category collage and leaves VAPES unchanged", () => {
-  const collage = {
-    src: "/banners/tv2-category-collage.png",
-    alt: "Edibles, concentrates, and pre-rolls collage",
-  };
-  assert.deepEqual(getTv2DaytimePromo("CIGARETTES", true, 0), collage);
-  assert.deepEqual(getTv2DaytimePromo("CIGARETTES", true, 10_000), collage);
+test("daytime keeps the scheduled cigarette card instead of replacing it with a promo", () => {
+  assert.equal(getTv2DaytimePromo("CIGARETTES", true, 0), undefined);
+  assert.equal(getTv2DaytimePromo("CIGARETTES", true, 10_000), undefined);
   assert.match(getTv2DaytimePromo("VAPES", true)?.alt || "", /Ultimate Cannabis Collection/);
   assert.equal(getTv2DaytimePromo("CIGARETTES", false), undefined);
 });
